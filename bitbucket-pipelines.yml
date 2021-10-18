@@ -1,0 +1,13 @@
+# This is an example Starter pipeline configuration
+# Use a skeleton to build, test and deploy using manual and parallel steps
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+image: atlassian/default-image:2
+
+pipelines:
+  default:
+      - step:
+          name: 'Build and Test'
+          script:
+            - git push https://heroku:e043cedb-b2c7-4d6b-8aaf-51d7db148c91@git.heroku.com/provids.git HEAD
+    
