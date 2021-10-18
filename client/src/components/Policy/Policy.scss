@@ -1,0 +1,46 @@
+.policy {
+  box-sizing: border-box;
+  padding: 10vh 15px 15px;
+  height: 100%;
+  font-family: "Montserrat", "Helvetica Neue", sans-serif;
+  p {
+    padding: 10px 0 10px 10px;
+    line-height: 28px;
+    i {
+      font-style: italic;
+      font-weight: 700;
+      font-size: 28px;
+      color: #2291ff;
+    }
+    span {
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+  }
+  h1 {
+    font-size: 24px;
+    font-weight: 700;
+    padding: 25px 0;
+    font-family: "CircularStd-Medium", sans-serif;
+    text-shadow: 3px 3px 5px gray;
+  }
+  h5 {
+    font-size: 20px;
+    font-weight: 700;
+    padding: 25px 0;
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', arial, sans-serif;
+    line-height: 30px;
+    text-transform: uppercase;
+    text-decoration: underline;
+  }
+}
+
+@media all and (max-width: 575px) {
+  .policy {
+    padding: 0 15px 15px;
+  }
+  p {
+    font-size: 16px;
+    line-height: 28px;
+  }
+}

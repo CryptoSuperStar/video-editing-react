@@ -1,0 +1,126 @@
+.projects {
+  padding: 0 15px;
+  margin-top: 120px;
+  height: 100%;
+  overflow: auto;
+  h3 {
+    letter-spacing: 0.00px;
+    line-height: 40px;
+    color: var(--black);
+    font-family: Montserrat, Helvetica, sans-serif;
+    font-size: var(--font-size-xxxl);
+    font-weight: 700;
+  }
+}
+.projects__block {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  //justify-content: space-between;
+  .delete__video--btn {
+    right: 10px;
+  }
+  .project__item {
+    box-sizing: border-box;
+    width: 19%;
+    //height: 20vh;
+    margin: 5px;
+    position: relative;
+    cursor: pointer;
+    .project__item--image {
+      background-size: cover !important;
+      height: 200px;
+      border-radius: 12px;
+    }
+  }
+  .project__item--name, .project__item--date {
+    display: block;
+  }
+  .project__item--name {
+    letter-spacing: 0.00px;
+    line-height: 28px;
+    color: var(--black);
+    font-family: "Montserrat", "Helvetica Neue", sans-serif;
+    font-size: var(--font-size-l);
+    font-weight: 500;
+    overflow:hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    strong {
+      font-size: var(--font-size-xxl);
+      font-weight: 700;
+      color: #3a3a60;
+    }
+  }
+  .project__item--date {
+    letter-spacing: 0.00px;
+    line-height: 28px;
+    color: rgba(0,0,0,.5);
+    font-family: Montserrat, Helvetica, sans-serif;
+    font-size: var(--font-size-l);
+    font-weight: 500;
+  }
+  .project__item--publish {
+    font-weight: 700;
+    font-family: Montserrat, Helvetica, sans-serif;
+  }
+  .project__item--theme {
+    position: absolute;
+    bottom: 50%;
+    left: 20px;
+    color: var(--white);
+    font-family: Montserrat, Helvetica, sans-serif;
+    font-size: var(--font-size-l);
+    font-weight: 700;
+    height: 22px;
+    letter-spacing: 0.00px;
+    line-height: 28px;
+  }
+  .project__item--plan {
+    position: absolute;
+    bottom: 40%;
+    left: 20px;
+    color: var(--white);
+    font-family: Montserrat, Helvetica, sans-serif;
+    font-size: var(--font-size-l);
+    height: 22px;
+    letter-spacing: 0.00px;
+    line-height: 28px;
+  }
+}
+
+@media all and (max-width: 575px) {
+  .projects {
+    margin-top: 0;
+  }
+  .project__item {
+    box-sizing: border-box;
+    width: 30% !important;
+    height: auto !important;
+    .delete__video--btn {
+      width: 25px;
+      height: 25px;
+      right: 5px;
+    }
+    .project__item--image {
+      height: 150px !important;
+    }
+  }
+  .project__item--theme {
+    bottom: 75% !important;
+    font-size: 14px !important;
+    line-height: 20px !important;
+    left: 10px !important;
+  }
+  .project__item--plan {
+    top: 80px;
+    left: 10px !important;
+  }
+  .project__item--name, .project__item--date {
+    font-size: 14px !important;
+    line-height: 20px !important;
+  }
+  .project__item--date {
+  
+  }
+}

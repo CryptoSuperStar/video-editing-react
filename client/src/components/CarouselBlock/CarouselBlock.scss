@@ -1,0 +1,25 @@
+.slider {
+  height: 100%;
+}
+.slider-control-centerright, .slider-control-centerleft {
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,0,.5);
+  button {
+    height: 75%;
+    background-color: transparent !important;
+    outline: none;
+  }
+}
+
+.slider-control-centerright {
+  border-radius: 15px 0 0 15px;
+  right: 2px !important;
+}
+
+.slider-control-centerleft {
+  border-radius: 0 15px 15px 0;
+  left: 2px !important;
+}

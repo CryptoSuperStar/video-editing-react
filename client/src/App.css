@@ -1,0 +1,125 @@
+:root {
+  --alabaster: #fafcfe;
+  --athens-gray: #eceff8;
+  --black: #000000;
+  --black-2: #00000033;
+  --black-3: #00000080;
+  --black-haze: #f4f6f9;
+  --blue-haze: #bdc3d8;
+  --breaker-bay: #609ca6;
+  --bunker: #111217;
+  --cape-cod: #393f46;
+  --cloud-burst: #242f57;
+  --cloud-burst-2: #173054;
+  --concrete: #f3f3f3;
+  --dodger-blue: #2291ff;
+  --dove-gray: #70707026;
+  --dove-gray-2: #707070;
+  --dove-gray-3: #70707033;
+  --eerie-black: #19191b;
+  --gray-nurse: #e8e8e8;
+  --indigo: #5454d41a;
+  --indigo-2: #5454d4;
+  --iron: #d8d8d8;
+  --loblolly: #bcc7cd;
+  --link-water: #d8e1f1;
+  --mine-shaft: #333333;
+  --mischka: #d2d5e1;
+  --my-sin: #ffb417;
+  --navy-blue: #1976d2;
+  --oracle: #306d76;
+  --oslo-gray: #858695;
+  --paradiso: #3a828d;
+  --periwinkle-gray: #bcc9e1;
+  --periwinkle-gray-2: #bfc7e0;
+  --pigeon-post: #a1b8e3;
+  --rhino: #3a3a60;
+  --rock-blue: #9fa8c9;
+  --scarpa-flow: #4b5865;
+  --scarpa-flow-2: #565d66;
+  --shuttle-gray: #696871;
+  --smalt-blue: #3b8590;
+  --smalt-blue-2: #3b85911a;
+  --star-dust: #9a9a9a;
+  --star-dust-2: #9b9b9b;
+  --white: #ffffff;
+  --white-2: #ffffffb3;
+  --white-lilac: #f7f7fb;
+  --zircon: #f4f7fc;
+  
+  --font-size-l: 17px;
+  --font-size-m: 16px;
+  --font-size-s: 14px;
+  --font-size-xl: 18px;
+  --font-size-xs: 12px;
+  --font-size-xxl: 21px;
+  --font-size-xxxl: 24px;
+  
+  --font-family-active-regular: "Active-Regular", Helvetica;
+  --font-family-circular_std: "Circular Std", Helvetica;
+  --font-family-circularstd-bold: "CircularStd-Bold", Helvetica;
+  --font-family-circularstd-book: "CircularStd-Book", Helvetica;
+  --font-family-circularstd-medium: "CircularStd-Medium", Helvetica;
+  --font-family-gilroy-medium-☞: "Gilroy-Medium-☞", Helvetica;
+  --font-family-montserrat: "Montserrat", Helvetica;
+  --font-family-sfpro_display-bold: "SFPro Display-Bold", Helvetica;
+  --font-family-sfpro_display-regular: "SFPro Display-Regular", Helvetica;
+  --font-family-tofino-regular: "Tofino-Regular", Helvetica;
+}
+.spinner__wrapper, .spinner__wrapper--slider {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner__wrapper--slider {
+  height: 20vh;
+  flex-direction: column;
+}
+
+
+.spinner__wrapper--slider h3 {
+  color: #696871 !important;
+  margin-bottom: 15px;
+}
+
+.private__inner {
+  /*margin-top: 110px;*/
+  min-height: 95vh;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  overflow: auto;
+}
+
+.fullscreen-enabled {
+  background: #fff;
+}
+
+@media all and (max-width: 575px){
+  #root {
+    height: 100vh;
+    overflow: auto;
+  }
+  .private__inner {
+    height: 95vh;
+  }
+  .spinner__wrapper {
+    margin-top: 250px;
+  }
+  .spinner__wrapper--slider {
+    height: 10vh;
+  }
+  .spinner__wrapper--slider h3 {
+    font-size: 16px !important;
+    margin-bottom: 5px !important;
+  }
+  .spinner__wrapper--slider span{
+    margin: 0 !important;
+  }
+}

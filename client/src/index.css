@@ -1,0 +1,111 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700,500,600");
+@font-face {
+  font-family: "Active-Regular";
+  font-style: normal;
+  font-weight: 400;
+  src: url("fonts/ActiveRegular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Tofino-Regular";
+  font-style: normal;
+  font-weight: 400;
+  src: url("fonts/Tofino-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Gilroy-Medium";
+  font-style: normal;
+  font-weight: 500;
+  src: url("fonts/gilroy-medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "CircularStd-Book";
+  font-style: normal;
+  font-weight: 400;
+  src: url("fonts/CircularStd-Book.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "CircularStd-Medium";
+  font-style: normal;
+  font-weight: 500;
+  src: url("fonts/CircularStd-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "CircularStd-Bold";
+  font-style: normal;
+  font-weight: 700;
+  src: url("fonts/CircularStd-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "SFPro Display-Bold";
+  font-style: normal;
+  font-weight: 700;
+  src: url("fonts/FontsFree-Net-SFProDisplay-Bold.ttf") format("truetype");
+}
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: "CircularStd-Book", sans-serif;
+  color: var(--shuttle-gray);
+  font-size: var(--font-size-xxl);
+  overflow-x: hidden;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.container {
+  width: 1600px;
+  margin: 0 auto;
+}
+
+.container__inner {
+  width: 1280px;
+  margin: 0 auto;
+}
+
+.web__view {
+
+}
+
+.mobile__view {
+  display: none;
+}
+
+@media screen and (max-width: 1600px){
+  .container {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+  
+  .container__inner {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 25px;
+  }
+}
+
+@media all and (max-width: 575px){
+  .web__view {
+    display: none;
+  }
+  .mobile__view {
+    display: block;
+  }
+  .container__inner {
+    padding: 0;
+  }
+}
+

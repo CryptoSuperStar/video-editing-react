@@ -1,0 +1,104 @@
+.SideHiddenMenu {
+  display: none;
+}
+
+@media all and (max-width: 575px){
+  .SideHiddenMenu {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    top: 5%;
+    left: 0;
+    height: calc(100vh - 5%);
+    background-color: #fafaf8;
+    z-index: 100;
+    transition: all ease-in-out .5s;
+  }
+  
+  .SideHiddenMenu__login {
+    text-align: center;
+    width: 100%;
+    background-color: var(--white);
+    border-top: 1px solid var(--pigeon-post);
+    border-bottom: 1px solid var(--pigeon-post);
+    span {
+      display: inline-block;
+      margin-top: 25px;
+      color: var(--black);
+      font-family: "Montserrat", "Helvetica Neue", sans-serif;
+      font-size: var(--font-size-l);
+      letter-spacing: 0.00px;
+      line-height: 32px;
+    }
+    .SideHiddenMenu__links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 15px;
+      button {
+        box-sizing: border-box;
+        letter-spacing: 0.00px;
+        line-height: 22px;
+        font-family: "Montserrat", "Helvetica Neue", sans-serif;
+        font-size: var(--font-size-l);
+        font-style: normal;
+        font-weight: 500;
+        text-decoration: none;
+        border-radius: 22px;
+        padding: 10px 25px;
+        margin: 0 5px;
+      }
+      .SideHiddenMenu__link--register {
+        background-color: var(--smalt-blue);
+        color: var(--white);
+        border: 2px solid var(--smalt-blue);
+      }
+      .SideHiddenMenu__link--login {
+        border: 2px solid var(--smalt-blue);
+        color: var(--smalt-blue);
+      }
+    }
+  }
+  .SideHiddenMenu__links--unregistered {
+    height: 100%;
+    padding: 0;
+    margin: 5px 0 0;
+    text-align: left;
+    li:last-child {
+      border-bottom: none;
+    }
+    li {
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      width: 90%;
+      margin: 0 auto;
+      padding: 10px 25px;
+      border-bottom: 1px solid var(--pigeon-post);
+      button {
+        text-align: left;
+        background-color: transparent;
+        border: none;
+        width: 100%;
+        letter-spacing: 0.00px;
+        line-height: 32px;
+        color: var(--black);
+        font-family: "Montserrat", "Helvetica Neue", sans-serif;
+        font-size: var(--font-size-xl);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      svg {
+        width: 10px;
+        height: 10px;
+        padding: 5px;
+        border: 1px solid black;
+        border-radius: 50%;
+      }
+    }
+  }
+}
+

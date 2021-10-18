@@ -1,0 +1,39 @@
+.CommentBlock {
+  flex-basis: 18%;
+  background-color: white;
+  padding: 0 20px;
+  h5 {
+    margin: 145px 0 30px;
+    letter-spacing: 0.50px;
+    line-height: 18px;
+    color: var(--cloud-burst);
+    font-family: "SFPro Display", "Helvetica Neue", sans-serif;
+    font-size: var(--font-size-xl);
+  }
+  .comment__item {
+    margin-top: 20px;
+  }
+  .comment_time {
+    letter-spacing: 0.00px;
+    line-height: 15px;
+    color: var(--black);
+    font-family: "Montserrat", "Helvetica Neue", sans-serif;
+    font-size: var(--font-size-s);
+  }
+  .comment__text {
+    margin-top: 20px;
+    letter-spacing: 0.00px;
+    line-height: 15px;
+    color: var(--black);
+    font-family: var(--font-family-montserrat);
+    font-size: var(--font-size-xs);
+  }
+  .comment__date {
+    margin-top: 5px;
+    letter-spacing: 0.00px;
+    line-height: 15px;
+    color: rgba(0,0,0,.5);
+    font-family: var(--font-family-montserrat);
+    font-size: 10px;
+  }
+}

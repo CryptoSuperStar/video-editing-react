@@ -1,0 +1,144 @@
+.connectSocial__wrapper {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--black-3);
+  z-index: 101;
+}
+.connectSocial {
+  width: 30%;
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--white);
+  border-radius: 10px;
+  .connectSocial__cross {
+    position: fixed;
+    top: 25px;
+    right: 45px;
+    width: 15px;
+    height: 15px;
+    padding: 15px;
+    border: 1px solid black;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    svg {
+      width: 15px;
+      height: 15px;
+    }
+  }
+  h3 {
+    width: 80%;
+  }
+  p {
+    width: 80%;
+  }
+  .instagram_button, .google__button, .tikTok__button, .onlyFans__button {
+    margin-top: 15px;
+    border-radius: 22px;
+    width: 70%;
+    letter-spacing: 0.00px;
+    line-height: 23px;
+    color: var(--black);
+    font-family: "Montserrat", "Helvetica Neue", sans-serif !important;
+    font-size: var(--font-size-l);
+    font-style: normal;
+    font-weight: 500;
+    padding: 10px 0 10px 25px;
+    display: flex ;
+    align-items: center;
+    justify-content: flex-start;
+    cursor: pointer;
+    border: 1px solid var(--black-2);
+    background-color: var(--white);
+    svg {
+      width: 24px;
+      height: 24px;
+      margin-right: 28px;
+    }
+  }
+  .instagram_button {
+    margin-top: 50px;
+  }
+  .google__button {
+    padding-left: 22px !important;
+    & > span {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    svg {
+      width: 30px;
+      height: 30px;
+    }
+  }
+  .onlyFans__button {
+    padding-left: 10px;
+    margin-bottom: 170px;
+    svg {
+      width: 63px;
+      height: 15px;
+      margin-right: 5px;
+    }
+  }
+}
+
+@media all and (max-width: 1400px){
+  .connectSocial {
+    width: 40%;
+  }
+}
+
+@media all and (max-width: 1280px){
+  .connectSocial {
+    width: 50%;
+  }
+}
+
+@media all and (max-width: 840px){
+  .connectSocial {
+    width: 65%;
+  }
+}
+
+@media all and (max-width: 575px){
+  .connectSocial__wrapper {
+    top: 75px;
+    position: fixed;
+  }
+  .connectSocial {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    transform: none;
+    border-radius: 0;
+    z-index: 10;
+    overflow-y: auto;
+    background: linear-gradient(180deg, #ffffff 0%, #eaf0fd 49.26%, #ffffff 100%);
+    padding-top: 75px;
+    .connectSocial__cross {
+      top: 90px;
+      position: absolute;
+    }
+    h3 {
+      margin-top: 0;
+    }
+    span.steps {
+      margin: 50px 0 15px;
+    }
+    .instagram_button, .google__button, .tikTok__button, .onlyFans__button {
+      width: 90%;
+    }
+  }
+}
+

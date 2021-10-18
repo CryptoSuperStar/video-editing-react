@@ -1,0 +1,265 @@
+.LoginRegister {
+  margin-top: 65px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.LoginRegister__text, .LoginRegister__image {
+  box-sizing: border-box;
+  flex-basis: 50%;
+}
+
+.LoginRegister__text, .connectSocial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 150px;
+  h3 {
+    letter-spacing: 0.00px;
+    line-height: 40px;
+    color: var(--black);
+    font-family: "Montserrat", "Helvetica Neue", sans-serif;
+    font-size: var(--font-size-xxxl);
+    font-style: normal;
+    font-weight: 700;
+  }
+  p {
+    width: 45%;
+    text-align: center;
+    letter-spacing: 0.00px;
+    line-height: 22px;
+    color: var(--mine-shaft);
+    font-family: "Montserrat", "Helvetica Neue", sans-serif;
+    font-size: var(--font-size-m);
+  }
+  & > span {
+    display: inline-block;
+    margin: 150px 0;
+    color: var(--black);
+    font-family: "Montserrat", "Helvetica Neue", sans-serif;
+    font-size: var(--font-size-l);
+    font-style: normal;
+    font-weight: 500;
+    &.steps {
+      margin: 0 0 15px;
+    }
+    a {
+      color: var(--smalt-blue);
+      text-decoration: none;
+      font-weight: 700;
+    }
+  }
+}
+
+.connectSocial h3 {
+  margin-top: 0;
+}
+
+.LoginRegister__social_login {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+  & > span {
+    width: 50%;
+    text-align: center;
+  }
+}
+
+.twitter_login__button, .facebook__button, .google__button, .email__button {
+  box-sizing: border-box;
+  background-color: #00a2f9;
+  border-radius: 22px !important;
+  width: 50%;
+  letter-spacing: 0.00px;
+  line-height: 23px;
+  color: var(--white);
+  font-family: "Montserrat", "Helvetica Neue", sans-serif !important;
+  font-size: var(--font-size-l) !important;
+  font-style: normal;
+  font-weight: 500 !important;
+  border: none;
+  padding: 10px 0 10px 25px;
+  display: flex ;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+  svg {
+    fill: white;
+    margin-right: 15px;
+  }
+}
+
+.facebook__button {
+  background-color: var(--navy-blue);
+  width: 100%;
+  margin-top: 10px;
+  i {
+    transform: scale(1.3,1.3);
+    margin-left: 5px;
+    margin-right: 30px;
+  }
+}
+
+.google__button {
+  margin-top: 10px;
+  box-shadow: none !important;
+  border: 1px solid var(--dove-gray-3) !important;
+  & > div {
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+    svg {
+      transform: scale(1.2,1.2);
+    }
+  }
+  & > span {
+    margin-left: -10px;
+    color: black;
+  }
+}
+
+.apple-auth-btn {
+  margin-top: 10px;
+  width: 50%;
+  box-sizing: border-box;
+  border-radius: 22px !important;
+  justify-content: flex-start !important;
+  letter-spacing: 0.00px;
+  line-height: 23px;
+  color: var(--white);
+  font-family: "Montserrat", "Helvetica Neue", sans-serif !important;
+  font-size: var(--font-size-l) !important;
+  font-style: normal;
+  font-weight: 500 !important;
+  & > svg {
+    width: 65px;
+    rect {
+  
+    }
+  }
+  
+}
+
+.email__button {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: 1px solid var(--dove-gray-3);
+  margin-top: 10px;
+  span {
+    color: black;
+    margin-left: 20px;
+  }
+  img {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+.LoginRegister__image {
+  background-color: var(--cloud-burst-2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  img {
+    max-width: 80%;
+  }
+  p {
+    text-align: center;
+    width: 70%;
+    letter-spacing: 0.57px;
+    line-height: 24px;
+    color: var(--white);
+    font-family: "SFPro Display", sans-serif;
+    font-size: var(--font-size-m);
+    margin-top: 150px;
+  }
+}
+
+.LoginRegister__form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 50px;
+  align-items: center;
+  input, button {
+    box-sizing: border-box;
+    width: 50%;
+    font-family: "Montserrat","Helvetica Neue", sans-serif;
+    padding: 10px 0 10px 25px;
+    font-size: var(--font-size-m);
+    font-style: normal;
+    font-weight: 500;
+    letter-spacing: 0.00px;
+    line-height: 22px;
+    border-radius: 22px;
+  }
+  input {
+    border: 1px solid var(--dove-gray);
+    background-color: var(--alabaster);
+    outline: none;
+    margin-bottom: 20px;
+    &::placeholder {
+      color: var(--star-dust-2);
+      font-weight: 400;
+    }
+    &:focus {
+      border: 1px solid var(--dove-gray);
+    }
+  }
+  button {
+    margin-top: 30px;
+    background-color: var(--smalt-blue);
+    color: var(--white);
+    font-family: var(--font-family-montserrat);
+    font-size: var(--font-size-m);
+    font-style: normal;
+    font-weight: 500;
+    letter-spacing: 0.00px;
+    line-height: 22px;
+    border: none;
+    cursor: pointer;
+  }
+  a {
+    text-decoration: none;
+    margin-top: 25px;
+    color: var(--smalt-blue);
+    font-family: "Montserrat", "Helvetica Neue", sans-serif;
+    font-size: var(--font-size-m);
+    font-style: normal;
+    font-weight: 700;
+  }
+}
+
+@media all and (max-width: 575px){
+  .LoginRegister {
+    margin-top: 0;
+  }
+  .LoginRegister__text {
+    flex-basis: 100%;
+    background: linear-gradient(180deg, #ffffff 0%, #eaf0fd 49.26%, #ffffff 100%);
+    padding-top: 75px;
+    p {
+      width: 60%;
+    }
+  }
+  .LoginRegister__image {
+   display: none;
+ }
+  .twitter_login__button, .facebook__button, .google__button, .email__button, .apple-auth-btn {
+    width: 80%;
+  }
+  .LoginRegister__social_login > span {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .LoginRegister__form {
+    input, button {
+      width: 80%;
+    }
+  }
+}
