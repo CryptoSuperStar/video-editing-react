@@ -18,7 +18,7 @@ function clearTemp (link) {
 
 exports.createTempProjectController = async (req, res) => {
   let {link, bucket} = req.body;
-  const {_id} = req.userId;
+  const _id = req.userId;
   const supported = req.supported;
   const isImage = req.isImage;
   try {
@@ -305,8 +305,9 @@ exports.updateProject = async (req, res) => {
 }
 
 exports.getProjects = async (req, res) => {
+  console.log(req.userId,'req.userId._id');
   try {
-    await Project.find({author: req.userId._id}, (err,projects) => {
+    await Project.find({author: req.userId}, (err,projects) => {
       if (err) return res.status(400).send({msg: err.status});
       return res.status(200).json({projects});
     })
