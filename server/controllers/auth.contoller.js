@@ -174,7 +174,7 @@ exports.googleController = async (req, res) => {
               //If no error generate token
               jwt.sign({_id: data._id}, process.env.JWT_SECRET, {expiresIn: '7d'}, (error, token) => {
                 if (error) throw error;
-                return res.json({token})
+                return res.json({token, registering: true})
               });
             })
           }
@@ -189,7 +189,6 @@ exports.googleController = async (req, res) => {
 exports.facebookController = async (req, res) => {
   const { userId, accessToken } = req.body;
   
-  console.log('body', req.body);
   
   const url = `https://graph.facebook.com/${userId}?fields=id,name,email&access_token=${accessToken}`;
   // get from facebook
@@ -226,7 +225,7 @@ exports.facebookController = async (req, res) => {
             //If no error generate token
             jwt.sign({_id: data._id}, process.env.JWT_SECRET, (error, token) => {
               if (error) return res.status(400).json({ msg: error.message});
-              return res.status(200).json({token})
+              return res.status(200).json({token, registering: true})
             });
           })
         }
@@ -270,7 +269,7 @@ exports.appleController = async (req, res) => {
             //If no error generate token
             jwt.sign({_id: data._id}, process.env.JWT_SECRET, {expiresIn: '7d'}, (error, token) => {
               if (error) throw error;
-              return res.json({token})
+              return res.json({token, registering: true})
             });
           })
         }
