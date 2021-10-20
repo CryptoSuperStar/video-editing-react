@@ -48,7 +48,7 @@ exports.createTempProjectController = async (req, res) => {
 };
 
 exports.takeScreenShotController = async (req, res) => {
-  const userId = req.userId._id;
+  const userId = req.userId;
   const {preDuration} = req;
   const {link, id, name, bucket} = req.body;
   if (!fs.existsSync(`${MEDIA_SRC}/temp`)) {
@@ -104,11 +104,13 @@ exports.takeScreenShotController = async (req, res) => {
             newScreensArray.push({
               screenSrc: uploadedVideo.Location,
               time:timeInFormat,
-              comment: {
-                text: '',
-                time: timeInFormat,
-                createdAt: ''
-              }
+              comment: [
+                {
+                  text: '',
+                  time: timeInFormat,
+                  createdAt: ''
+                }
+              ]
             })
           })
           Promise.all(screens).then(() => {
@@ -305,7 +307,6 @@ exports.updateProject = async (req, res) => {
 }
 
 exports.getProjects = async (req, res) => {
-  console.log(req.userId,'req.userId._id');
   try {
     await Project.find({author: req.userId}, (err,projects) => {
       if (err) return res.status(400).send({msg: err.status});

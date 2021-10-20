@@ -49,9 +49,9 @@ const StyleInspirationModal = (props) => {
     newContent[index] = newCurrentMedia;
     if(localStorage.comments) {
       let newComments = JSON.parse(localStorage.comments);
-      newCurrentMedia = newCurrentMedia.screens.map((item,i) => {
-        return newComments[i].text.length > 0 ? {...item, comment: newComments[i]} : item
-      })
+      newCurrentMedia = newCurrentMedia.screens.map((item, i) => {
+        return newComments[i].length ? { ...item, comment: newComments[i] } : item;
+      });
       newContent[index].screens = newCurrentMedia;
       props.setComments([]);
     }

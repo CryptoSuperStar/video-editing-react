@@ -80,7 +80,7 @@ const Projects = (props) => {
                }}>
             <span className="delete__video--btn" onClick={e => deleteProjectHandle(e, project._id, project.bucket)}>X</span>
             <div className="project__item--image"
-                 style={{background: project.content[0].screens.length > 1 ? `url(${project.content[0].screens[1].screenSrc}) no-repeat center center` : 'black'}}>
+                 style={{background: project.content[0]?.screens.length > 1 ? `url(${project.content[0].screens[1].screenSrc}) no-repeat center center` : 'black'}}>
               <div className="project__item--theme">Theme {project.themeName}</div>
               <div className="project__item--plan">{props.user.paymentId ? 'Premium' : 'Free'}</div>
             </div>
