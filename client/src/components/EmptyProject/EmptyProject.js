@@ -56,12 +56,18 @@ const EmptyProject = (props) => {
   
   return (
     <>
+      {showDemo && <DemoLayerEmpty setShowDemo={setShowDemo}/>}
       <img src={uploadImage} alt="upload_image"/>
       <h3>Upload videos to start!</h3>
       <p>Select media in the order you want it to be used.</p>
-      <div className="upload__media--field">
-        <input type="file" ref={fileInput} id="upload__media--button" onChange={handleChange}/>
-        <label htmlFor="upload__media--button">
+      <div className="upload__media--field" >
+        <input type="file" ref={fileInput} id="upload__media--button"
+               onChange={handleChange}
+        />
+        <label htmlFor="upload__media--button" style={{
+          boxShadow: showDemo && "0px 0px 25px 0px #306D76",
+          zIndex: showDemo && 102
+        }}>
           Upload Media
         </label>
       </div>

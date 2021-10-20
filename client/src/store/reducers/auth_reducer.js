@@ -15,7 +15,7 @@ const initialState = {
 
 const authReducer = (state = initialState, {type, payload}) => {
   switch (type) {
-    case 'REGISTER_USER':
+    
     case 'LOGIN_USER':
     case 'LOGIN_REGISTER_GOOGLE':
     case 'LOGIN_REGISTER_FACEBOOK': {
@@ -25,6 +25,13 @@ const authReducer = (state = initialState, {type, payload}) => {
         loading: false
       }
     }
+    case 'REGISTER_USER':
+      localStorage.showDemoLayer = true;
+      localStorage.token = payload.token;
+      return {
+        ...state,
+        loading: false
+      }
     case 'AUTH_USER': {
       localStorage.isAuthenticated = true;
       return {

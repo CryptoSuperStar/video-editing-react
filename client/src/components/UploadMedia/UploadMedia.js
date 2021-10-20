@@ -19,6 +19,7 @@ import TimeLine from "../TimeLine/TimeLine";
 import VideoPlayer from "../VideoPlayer/VideoPlayer";
 import CarouselMedia from "../CarouselBlock/CarouselMedia";
 import {ReactComponent as Cut} from "../../assets/img/cut.svg";
+import DemoLayerUpload from "../DemoLayer/DemoLayerUpload";
 
 momentDurationFormatSetup(moment);
 
@@ -45,6 +46,13 @@ const UploadMedia = (props) => {
   const [loadingSlider, setLoadingSlider] = useState(false);
   const [moveTo, setMoveTo] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null)
+  const [showDemo, setShowDemo] = useState(false);
+  
+  useEffect(() => {
+    if (localStorage.showDemoLayer) {
+      setShowDemo(true)
+    }
+  },[])
   
   useEffect(() => {
     if (localStorage.currentProjectId) {
@@ -146,6 +154,7 @@ const UploadMedia = (props) => {
   </div>
   return (
     <div className="upload__media">
+      {showDemo && localStorage.currentProjectId && <DemoLayerUpload setShowDemo={setShowDemo}/>}
       {showStyleModal && <StyleInspirationModal
         setShowStyleModal={setShowStyleModal}
         user={props.user}
@@ -159,7 +168,7 @@ const UploadMedia = (props) => {
       <div className="upload__media--inner">
         {currentMedia.mediaName && props.project.projectName ?
         <div className="video__block" style={{marginTop: (window.innerWidth <= 575 && showCommentBlock) && '0'}}>
-          <div className="video__indicators">
+          <div className="video__indicators" style={{zIndex: showDemo && '101'}}>
             <div className="comments_indicator" onClick={toggleCommentBlock}>
               <Chat/>
               <span className="comments__total" >

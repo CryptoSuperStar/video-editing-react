@@ -1,0 +1,97 @@
+.DemoLayer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,.7);
+  z-index: 101;
+  img {
+    margin: 10px 0 0;
+  }
+  .skip__btn {
+    position: absolute;
+    right: 5%;
+    bottom: 5%;
+    background-color: white;
+    border-radius: 5px;
+    color: #3B8590;
+    width: 320px;
+    height: 60px;
+    cursor: pointer;
+  }
+}
+
+.DemoLayer__tooltip {
+  font-family: Montserrat, sans-serif;
+  color: white;
+  position: absolute;
+  text-align: center;
+}
+
+.EmptyLayer {
+  .DemoLayer__tooltip {
+    left: 50%;
+    top: 325px;
+    transform: translateX(-140%);
+    width: 270px;
+    .arrow-demo {
+      position: absolute;
+      left: 90px;
+      margin-top: 20px;
+    }
+  }
+}
+
+.DemoLayer__title {
+  font-weight: 700;
+  font-size: 20px;
+  margin: 5px 0;
+}
+
+.DemoLayer__text {
+  font-weight: 400;
+  font-size: 14px;
+}
+
+@media all and (max-width: 860px) {
+  .EmptyLayer {
+    .DemoLayer__tooltip {
+      left: 50%;
+      top: 390px;
+      transform: translateX(-130%);
+      .arrow-demo {
+        left: 90px;
+        margin-top: 20px;
+        width: 150px;
+      }
+    }
+  }
+}
+
+@media all and (max-width: 575px) {
+  .DemoLayer {
+    .skip__btn {
+      bottom: auto;
+      top: 5%;
+      width: 110px;
+      height: 45px;
+      border-radius: 25px;
+      font-size: 16px;
+    }
+  }
+  .EmptyLayer {
+    .DemoLayer__tooltip {
+      top: 23%;
+      left: 0;
+      transform: none;
+      .arrow-demo {
+        max-height: none !important;
+        height: 300px;
+        width: 70px;
+        left: 75%;
+      }
+    }
+    
+  }
+}
