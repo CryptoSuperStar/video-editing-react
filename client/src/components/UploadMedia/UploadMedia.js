@@ -49,7 +49,7 @@ const UploadMedia = (props) => {
   const [showDemo, setShowDemo] = useState(false);
   
   useEffect(() => {
-    if (localStorage.showDemoLayer === true) {
+    if (localStorage.showDemoLayer === 'true') {
       setShowDemo(true)
     }
   },[])
