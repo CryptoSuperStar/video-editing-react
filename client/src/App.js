@@ -26,7 +26,6 @@ function App(props) {
   
   useEffect(() => {
     props.dispatch(authUser());
-    localStorage.showDemoLayer = true;
   },[]);
   
   return (

@@ -61,6 +61,7 @@ export const loginUserSSO = (data, history) => async dispatch => {
 export const loginRegisterGoogle = (idToken, func, action) => async dispatch => {
   try {
     const res = await axios.post(`${REACT_APP_API_URL}/login_register_google`, {idToken});
+    
     dispatch({
       type: 'LOGIN_REGISTER_GOOGLE',
       payload: res.data

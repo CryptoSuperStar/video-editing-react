@@ -19,6 +19,7 @@ import TimeLine from "../TimeLine/TimeLine";
 import VideoPlayer from "../VideoPlayer/VideoPlayer";
 import CarouselMedia from "../CarouselBlock/CarouselMedia";
 import { ReactComponent as Cut } from "../../assets/img/cut.svg";
+import DemoLayerUpload from "../DemoLayer/DemoLayerUpload";
 
 momentDurationFormatSetup(moment);
 
@@ -44,7 +45,14 @@ const UploadMedia = props => {
   const [loadingSlider, setLoadingSlider] = useState(false);
   const [moveTo, setMoveTo] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [showDemo, setShowDemo] = useState(false);
   let commentFinal = [];
+  useEffect(() => {
+    if (localStorage.showDemoLayer === "true") {
+      setShowDemo(true);
+    }
+  }, []);
+
   useEffect(
     () => {
       if (localStorage.currentProjectId) {
@@ -59,10 +67,22 @@ const UploadMedia = props => {
     },
     [localStorage.currentProjectId]
   );
+
   useEffect(
     () => {
       if (localStorage.currentMedia && props.project.projectName && props.project.content.length > 0) {
         setMedia();
+      }
+    },
+    [localStorage.currentMedia, props.project.content]
+  );
+
+  useEffect(
+    () => {
+      if (currentMedia.mediaName && currentMedia.screens.length > 0) {
+        let commentsArray = currentMedia.screens.map(item => item.comment);
+        localStorage.comments = JSON.stringify(commentsArray);
+        setComments(commentsArray);
       }
     },
     [localStorage.currentMedia, props.project.content]
@@ -137,7 +157,9 @@ const UploadMedia = props => {
   const toggleCommentBlock = () => setShowCommentBlock(!showCommentBlock);
   const toggleShareBlock = () => setShowShareModal(!showShareModal);
   comments && comments.length > 0 && comments.map((item, index) => item.map((innerItem, i) => commentFinal.push(innerItem)));
-  commentFinal = commentFinal ? commentFinal.sort((a, b) => moment.duration(a.time).asSeconds() - moment.duration(b.time).asSeconds()) : [];
+  commentFinal = commentFinal
+    ? commentFinal.sort((a, b) => moment.duration(a.time).asSeconds() - moment.duration(b.time).asSeconds())
+    : [];
   if (loading)
     return (
       <div className="spinner__wrapper">
@@ -146,6 +168,7 @@ const UploadMedia = props => {
     );
   return (
     <div className="upload__media">
+      {showDemo && localStorage.currentProjectId && <DemoLayerUpload setShowDemo={setShowDemo} />}
       {showStyleModal && (
         <StyleInspirationModal
           setShowStyleModal={setShowStyleModal}
