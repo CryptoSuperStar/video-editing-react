@@ -63,6 +63,7 @@ const UploadMedia = props => {
         localStorage.removeItem("currentProjectId");
         localStorage.removeItem("currentMedia");
         localStorage.removeItem("comments");
+        localStorage.removeItem("imageComments");
       }
     },
     [localStorage.currentProjectId]
@@ -98,7 +99,12 @@ const UploadMedia = props => {
     },
     [props.project.projectName, localStorage.currentMedia, currentMedia.screens.length]
   );
-
+  useEffect(() => {
+    setActiveComment('')
+    if(currentMedia.isImage){
+      setActiveComment(currentMedia.comment || '');
+    }
+  },[currentMedia])
   const setMedia = () => {
     let curMedia = props.project.content.filter(item => item._id === localStorage.currentMedia)[0];
     if (!curMedia) {
@@ -153,7 +159,11 @@ const UploadMedia = props => {
     localStorage.updateComment = true;
     setActiveComment("");
   };
-
+  const handleImageComment = (event) => {
+    localStorage.imageComments = event.target.value;
+    setActiveComment(event.target.value)
+  }
+  
   const toggleCommentBlock = () => setShowCommentBlock(!showCommentBlock);
   const toggleShareBlock = () => setShowShareModal(!showShareModal);
   comments && comments.length > 0 && comments.map((item, index) => item.map((innerItem, i) => commentFinal.push(innerItem)));
@@ -171,6 +181,7 @@ const UploadMedia = props => {
       {showDemo && localStorage.currentProjectId && <DemoLayerUpload setShowDemo={setShowDemo} />}
       {showStyleModal && (
         <StyleInspirationModal
+          isImage={currentMedia.isImage}
           setShowStyleModal={setShowStyleModal}
           user={props.user}
           project={props.project}
@@ -222,8 +233,8 @@ const UploadMedia = props => {
                 <ClockLoader className="spinner" color="#696871" loading={setLoadingSlider} size={25} />
               </div>
             )}
-            {currentMedia.isImage && <div className="TimeLine" />}
-            {!loadingSlider && currentMedia.screens.length > 0 && (
+            {/* {currentMedia.isImage && <div className="TimeLine" />} */}
+            {!loadingSlider && currentMedia.screens.length > 0 && !currentMedia.isImage && (
               <TimeLine
                 currentMedia={currentMedia}
                 setCurrentMedia={setCurrentMedia}
@@ -240,6 +251,13 @@ const UploadMedia = props => {
                 setActiveComment={setActiveComment}
                 setActiveIndex={setActiveIndex}
               />
+            )}
+            {currentMedia.isImage ? (
+              <div className="image__coment">
+                <textarea placeholder="Add edit notes here:" rows="5" value={activeComment} onChange={handleImageComment}/>{" "}
+              </div>
+            ) : (
+              ""
             )}
             <div className="generate__btns">
               <button onClick={handleCutVideo} style={{ backgroundColor: showCutBox && "gray" }}>

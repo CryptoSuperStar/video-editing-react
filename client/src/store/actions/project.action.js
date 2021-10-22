@@ -115,6 +115,7 @@ export const createProjectMedia = (project, history, setLoading) => async dispat
       setLoading(false)
       localStorage.removeItem('duration');
       localStorage.removeItem('comments');
+      localStorage.removeItem('imageComments');
       localStorage.removeItem('currentProjectId');
       localStorage.removeItem('updateComment');
       localStorage.removeItem('editedVideoTime');

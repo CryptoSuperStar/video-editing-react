@@ -4,6 +4,7 @@ const ContentSchema = new mongoose.Schema({
   mediaSrc: String,
   mediaName: String,
   duration: String,
+  comment: String,
   isSupported: {
     type: Boolean,
     default: false

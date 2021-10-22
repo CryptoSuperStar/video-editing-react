@@ -57,14 +57,29 @@ const StyleInspirationModal = (props) => {
     }
     return newContent;
   }
+  const updateImageComments = (id) => {
+    let newCurrentMedia = {...props.currentMedia};
+    let newContent = [...props.content];
+    let index = props.content.findIndex(content => content._id === id);
+    newContent[index] = newCurrentMedia;
+    if(localStorage.imageComments) {
+      let newComments = localStorage.imageComments;
+      newContent[index].comment = newComments;
+    }
+    return newContent;
+  }
   
   const handleDone = () => {
     let newContent
-    if ((localStorage.updateComment && localStorage.updateComment === 'true')
+    if(!props.isImage){
+      if ((localStorage.updateComment && localStorage.updateComment === 'true')
       || (localStorage.editedVideoTime && localStorage.editedVideoTime === 'true')) {
-      newContent = updateComments(localStorage.currentMedia);
-    } else {
-      newContent = props.content
+        newContent = updateComments(localStorage.currentMedia);
+      } else {
+        newContent = props.content
+      }
+    }else{
+      newContent = updateImageComments(localStorage.currentMedia)
     }
     const project = {
       ...props.project,
@@ -74,6 +89,7 @@ const StyleInspirationModal = (props) => {
       },
       content: newContent
     }
+    console.log(project,'project');
     props.setShowStyleModal(false);
     props.setLoading(true);
     props.dispatch(createProjectMedia(project, history, props.setLoading))
