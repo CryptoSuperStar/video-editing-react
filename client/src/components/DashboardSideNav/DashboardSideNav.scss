@@ -57,6 +57,7 @@
 
 .dashboard__content {
   flex-grow: 1;
+  overflow: auto;
 }
 
 @media all and (max-width: 860px) {
@@ -77,7 +78,6 @@
     display: flex;
     background-color: var(--zircon);
     flex-direction: column-reverse;
-    
   }
   .dashboard_nav {
     height: 7vh;
@@ -110,6 +110,9 @@
         display: none;
       }
       &:nth-child(7) {
+        display: none;
+      }
+      &:nth-child(8) {
         display: none;
       }
       svg {

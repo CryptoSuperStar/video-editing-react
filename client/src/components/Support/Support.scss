@@ -1,0 +1,138 @@
+.support__form {
+  width: 100%;
+  margin-top: 15px;
+  textarea, {
+    outline: 1px solid #c3c9e1;
+    box-sizing: border-box;
+    width: 100%;
+    margin-top: 15px;
+    border: 1px solid #D2D5E1;
+    border-radius: 5px;
+    padding: 15px;
+    background-color: #FAFCFE;
+    color: #97A0C3;
+  }
+  label  {
+    &:first-child {
+      span {
+        font-size: 15px;
+        font-weight: bold;
+        line-height: 19px;
+        color: #97A0C3;
+      }
+    }
+    &:last-child {
+      span {
+        display: inline-block;
+        margin: 15px 0;
+        font-size: 14px;
+        font-weight: 400;
+        color: #97A0C3;
+      }
+    }
+  }
+  .form__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    label {
+      flex-basis: 50%;
+      select {
+        display: block;
+        font-size: 16px;
+        width: 100%;
+        outline: 1px solid #c3c9e1;
+        box-sizing: border-box;
+        margin-top: 15px;
+        border: 1px solid #D2D5E1;
+        border-radius: 5px;
+        padding: 5px;
+        background-color: #FAFCFE;
+        color: #97A0C3;
+        option {
+          font-size: 16px;
+          line-height: 22px;
+          background-color: #FAFCFE;
+        }
+      }
+    }
+    button {
+      flex-basis: 25%;
+      background-color: #3B8590;
+      border: 1px solid #306D76;
+      border-radius: 5px;
+      text-align: center;
+      color: white;
+      padding: 15px 0;
+    }
+  }
+}
+
+.support__questions {
+  margin-top: 15px;
+  .support__question--item {
+    margin: 15px 0;
+    .support__question--title {
+      font-size: 16px;
+      font-weight: bold;
+      line-height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+    .support__question--text {
+      margin: 10px 5px;
+      font-size: 14px;
+      line-height: 18px;
+      max-width: 1280px;
+      box-sizing: border-box;
+    }
+  }
+}
+
+@media all and (max-width: 575px) {
+  .support__form {
+    label {
+      position: relative;
+      display: block;
+      span {
+        position: absolute;
+        top: 3px;
+        left: 5px;
+        padding: 0 5px;
+        font-size: 12px;
+        background-color: white;
+      }
+    }
+    textarea {
+      background-color: white;
+    }
+    .form__bottom {
+      flex-direction: column;
+      align-items: center;
+      label {
+        width: 100%;
+        select {
+          padding: 10px 5px;
+          background-color: white;
+          option {
+            background-color: white;
+          }
+        }
+      }
+      button {
+        margin-top: 15px;
+        width: 90%;
+        border-radius: 30px;
+      }
+    }
+  }
+  .support__questions .support__question--item {
+    border-bottom: 1px solid #D8E1F1;
+    .support__question--title {
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
+}

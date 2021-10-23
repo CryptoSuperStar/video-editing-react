@@ -35,6 +35,7 @@ const PayWallModal = (props) => {
     active: false,
     totalPrice: 75
   }]);
+  
   const [payments, setPayments] = useState([{
     title: "credit card",
     src: <CreditCard />,
@@ -146,10 +147,10 @@ const PayWallModal = (props) => {
         price: plan.cost,
         totalCost: plan.totalPrice,
         paidWith: activePayment,
-        paidDate: moment().format('DD-MM-YYYY'),
+        paidDate: moment().format('MMMM Do YYYY'),
         paidExpiresDate: plan.title.toLowerCase() === "annual"
-          ? moment().add(1, 'years').format('DD-MM-YYYY')
-          : moment().add(1, 'M').format('DD-MM-YYYY')
+          ? moment().add(1, 'years').format('MMMM Do YYYY')
+          : moment().add(1, 'M').format('MMMM Do YYYY')
       }
     }
     props.dispatch(updateUser(props.user._id, paymentData, props.setShowPayWall))

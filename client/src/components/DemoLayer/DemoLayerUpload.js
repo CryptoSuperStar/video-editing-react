@@ -1,10 +1,11 @@
 import React from 'react';
 import ToolTip from "./ToolTip";
-import arrowComm from "../../assets/img/arrowComm.png";
+import arrowComm from "../../assets/img/arrowComm.svg";
 import arrowCut from "../../assets/img/arrowCut.png";
-import arrowClear from "../../assets/img/arrowClear.png";
+import arrowClear from "../../assets/img/arrowClear.svg";
 import arrowVideo from "../../assets/img/arrowVideo.png";
 import arrowAddC from "../../assets/img/arrowAddC.png";
+
 import arrowAddVideo from "../../assets/img/arrowAddVideo.png";
 import './DemoLayerUpload.scss';
 
@@ -17,29 +18,29 @@ const DemoLayerUpload = ({setShowDemo}) => {
       <div className="container" style={{position:'relative', height: '100%', overflow: 'hidden'}}>
         <ToolTip title="Comments"
                  text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-                 src={arrowComm}
+                 src={window.innerWidth <= 575 ? arrowComm : false}
                  name="DemoLayer__tooltip comm_tooltip"
                  
         />
         <ToolTip title="Option 1"
                  text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-                 src={arrowCut}
+                 src={window.innerWidth <= 575 ? arrowCut : false}
                  name="DemoLayer__tooltip cut_tooltip"
                  
         />
         <ToolTip title="Option 2"
                  text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-                 src={arrowClear}
+                 src={window.innerWidth <= 575 ? arrowClear : false}
                  name="DemoLayer__tooltip clear_tooltip"
         />
         <ToolTip title="Option 3"
                  text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-                 src={arrowVideo}
+                 src={window.innerWidth <= 575 ? arrowVideo : false}
                  name="DemoLayer__tooltip video_tooltip"
         />
         <ToolTip title="Option 4"
                  text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-                 src={arrowAddC}
+                 src={window.innerWidth <= 575 ? arrowAddC : false}
                  name="DemoLayer__tooltip addC_tooltip"
         />
         <ToolTip title="Add Video"
