@@ -1,6 +1,14 @@
 const mongoose = require('mongoose');
 
 const ContentSchema = new mongoose.Schema({
+  comments: {
+    type: {
+      text: String,
+      rawTime: String,
+      time: String,
+      createdAt: Date
+    }
+  },
   mediaSrc: String,
   mediaName: String,
   duration: String,
@@ -21,6 +29,7 @@ const ContentSchema = new mongoose.Schema({
   screens: [{
     screenSrc: String,
     time: String,
+    timeInSeconds: String,
     comment: {
       type: {
         text: String,
@@ -59,7 +68,7 @@ const projectSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
   }
-}, {timestamps: true})
+}, { timestamps: true })
 
 const Project = mongoose.model('Project', projectSchema);
 module.exports = { Project };

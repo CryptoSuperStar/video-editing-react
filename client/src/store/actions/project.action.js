@@ -1,13 +1,13 @@
 import axios from 'axios';
-import {REACT_APP_API_URL} from '../../utils/misc';
-import {toast} from "react-toastify";
+import { REACT_APP_API_URL } from '../../utils/misc';
+import { toast } from "react-toastify";
 import setAuthToken from '../../utils/authToken';
 
-export const createTempProject = (link, bucket, setLoadingVideo ) => async dispatch => {
+export const createTempProject = (link, bucket, setLoadingVideo) => async dispatch => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
     try {
-      const res = await axios.post(`${REACT_APP_API_URL}/createTempProject`,  {link, bucket});
+      const res = await axios.post(`${REACT_APP_API_URL}/createTempProject`, { link, bucket });
       dispatch({
         type: "CREATE_PROJECT",
         payload: res.data
@@ -29,7 +29,7 @@ export const takeScreenshots = (id, bucket, link, name, setLoadingSlider) => asy
   if (localStorage.token) {
     setAuthToken(localStorage.token);
     try {
-      const res = await axios.post(`${REACT_APP_API_URL}/takeScreenshot`,  {id, bucket, link,name});
+      const res = await axios.post(`${REACT_APP_API_URL}/takeScreenshot`, { id, bucket, link, name });
       dispatch({
         type: 'TAKE_SCREENSHOTS',
         payload: res.data
@@ -46,7 +46,7 @@ export const takeScreenshots = (id, bucket, link, name, setLoadingSlider) => asy
   }
 }
 
-export const clearTempProject = (id,bucket) => async dispatch => {
+export const clearTempProject = (id, bucket) => async dispatch => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
     localStorage.removeItem('duration');
@@ -107,7 +107,7 @@ export const createProjectMedia = (project, history, setLoading) => async dispat
       }
     }
     try {
-      const res = await axios.post(`${REACT_APP_API_URL}/createProject`, {project}, config);
+      const res = await axios.post(`${REACT_APP_API_URL}/createProject`, { project }, config);
       dispatch({
         type: "CREATE_FULL_PROJECT"
       })
@@ -175,7 +175,7 @@ export const getProject = (id, setLoading) => async dispatch => {
       type: 'GET_PROJECT_ERROR'
     })
     setLoading(false);
-    console.log(e);
+    console.log(e.message);
   }
 }
 
@@ -197,9 +197,9 @@ export const getCurrentProject = (id, setLoading) => async dispatch => {
   }
 }
 
-export const addMediaToProject = (link,  projectId, bucket, setLoadingVideo) => async dispatch => {
+export const addMediaToProject = (link, projectId, bucket, setLoadingVideo) => async dispatch => {
   try {
-    const res = await axios.put(`${REACT_APP_API_URL}/addMedia`,  {projectId, link, bucket});
+    const res = await axios.put(`${REACT_APP_API_URL}/addMedia`, { projectId, link, bucket });
     dispatch({
       type: "ADD_PROJECT",
       payload: res.data
@@ -208,7 +208,7 @@ export const addMediaToProject = (link,  projectId, bucket, setLoadingVideo) => 
     setLoadingVideo(false);
     toast.success('The file was added')
     return res.data;
-    
+
   } catch (e) {
     dispatch({
       type: "ADD_PROJECT_ERROR"
@@ -221,7 +221,7 @@ export const addMediaToProject = (link,  projectId, bucket, setLoadingVideo) => 
 export const updateContent = (content) => async dispatch => {
   try {
     const res = await axios.put(`${REACT_APP_API_URL}/updateComments/${localStorage.currentProjectId}`,
-      {content});
+      { content });
     dispatch({
       type: "UPDATE_PROJECT",
       payload: res.data
@@ -240,7 +240,7 @@ export const updateContent = (content) => async dispatch => {
 export const deleteVideo = (newContent, videoInfo, bucket) => async dispatch => {
   try {
     const res = await axios.put(`${REACT_APP_API_URL}/deleteVideo/${localStorage.currentProjectId}`,
-      {newContent, videoInfo, bucket});
+      { newContent, videoInfo, bucket });
     dispatch({
       type: "DELETE_VIDEO",
       payload: res.data
