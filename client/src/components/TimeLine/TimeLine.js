@@ -36,6 +36,8 @@ const TimeLine = props => {
     [props.currentTime, props.currentMedia.duration]
   );
   const handleStepTime = (e, time, i) => {
+    props.setActiveIndex(i);
+    props.setActiveComment('');
     // props.comments.length > 0 && props.setActiveComment(props.comments[i].text);
     let leftPad = e.clientX - timeLineBox.current.getBoundingClientRect().left;
     let widthBox = timeLineBox.current.getBoundingClientRect().width;
@@ -43,6 +45,8 @@ const TimeLine = props => {
     // let newTime = moment.duration(props.currentMedia.duration * (leftPad / widthBox), 'seconds')
     //   .format("mm:ss:SS", { trim: false })
     let newTime = props.currentMedia.duration * (leftPad / widthBox)
+    const selectedComment = props.comments?.[i]?.length > 0 && props.comments[i].find(item => item.time === moment.duration(newTime, 'seconds').format("hh:mm:ss", { trim: false }))
+    selectedComment && props.setActiveComment(selectedComment.text)
     props.setMoveTo(newTime);
     setShift(newTime * 100 / props.currentMedia.duration)
   }
@@ -113,16 +117,16 @@ const TimeLine = props => {
         <div className="video-progress"
           style={{ left: shift + "%", zIndex: "11" }} />
 
-        {props.comments &&
+        {/* {props.comments &&
           props.comments.map((comment, i) => comment.text.length > 0 &&
             <div key={i} onClick={(e) => { props.editComment(i); handleStepTime(e) }} className="comment__indicate" style={{ left: (comment.rawTime * 100 / props.currentMedia.duration) + "%", zIndex: "10", cursor: "pointer" }}>
 
               <span />
-            </div>)}
+            </div>)} */}
 
         <div className="TimeLine__inner--images">{props.currentMedia.screens.map((scr, i) => (
           <div className="TimeLine__image--item" onClick={(e) =>
-            handleStepTime(e)}
+            handleStepTime(e, scr.time, i)}
             key={scr._id}>
             <p>{scr.time}</p>
             <div className="insteadOfImg" style={{ backgroundImage: `url(${scr.screenSrc})` }} />
