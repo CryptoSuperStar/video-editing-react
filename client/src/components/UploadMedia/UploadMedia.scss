@@ -19,6 +19,22 @@
       font-family: "Montserrat", "Helvetica Neue", sans-serif;
       font-size: var(--font-size-xs);
     }
+    .image__coment{
+      margin-top: 10px;
+      width: 100%;
+      text-align: center;
+      textarea {
+        padding: 10px;
+        width: 95%;
+        border-color: #ccc;
+        border-radius: 5px;
+        &:focus-visible{
+          border-radius: 5px;
+          outline: none;
+          border: 2px solid #ccc;
+        }
+      }
+    }
   }
   img {
     margin-top: 150px;
@@ -384,7 +400,7 @@
     img, svg {
       margin: 0 15px 0 20px;
       width: 25px;
-      height: 25px;
+      height: auto;
     }
     svg {
       fill: white;

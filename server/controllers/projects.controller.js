@@ -63,10 +63,8 @@ exports.takeScreenShotController = async (req, res) => {
   newName = newName[newName.length - 1]
   let duration = preDuration;
   let quantity = '';
-  if (duration <= 10) {
-    quantity = 3;
-  } else if (duration > 10 && duration <= 30) {
-    quantity = 5;
+  if (duration <= 30) {
+    quantity = 6;
   } else if (duration > 30 && duration <= 60) {
     quantity = 7;
   } else {
@@ -90,7 +88,7 @@ exports.takeScreenShotController = async (req, res) => {
           let newScreensArray = [];
           let screens = [...Array(quantity)].map(async (item, i) => {
             let timeInFormat = moment.duration((stepInSeconds * (i + 1) - (stepInSeconds / 2)), 'seconds')
-              .format("mm:ss:SSS", { trim: false })
+              .format("hh:mm:ss", { trim: false })
 
             const fileContent = await fs.readFileSync(`${MEDIA_SRC}/temp/${userId}/${bucket}/${newName}-${i + 1}.jpg`);
             let params = {
@@ -104,11 +102,13 @@ exports.takeScreenShotController = async (req, res) => {
               screenSrc: uploadedVideo.Location,
               timeInSeconds: (stepInSeconds * (i + 1) - (stepInSeconds / 2)),
               time: timeInFormat,
-              comment: {
-                text: '',
-                time: timeInFormat,
-                createdAt: ''
-              }
+              comment: [
+                {
+                  text: '',
+                  time: timeInFormat,
+                  createdAt: ''
+                }
+              ]
             })
           })
           Promise.all(screens).then(() => {
