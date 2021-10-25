@@ -133,8 +133,8 @@ const TimeLine = props => {
           </div>
         ))}</div>
 
-        <Fragment>
-          {props.showCutBox && <div className="resizable__box" style={{
+        <Fragment   >
+          {props.showCutBox && <div className="resizable__box" onClick={(e) => handleStepTime(e)} style={{
             left: leftArrowPad + "%",
             right: rightArrowPad + '%'
           }}>
