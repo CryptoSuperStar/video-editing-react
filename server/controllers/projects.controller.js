@@ -63,10 +63,8 @@ exports.takeScreenShotController = async (req, res) => {
   newName = newName[newName.length - 1]
   let duration = preDuration;
   let quantity = '';
-  if (duration <= 10) {
-    quantity = 3;
-  } else if (duration > 10 && duration <= 30) {
-    quantity = 5;
+  if (duration <= 30) {
+    quantity = 6;
   } else if (duration > 30 && duration <= 60) {
     quantity = 7;
   } else {
