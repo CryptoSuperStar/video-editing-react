@@ -28,7 +28,7 @@ const Projects = (props) => {
   
   useEffect(() => {
     if(props.user.userName) {
-      !props.user.paymentId &&
+      !props.user.payments.length &&
       setTimeout(() => {
         setShowPayAccess(true);
       },500)
