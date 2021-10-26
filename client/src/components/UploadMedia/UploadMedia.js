@@ -47,7 +47,7 @@ const UploadMedia = props => {
   const [loadingSlider, setLoadingSlider] = useState(false);
   const [moveTo, setMoveTo] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [showDemo, setShowDemo] = useState(true);
+  const [showDemo, setShowDemo] = useState(false);
   let commentFinal = [];
   useEffect(() => {
     if (localStorage.showDemoLayer === "true") {

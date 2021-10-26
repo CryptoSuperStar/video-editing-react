@@ -18,14 +18,17 @@
         top: 40vh;
         left: 22%;
         .arrow-demo {
-          height: 175px;
+          height: 10vh;
+        }
+        svg {
+          height: 20vh;
         }
       }
       &.clear_tooltip {
         top: 50vh;
         left: 41%;
         .arrow-demo {
-          height: 90px;
+          height: 10vh;
           margin-top: 0;
         }
       }
@@ -33,15 +36,17 @@
         top: 40vh;
         left: 60%;
         .arrow-demo {
-          height: 175px;
-          
+          height: 10vh;
+        }
+        svg {
+          height: 20vh;
         }
       }
       &.addC_tooltip {
         top: 50vh;
         left: 79%;
         .arrow-demo {
-          height: 90px;
+          height: 10vh;
           margin-top: 0;
         }
       }
@@ -88,12 +93,12 @@
       }
       &.clear_tooltip {
         top: auto;
-        bottom: 35vh;
+        bottom: 36vh;
         left: 27%;
         .arrow-demo {
-          height: 60px;
+          height: 8vh;
           position: relative;
-          top: -10px;
+          top: 0;
         }
       }
       &.video_tooltip {
@@ -103,16 +108,16 @@
           position: absolute;
           top: -25px;
           left: 140px;
-          height: 40px;
+          height: 5vh;
         }
       }
       &.addC_tooltip {
         top: auto;
-        bottom: 53vh;
+        bottom: 55vh;
         left: auto;
         right: 0;
         .arrow-demo {
-          height: 125px;
+          height: 17vh;
           position: absolute;
           right: 15px;
           margin-top: 30px;
