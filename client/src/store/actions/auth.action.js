@@ -123,7 +123,8 @@ export const updateUser = (id, data, func) => async dispatch => {
     toast.success(`Success.`);
     func(false)
   } catch (e) {
-    toast.error(e.response.data.msg)
+    console.log(e);
+    toast.error("Something went wrong")
     dispatch({
       type: "UPDATE_USER_ERROR"
     })
@@ -144,6 +145,20 @@ export const setConnectSocial = (social, link) => async dispatch => {
       dispatch({
         type: 'CONNECT_SOCIAL_ERROR'
       });
+    }
+  }
+}
+
+export const resetPassword = (oldPass, newPass, func) => async dispatch => {
+  if (localStorage.token) {
+    setAuthToken(localStorage.token);
+    console.log(oldPass, newPass)
+    try {
+      const res = await axios.post(`${REACT_APP_API_URL}/resetPassword`, {oldPass, newPass});
+      localStorage.token = res.data;
+      func(false);
+    } catch (e) {
+      console.log(e)
     }
   }
 }

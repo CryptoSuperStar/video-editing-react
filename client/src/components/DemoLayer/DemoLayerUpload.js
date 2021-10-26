@@ -20,28 +20,31 @@ const DemoLayerUpload = ({setShowDemo}) => {
                  text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
                  src={window.innerWidth <= 575 ? arrowComm : false}
                  name="DemoLayer__tooltip comm_tooltip"
-                 
+                 comp={arrowCut}
         />
         <ToolTip title="Option 1"
                  text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
                  src={window.innerWidth <= 575 ? arrowCut : false}
                  name="DemoLayer__tooltip cut_tooltip"
-                 
+                 comp={arrowCut}
         />
         <ToolTip title="Option 2"
                  text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-                 src={window.innerWidth <= 575 ? arrowClear : false}
+                 src={window.innerWidth <= 575 ? arrowClear : arrowClear}
                  name="DemoLayer__tooltip clear_tooltip"
+                 comp={arrowCut}
         />
         <ToolTip title="Option 3"
                  text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
                  src={window.innerWidth <= 575 ? arrowVideo : false}
                  name="DemoLayer__tooltip video_tooltip"
+                 comp={arrowCut}
         />
         <ToolTip title="Option 4"
                  text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-                 src={window.innerWidth <= 575 ? arrowAddC : false}
+                 src={window.innerWidth <= 575 ? arrowAddC : arrowClear}
                  name="DemoLayer__tooltip addC_tooltip"
+                 comp={arrowCut}
         />
         <ToolTip title="Add Video"
                  text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."

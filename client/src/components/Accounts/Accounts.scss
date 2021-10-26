@@ -91,6 +91,7 @@
       font-family: Montserrat, sans-serif;
       display: flex;
       justify-content: space-between;
+      flex-basis: 40%;
       div {
         display: flex;
         flex-direction: column;
@@ -120,12 +121,15 @@
     .card__info {
       display: flex;
       margin-right: 25px;
+      flex-basis: 30%;
+      align-items: center;
       img {
-        height: 60px;
+        width: 30%;
       }
       .payment__detail {
         display: flex;
         flex-direction: column;
+        margin-left: 15px;
         span:first-child {
           font-size: 16px;
           line-height: 26px;

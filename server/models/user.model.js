@@ -18,7 +18,7 @@ const paymentSchema = new mongoose.Schema({
       totalCost: String,
       paidWith: String,
       paidDate: Date,
-      paidExpiresDate: Date
+      paidExpiresDate: String
     }
   }
 })

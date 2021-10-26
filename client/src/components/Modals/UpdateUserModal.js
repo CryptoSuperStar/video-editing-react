@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {connect} from "react-redux";
 import {updateUser} from "../../store/actions/auth.action";
+import penDot from '../../assets/img/penDot.png';
 import './UpdateUserModal.scss';
 import {ReactComponent as Cancel} from "../../assets/img/close-2.svg";
 import {ReactComponent as ArrowLeft} from "../../assets/img/arrow-left.svg";
@@ -32,22 +33,27 @@ const UpdateUserModal = (props) => {
             <label className="pay__form--firstName">
               <span>First Name</span>
               <input type="text" value={firstName} onChange={e => setFirstName(e.target.value)} required/>
+              <img src={penDot} alt="pen"/>
             </label>
             <label className="pay__form--lastName">
               <span>Last Name</span>
               <input type="text" value={lastName} onChange={e => setLastName(e.target.value)} required/>
+              <img src={penDot} alt="pen"/>
             </label></div>
           <label className="pay__form--creditCard">
             <span>Email</span>
             <input type="email" value={email} onChange={e => setEmail(e.target.value)} required/>
+            <img src={penDot} alt="pen"/>
           </label>
           <label className="pay__form--creditCard">
             <span>Phone (optional)</span>
             <input type="text" value={phone} onChange={e => setPhone(e.target.value)}/>
+            <img src={penDot} alt="pen"/>
           </label>
           <label className="pay__form--creditCard">
             <span>Organization</span>
             <input type="text" value={company} onChange={e => setCompany(e.target.value)} required/>
+            <img src={penDot} alt="pen"/>
           </label>
           <button className="pay__modal--submit" type="submit">Update</button>
         </form>

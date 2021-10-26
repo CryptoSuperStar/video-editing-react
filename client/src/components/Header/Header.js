@@ -38,7 +38,9 @@ const Header = (props) => {
         <Bell />
         <div className="menu__user">
           <img src={props.user ? props.user.avatar : avatar} alt="avatar"/>
-          <span className="menu__user--name">{props.user && (props.user.userName || props.user.email)} </span>
+          <span className="menu__user--name"
+                onClick={() => props.history.push('/dashboard/account')}
+          >{props.user && (props.user.userName || props.user.email)} </span>
           <button type="button" onClick={() => {
             localStorage.removeItem('token');
             props.dispatch({type: 'LOGOUT'});

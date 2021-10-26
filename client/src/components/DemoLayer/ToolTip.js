@@ -2,7 +2,7 @@ import React from 'react';
 import {ReactComponent as ArrowArrow} from "../../assets/img/arrow.svg";
 
 
-const ToolTip = ({title, text, src, name}) => {
+const ToolTip = ({title, text, src, name, comp}) => {
   return (
     <section className={name}>
       <div className="DemoLayer__title">{title}</div>

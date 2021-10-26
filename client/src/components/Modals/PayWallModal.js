@@ -15,6 +15,7 @@ import {ReactComponent as ApplePay} from "../../assets/img/apple-pay.svg";
 import {ReactComponent as ArrowLeft} from "../../assets/img/arrow-left.svg";
 import {updateUser} from "../../store/actions/auth.action";
 import './PayWallModal.scss';
+import penDot from "../../assets/img/penDot.png";
 
 const PayWallModal = (props) => {
   
@@ -87,6 +88,7 @@ const PayWallModal = (props) => {
       // Check the availability of the Payment Request API first.
       pr.canMakePayment().then((result) => {
         if (result) {
+          console.log('result2',result)
           pr.on('paymentmethod', handlePaymentMethodReceived);
           setPaymentRequest(pr);
         }
@@ -150,7 +152,7 @@ const PayWallModal = (props) => {
     setPayments(newPayments);
   }
   
-  const collectPaymentsData = (paymentId, first, last) => {
+  const collectPaymentsData = (paymentId) => {
     let plan = plans.filter(plan => plan.active)[0];
     
     const paymentData = [{
@@ -176,12 +178,15 @@ const PayWallModal = (props) => {
     props.dispatch(updateUser(props.user._id, newUserInfo, props.setShowPayWall))
   }
   
-  const onSuccess = (payment) => {
+  const onSuccess = (pay) => {
     // Congratulation, it came here means everything's fine!
-    console.log("The payment was succeeded!", payment);
+    console.log("The payment was succeeded!", pay);
     if (payment.paid) {
-      const [lastName, firstName] = payment.address.recipient_name.split(' ');
-      collectPaymentsData(payment.paymentID, firstName, lastName)
+      const [lastName, firstName] = pay.address.recipient_name.split(' ');
+      payment = {...payment,
+        holder: firstName + ' ' + lastName
+      }
+      collectPaymentsData(pay.paymentID, firstName, lastName)
     }
     // You can bind the "payment" object's value to your state or props or whatever here, please see below for sample returned data
   }
@@ -331,23 +336,28 @@ const PayWallModal = (props) => {
             <div style={{display: 'flex'}}><label className="pay__form--firstName">
               <span>First Name</span>
               <input type="text" value={firstName} onChange={e => setFirstName(e.target.value)} required/>
+              <img src={penDot} alt="pen"/>
             </label>
               <label className="pay__form--lastName">
                 <span>Last Name</span>
                 <input type="text" value={lastName} onChange={e => setLastName(e.target.value)} required/>
+                <img src={penDot} alt="pen"/>
               </label></div>
             <label className="pay__form--creditCard">
               <span>Card Number</span>
               <CardNumberElement id="creditCard__number"/>
+              <img src={penDot} alt="pen"/>
             </label>
             <div className="creditCard__last">
               <label>
                 <span>Expiry</span>
                 <CardExpiryElement id="creditCard__expire"/>
+                <img src={penDot} alt="pen"/>
               </label>
               <label>
                 <span>CVV</span>
                 <CardCvcElement id="creditCard__cvv"/>
+                <img src={penDot} alt="pen"/>
               </label>
             </div>
           </div>}
