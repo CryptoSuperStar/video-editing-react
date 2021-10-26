@@ -46,7 +46,8 @@
         }
       }
       &.videAdd_tooltip {
-        top: 88vh;
+        top: auto;
+        bottom: 7vh;
         left: 50%;
         .arrow-demo {
           position: absolute;
@@ -77,14 +78,17 @@
       }
       &.cut_tooltip {
         left: 3%;
-        top: 27vh;
+        top: auto;
+        bottom: 36vh;
         .arrow-demo {
           left: 10px;
           position: relative;
+          height: 27vh;
         }
       }
       &.clear_tooltip {
-        top: 46vh;
+        top: auto;
+        bottom: 35vh;
         left: 27%;
         .arrow-demo {
           height: 60px;
@@ -103,7 +107,8 @@
         }
       }
       &.addC_tooltip {
-        top: 35vh;
+        top: auto;
+        bottom: 53vh;
         left: auto;
         right: 0;
         .arrow-demo {
