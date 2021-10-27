@@ -40,7 +40,7 @@ const Accounts = ({user}) => {
       <>
         <section>
           <div className="Account__header">
-            <h3>Information </h3>
+            <h3>Information</h3>
             <button onClick={() => setShowUpdateModal(true)}>
               <img src={penDot} alt="pen"/>
               <span>Update</span>
