@@ -37,6 +37,7 @@ const UploadMedia = props => {
   const [currentTime, setCurrentTime] = useState(0);
   const [comments, setComments] = useState([]);
   const [activeComment, setActiveComment] = useState("");
+  const [imageCommentDate, setImageCommentDate] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
   const [isShowComment, setIsShowComment] = useState(false);
   const [showCommentBlock, setShowCommentBlock] = useState(false);
@@ -111,9 +112,20 @@ const UploadMedia = props => {
       curMedia = props.project.content[0];
     }
     if (curMedia.screens.length > 0) {
-      curMedia.screens.sort((a, b) => moment.duration(a.time).asSeconds() - moment.duration(b.time).asSeconds());
+      curMedia.screens.sort((a, b) => a.timeInSeconds - b.timeInSeconds);
     }
     setCurrentMedia(curMedia);
+    console.log(curMedia,'curMedia');
+    if (curMedia.mediaName && curMedia.screens.length > 0) {
+      let commentsArray = curMedia.screens.map(item => item.comment);
+      localStorage.comments = JSON.stringify(commentsArray);
+      setComments(commentsArray);
+    }
+    setActiveComment('')
+    if(curMedia.isImage){
+      setActiveComment(curMedia.comment || '');
+      setImageCommentDate(currentMedia.createdAt || '');
+    }
   };
 
   const handleClear = () => {
@@ -166,10 +178,15 @@ const UploadMedia = props => {
   
   const toggleCommentBlock = () => setShowCommentBlock(!showCommentBlock);
   const toggleShareBlock = () => setShowShareModal(!showShareModal);
-  comments && comments.length > 0 && comments.map((item, index) => item.map((innerItem, i) => commentFinal.push(innerItem)));
-  commentFinal = commentFinal
-    ? commentFinal.sort((a, b) => moment.duration(a.time).asSeconds() - moment.duration(b.time).asSeconds())
-    : [];
+  if(!currentMedia.isImage){
+    comments && comments.length > 0 && comments.map((item, index) => item.map((innerItem, i) => commentFinal.push(innerItem)));
+    commentFinal = commentFinal
+      ? commentFinal.sort((a, b) => moment.duration(a.time).asSeconds() - moment.duration(b.time).asSeconds())
+      : [];
+  }else{
+    commentFinal.push({createdAt: imageCommentDate || new Date(), text: activeComment, time: ""});
+  }
+  
   if (loading)
     return (
       <div className="spinner__wrapper">
