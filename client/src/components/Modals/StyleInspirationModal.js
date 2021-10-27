@@ -41,18 +41,7 @@ const StyleInspirationModal = (props) => {
     newPlatforms[i].active = true;
     setPlatforms(newPlatforms);
   }
-  const updateImageComments = (id) => {
-    let newCurrentMedia = {...props.currentMedia};
-    let newContent = [...props.content];
-    let index = props.content.findIndex(content => content._id === id);
-    newContent[index] = newCurrentMedia;
-    if(localStorage.imageComments) {
-      let newComments = localStorage.imageComments;
-      newContent[index].comment = newComments;
-      newContent[index].createdAt = new Date();
-    }
-    return newContent;
-  }
+
   const updateComments = (id) => {
     let newCurrentMedia = { ...props.currentMedia };
     let newContent = [...props.content];
@@ -73,15 +62,11 @@ const StyleInspirationModal = (props) => {
 
   const handleDone = () => {
     let newContent
-    if(!props.isImage){
-      if ((localStorage.updateComment && localStorage.updateComment === 'true')
-        || (localStorage.editedVideoTime && localStorage.editedVideoTime === 'true')) {
-        newContent = updateComments(localStorage.currentMedia);
-      } else {
-        newContent = props.content
-      }
-    }else{
-      newContent = updateImageComments(localStorage.currentMedia)
+    if ((localStorage.updateComment && localStorage.updateComment === 'true')
+      || (localStorage.editedVideoTime && localStorage.editedVideoTime === 'true')) {
+      newContent = updateComments(localStorage.currentMedia);
+    } else {
+      newContent = props.content
     }
     const project = {
       ...props.project,

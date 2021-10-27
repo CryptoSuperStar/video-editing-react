@@ -143,10 +143,10 @@ const VideoPlayer = (props) => {
           </button>
           <div className="time">
             <time id="time-elapsed">
-              {moment.duration(currentTime, 'seconds').format("hh:mm:ss", { trim: false })}
+              {moment.duration(currentTime, 'seconds').format("mm:ss:SSS", { trim: false })}
             </time>
             <span> / </span>
-            <time id="duration">{moment.duration(endAt, 'seconds').format("hh:mm:ss", { trim: false })}</time>
+            <time id="duration">{moment.duration(endAt, 'seconds').format("mm:ss:SSS", { trim: false })}</time>
           </div>
         </div>}
     </div>
