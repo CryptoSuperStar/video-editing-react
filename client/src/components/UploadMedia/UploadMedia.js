@@ -94,9 +94,12 @@ const UploadMedia = props => {
       curMedia.screens.sort((a, b) => a.timeInSeconds - b.timeInSeconds);
     }
     setCurrentMedia(curMedia);
-    if (curMedia?.comments) {
+    if (curMedia.comments) {
+      localStorage.comments = JSON.stringify(curMedia?.comments);
       setComments(curMedia?.comments);
+
     }
+    setActiveComment('')
   }
 
   const handleClear = () => {
@@ -140,6 +143,7 @@ const UploadMedia = props => {
       newCommentsArray.push(comment);
     }
     commentFinal = newCommentsArray.sort((a, b) => a.rawTime - b.rawTime);
+    setCurrentMedia({ ...currentMedia, comments: commentFinal });
     setComments(commentFinal);
     localStorage.comments = JSON.stringify(newCommentsArray);
     localStorage.updateComment = true;
@@ -240,6 +244,7 @@ const UploadMedia = props => {
                   setActiveComment={setActiveComment}
                   setActiveIndex={setActiveIndex}
                   editComment={editComment}
+                  setCurrentTime={setCurrentTime}
                   editCommentValue={editCommentValue}
                   setEditCommentValue={setEditCommentValue}
                 />

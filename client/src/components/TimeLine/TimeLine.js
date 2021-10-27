@@ -44,6 +44,7 @@ const TimeLine = props => {
     //   .format("mm:ss:SS", { trim: false })
     let newTime = props.currentMedia.duration * (leftPad / widthBox)
     props.setMoveTo(newTime);
+    props.setCurrentTime(newTime);
     setShift(newTime * 100 / props.currentMedia.duration)
   }
 
@@ -115,7 +116,7 @@ const TimeLine = props => {
 
         {props.comments &&
           props.comments.map((comment, i) => comment.text.length > 0 &&
-            <div key={i} onClick={(e) => { props.editComment(i); handleStepTime(e) }} className="comment__indicate" style={{ left: (comment.rawTime * 100 / props.currentMedia.duration) + "%", zIndex: "10", cursor: "pointer" }}>
+            <div key={i} onClick={(e) => { props.editComment(i) }} className="comment__indicate" style={{ left: (comment.rawTime * 100 / props.currentMedia.duration) + "%", zIndex: "10", cursor: "pointer" }}>
 
               <span />
             </div>)}
