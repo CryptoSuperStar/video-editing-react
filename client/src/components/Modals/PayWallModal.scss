@@ -198,7 +198,7 @@
   }
 }
 
-.pay__modal--tick_item,  {
+.pay__modal--tick_item {
   width: 70%;
   margin: 10px auto;
   display: flex;
@@ -370,8 +370,8 @@
     transform: none;
     border-radius: 0;
     left: 0;
-    top: 40px;
-    height: calc(100vh - 40px);
+    top: 75px;
+    height: calc(100vh - 75px);
     .connectSocial__cross {
       top: 23px;
       position: absolute;

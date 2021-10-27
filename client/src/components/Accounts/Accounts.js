@@ -11,37 +11,33 @@ import apple from '../../assets/img/apple-pay.svg';
 import star from '../../assets/img/star.png';
 
 import "./Accounts.scss";
-import UpdateUserModal from "../Modals/UpdateUserModal";
-import moment from "moment";
 
 const Accounts = ({user}) => {
   
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [showUpdateModal, setShowUpdateModal] = useState(false);
-  const [showPayModal, setShowPayModal] = useState(false);
   
   useEffect(() => {
     if (user._id) {
       setUserInfo(user);
       setLoading(false)
     }
-  },[user._id, user])
+  },[user._id])
+  
+  console.log(userInfo)
   
   if(loading) return <div className="spinner__wrapper">
     <MoonLoader className="spinner" color="#000" loading={loading} size={50}/>
   </div>
   return (
     <div className="Account">
-      {showUpdateModal && <UpdateUserModal user={userInfo} setShowUpdateModal={setShowUpdateModal}/>}
-      
       <h3>Account</h3>
       {userInfo &&
       <>
         <section>
           <div className="Account__header">
             <h3>Information</h3>
-            <button onClick={() => setShowUpdateModal(true)}>
+            <button>
               <img src={penDot} alt="pen"/>
               <span>Update</span>
             </button>
@@ -57,69 +53,51 @@ const Accounts = ({user}) => {
           <div className="account_line"/>
           <div className="organisation">
             <h5>Organisation</h5>
-            <span>{userInfo.organisation ? userInfo.organisation : '---'}</span>
+            <span>{userInfo.organization ? userInfo.organization : 'Provide LLC'}</span>
           </div>
         </section>
         
         <section>
           <div className="billing__header">
             <h3>Billing</h3>
-            <button>
-              {userInfo.payments.length > 0 ? <span>+ add a card</span> : <span>pay now</span>}
-            </button>
+            <button><span>+ add a card</span></button>
           </div>
           <div className="account_line"/>
-          
-          {userInfo.payments.length > 0 ? userInfo.payments.map(pay => (
-            <div className="billing__info" key={pay._id}>
-              <div className="billing__accounts">
-                <div className="billing__plan">
-                  <div>
+          {userInfo.plan && <div className="billing__info">
+            <div className="billing__accounts">
+              <div className="billing__plan">
+                <div>
                   <span className="billing__plan--title">
-                    {pay.plan.title}
+                    {userInfo.plan.title}
                     <img src={star} alt="star"/>
                   </span>
-                    <span className='billing__plan--exp'>Experienced on {pay.plan.paidExpiresDate}</span>
-                  </div>
-                  <button className="cancelPlan">Cancel Subscription</button>
+                  <span className='billing__plan--exp'>Experienced on {userInfo.plan.paidExpiresDate}</span>
                 </div>
-                <div className="card__info">
-                  <img src={
-                    pay.paidBy === "paypal"
-                      ? paypal
-                      : pay.paidBy === "mastercard"
-                        ? master
-                        : pay.paidBy === "visa"
-                          ? visa
-                          : pay.paidBy === "apple_pay"
-                            ? apple : visaMaster
-                  } alt="payment__image"/>
-                  <div className="payment__detail">
-                    <span>{pay.paidBy} **** **** **** {pay.cardNumberLast4str}</span>
-                    <span>{pay.holder}</span>
-                  </div>
+                <button className="cancelPlan">Cancel Subscription</button>
+              </div>
+              <div className="card__info">
+                <img src={
+                  userInfo.plan.paidWith === "paypal"
+                    ? paypal
+                    : userInfo.plan.paidWith === "mastercard"
+                      ? master
+                      : userInfo.plan.paidWith === "visa"
+                        ? visa
+                        : userInfo.plan.paidWith === "apple_pay"
+                          ? apple : visaMaster
+                } alt="payment__image"/>
+                <div className="payment__detail">
+                  <span>{userInfo.plan.paidWith}</span>
+                  <span>{userInfo.userName}</span>
                 </div>
               </div>
+            </div>
     
-              <button>
-                <img src={penDot} alt="pen"/>
-                <span>Update</span>
-              </button>
-            </div>
-          )):
-            <div className="billing__info">
-              <div className="billing__accounts">
-                <div className="billing__plan">
-                  <div>
-                  <span className="billing__plan--title">
-                    Trial
-                  </span>
-                    <span className='billing__plan--exp'>Experienced on {moment(userInfo.createdAt).add(1, 'w').format('MMMM Do YYYY')}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          }
+            <button>
+              <img src={penDot} alt="pen"/>
+              <span>Update</span>
+            </button>
+          </div>}
         </section>
         
         <section>
