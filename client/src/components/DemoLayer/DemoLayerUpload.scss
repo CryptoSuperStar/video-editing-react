@@ -5,42 +5,50 @@
       line-height: 22px;
       &.comm_tooltip {
         top: 70px;
-        right: 580px;
-        svg {
-          height: 175px;
+        right: 500px;
+        .arrow-demo {
+          width: 75px;
+          height: 90px;
           position: absolute;
           right: -80px;
-          top: -60px;
-          transform: rotate(-90deg);
+          top: 25px;
+          transform: rotate(-50deg);
         }
       }
       &.cut_tooltip {
         top: 40vh;
-        left: 22%;
+        left: 23%;
         .arrow-demo {
           height: 175px;
         }
       }
       &.clear_tooltip {
-        top: 40vh;
+        top: 50vh;
         left: 41%;
         .arrow-demo {
-          height: 175px;
+          height: 110px;
+          margin-top: 5px;
+          transform: rotate(35deg);
         }
       }
       &.video_tooltip {
-        top: 40vh;
+        top: 83vh;
         left: 60%;
         .arrow-demo {
-          height: 175px;
-          
+          height: 50px;
+          width: 50px;
+          margin-top: 5px;
+          //transform: rotate(-110deg);
+          position: absolute;
+          top: -55px;
+          right: 30px;
         }
       }
       &.addC_tooltip {
-        top: 40vh;
+        top: 45vh;
         left: 79%;
         .arrow-demo {
-          height: 175px;
+          height: 150px;
         }
       }
       &.videAdd_tooltip {
@@ -68,44 +76,37 @@
         right: 45%;
         .arrow-demo {
           right: 0;
-          top: 20px;
-          position: absolute;
-          transform: rotate(-90deg);
         }
       }
       &.cut_tooltip {
         left: 3%;
-        top: 27vh;
+        top: 34vh;
         .arrow-demo {
           left: 10px;
           position: relative;
         }
       }
       &.clear_tooltip {
-        top: 46vh;
+        top: 52vh;
         left: 27%;
         .arrow-demo {
-          height: 60px;
-          position: relative;
-          top: -10px;
+          height: 40px;
+          
         }
       }
       &.video_tooltip {
         top: 76vh;
-        left: 20%;
+        left: 15%;
         .arrow-demo {
-          position: absolute;
           top: -25px;
-          left: 140px;
-          height: 40px;
+          right: 0;
         }
       }
       &.addC_tooltip {
-        top: 35vh;
-        left: auto;
-        right: 0;
+        top: 43vh;
+        left: 45%;
         .arrow-demo {
-          height: 125px;
+          height: 110px;
           position: absolute;
           right: 15px;
           margin-top: 30px;

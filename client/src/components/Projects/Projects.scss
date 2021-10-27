@@ -1,11 +1,15 @@
 .projects {
-  margin: 90px 20px 30px;
+  padding: 0 15px;
+  margin-top: 120px;
   height: 100%;
   overflow: auto;
   h3 {
-    font-size: 24px;
-    color: black;
-    font-weight: bold;
+    letter-spacing: 0.00px;
+    line-height: 40px;
+    color: var(--black);
+    font-family: Montserrat, Helvetica, sans-serif;
+    font-size: var(--font-size-xxxl);
+    font-weight: 700;
   }
 }
 .projects__block {
