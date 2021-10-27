@@ -1,31 +1,31 @@
-import React, { useState } from 'react';
-import { useHistory } from "react-router-dom";
-import { connect } from "react-redux";
-import { ReactComponent as Cancel } from "../../assets/img/close-2.svg";
-import { ReactComponent as Instagram } from "../../assets/img/instagram.svg";
-import { ReactComponent as Youtube } from "../../assets/img/youtube.svg";
-import { ReactComponent as TikTok } from "../../assets/img/tik-tok.svg";
-import { ReactComponent as OnlyFans } from "../../assets/img/OnlyFans_logo.svg";
-import { ReactComponent as Tick } from "../../assets/img/accept_added_check_complite_yes_icon.svg";
-import { createProjectMedia } from '../../store/actions/project.action';
+import React, {useState} from 'react';
+import {useHistory} from "react-router-dom";
+import {connect} from "react-redux";
+import {ReactComponent as Cancel} from "../../assets/img/close-2.svg";
+import {ReactComponent as Instagram} from "../../assets/img/instagram.svg";
+import {ReactComponent as Youtube} from "../../assets/img/youtube.svg";
+import {ReactComponent as TikTok} from "../../assets/img/tik-tok.svg";
+import {ReactComponent as OnlyFans} from "../../assets/img/OnlyFans_logo.svg";
+import {ReactComponent as Tick} from "../../assets/img/accept_added_check_complite_yes_icon.svg";
+import {createProjectMedia} from '../../store/actions/project.action';
 
 const StyleInspirationModal = (props) => {
-
+  
   const history = useHistory();
-
+  
   const [platforms, setPlatforms] = useState([{
     title: "TikTok",
     src: <TikTok />,
     active: true
-  }, {
+  },{
     title: "OnlyFans",
     src: <OnlyFans />,
     active: false
-  }, {
+  },{
     title: "Youtube",
     src: <Youtube />,
     active: false
-  }, {
+  },{
     title: "Instagram",
     src: <Instagram />,
     active: false
@@ -33,33 +33,31 @@ const StyleInspirationModal = (props) => {
   const [favouriteRelevant, setFavouriteRelevant] = useState(false);
   const [suggestion, setSuggestion] = useState(false);
   const [link, setLink] = useState('')
-
-
+  
+  
   const changePlatform = (i) => {
     let newPlatforms = [...platforms];
     newPlatforms.map(platform => platform.active = false);
     newPlatforms[i].active = true;
     setPlatforms(newPlatforms);
   }
-
+  
   const updateComments = (id) => {
-    let newCurrentMedia = { ...props.currentMedia };
+    let newCurrentMedia = {...props.currentMedia};
     let newContent = [...props.content];
     let index = props.content.findIndex(content => content._id === id);
     newContent[index] = newCurrentMedia;
-    if (localStorage.comments) {
+    if(localStorage.comments) {
       let newComments = JSON.parse(localStorage.comments);
-      // newCurrentMedia = newCurrentMedia.screens.map((item, i) => {
-      //   return newComments[i].text.length > 0 ? { ...item, comment: newComments[i] } : item
-      // })
-
-      // newContent[index].screens = newCurrentMedia;
-      newContent[index].comments = newComments;
+      newCurrentMedia = newCurrentMedia.screens.map((item,i) => {
+        return newComments[i].text.length > 0 ? {...item, comment: newComments[i]} : item
+      })
+      newContent[index].screens = newCurrentMedia;
       props.setComments([]);
     }
     return newContent;
   }
-
+  
   const handleDone = () => {
     let newContent
     if ((localStorage.updateComment && localStorage.updateComment === 'true')
@@ -80,17 +78,17 @@ const StyleInspirationModal = (props) => {
     props.setLoading(true);
     props.dispatch(createProjectMedia(project, history, props.setLoading))
   };
-
+  
   return (
     <div className="modal__wrapper">
       <div className="style__modal">
         <div className="connectSocial__cross" onClick={() => props.setShowStyleModal(false)}>
-          <Cancel fill="black" />
+          <Cancel fill="black"/>
         </div>
         <h3>Style Inspiration</h3>
         <p>Lorem ipsum dolor sit amet</p>
         <h5>Style Inspiration</h5>
-        <input type="text" placeholder="Paste your link here" value={link} onChange={e => setLink(e.target.value)} />
+        <input type="text" placeholder="Paste your link here" value={link} onChange={e =>setLink(e.target.value)}/>
         <h5>Target Platform Length</h5>
         <div className="connectSocial__links">
           {platforms.map((platform, i) => (
@@ -98,10 +96,10 @@ const StyleInspirationModal = (props) => {
               border: `1px solid ${platform.active ? "#3b8590" : '#36596a55'}`,
               backgroundColor: platform.active ? '#3b85911a' : 'white'
             }}
-              onClick={() => changePlatform(i)}
+                 onClick={() => changePlatform(i)}
             >
-              <div className="modal__plans--tick" style={{ backgroundColor: platform.active ? "#3b8590" : "rgba(133,134,149,0.1)" }}>
-                {platform.active && <Tick fill="white" />}
+              <div className="modal__plans--tick" style={{backgroundColor: platform.active ? "#3b8590" : "rgba(133,134,149,0.1)"}}>
+                {platform.active && <Tick fill="white"/>}
               </div>
               {platform.src}
             </div>
