@@ -36,9 +36,7 @@ const UploadMedia = props => {
   const [showCutBox, setShowCutBox] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [comments, setComments] = useState([]);
-  const [activeComment, setActiveComment] = useState('');
-  const [imageCommentDate, setImageCommentDate] = useState("");
-  const [editCommentValue, setEditCommentValue] = useState(false);
+  const [activeComment, setActiveComment] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
   const [isShowComment, setIsShowComment] = useState(false);
   const [showCommentBlock, setShowCommentBlock] = useState(false);
@@ -80,58 +78,62 @@ const UploadMedia = props => {
     [localStorage.currentMedia, props.project.content]
   );
 
+  useEffect(
+    () => {
+      if (currentMedia.mediaName && currentMedia.screens.length > 0) {
+        let commentsArray = currentMedia.screens.map(item => item.comment);
+        localStorage.comments = JSON.stringify(commentsArray);
+        setComments(commentsArray);
+      }
+    },
+    [localStorage.currentMedia, props.project.content]
+  );
+
+  useEffect(
+    () => {
+      if (currentMedia.mediaName && currentMedia.screens.length > 0) {
+        let commentsArray = currentMedia.screens.map(item => item.comment);
+        localStorage.comments = JSON.stringify(commentsArray);
+        setComments(commentsArray);
+      }
+    },
+    [props.project.projectName, localStorage.currentMedia, currentMedia.screens.length]
+  );
   useEffect(() => {
     setActiveComment('')
-    if (currentMedia.isImage) {
+    if(currentMedia.isImage){
       setActiveComment(currentMedia.comment || '');
     }
-  }, [currentMedia])
+  },[currentMedia])
   const setMedia = () => {
     let curMedia = props.project.content.filter(item => item._id === localStorage.currentMedia)[0];
     if (!curMedia) {
       curMedia = props.project.content[0];
     }
     if (curMedia.screens.length > 0) {
-      curMedia.screens.sort((a, b) => a.timeInSeconds - b.timeInSeconds);
+      curMedia.screens.sort((a, b) => moment.duration(a.time).asSeconds() - moment.duration(b.time).asSeconds());
     }
     setCurrentMedia(curMedia);
-    console.log(curMedia,'curMedia');
-    if (curMedia.mediaName && curMedia.screens.length > 0) {
-      let commentsArray = curMedia.screens.map(item => item.comment);
-      localStorage.comments = JSON.stringify(commentsArray);
-      setComments(commentsArray);
-    }
-    setActiveComment('')
-    if(curMedia.isImage){
-      setActiveComment(curMedia.comment || '');
-      setImageCommentDate(currentMedia.createdAt || '');
-    }
-  }
+  };
+
   const handleClear = () => {
     setComments([]);
-    setCurrentMedia({ mediaName: '', mediaSrc: '', screens: [], duration: 0, endTime: 0, startTime: 0 });
+    setCurrentMedia({ mediaName: "", mediaSrc: "", screens: [], duration: 0, endTime: 0, startTime: 0 });
     props.dispatch(clearTempProject(props.project._id, props.project.bucket));
-  }
+  };
 
   const handleCutVideo = () => {
     setShowCutBox(!showCutBox);
-  }
-
-  const handleActiveScreenshot = (idx) => {
-    setIsShowComment(true);
-    // setActiveComment(comments[idx] && comments[idx].text)
-  }
-  const editComment = (idx) => {
-    setIsShowComment(true);
-    setActiveIndex(idx);
-    setActiveComment(comments[idx] && comments[idx]?.text)
-    setEditCommentValue(true);
-
-  }
-  const handleCommentChange = (e) => {
-    setActiveComment(e.target.value);
   };
 
+  const handleActiveScreenshot = idx => {
+    setIsShowComment(true);
+    // setActiveComment(comments[idx] && comments[idx].text);
+  };
+
+  const handleCommentChange = e => {
+    setActiveComment(e.target.value);
+  };
   const handleCommentEnter = e => {
     setIsShowComment(false);
     let newCommentsArray = [...comments];
@@ -157,44 +159,17 @@ const UploadMedia = props => {
     localStorage.updateComment = true;
     setActiveComment("");
   };
-  // const handleCommentEnter = e => {
-  //   setIsShowComment(false);
-  //   let newCommentsArray = [...comments];
-
-  //   let comment = {
-  //     text: activeComment,
-  //     createdAt: new Date(),
-  //     rawTime: currentTime,
-  //     time: moment.duration(currentTime, 'seconds').format("hh:mm:ss", { trim: false })
-  //   }
-  //   if (editCommentValue) {
-  //     newCommentsArray[activeIndex].text = comment.text;
-  //     setEditCommentValue(false)
-  //   } else {
-  //     newCommentsArray.push(comment);
-  //   }
-  //   commentFinal = newCommentsArray.sort((a, b) => a.rawTime - b.rawTime);
-  //   setComments(commentFinal);
-  //   localStorage.comments = JSON.stringify(newCommentsArray);
-  //   localStorage.updateComment = true;
-  //   setActiveComment("");
-  // };
   const handleImageComment = (event) => {
     localStorage.imageComments = event.target.value;
     setActiveComment(event.target.value)
   }
-
+  
   const toggleCommentBlock = () => setShowCommentBlock(!showCommentBlock);
   const toggleShareBlock = () => setShowShareModal(!showShareModal);
-  if(!currentMedia.isImage){
-    comments && comments.length > 0 && comments.map((item, index) => item.map((innerItem, i) => commentFinal.push(innerItem)));
-    commentFinal = commentFinal
-      ? commentFinal.sort((a, b) => moment.duration(a.time).asSeconds() - moment.duration(b.time).asSeconds())
-      : [];
-  }else{
-    commentFinal.push({createdAt: imageCommentDate || new Date(), text: activeComment, time: ""});
-  }
-  
+  comments && comments.length > 0 && comments.map((item, index) => item.map((innerItem, i) => commentFinal.push(innerItem)));
+  commentFinal = commentFinal
+    ? commentFinal.sort((a, b) => moment.duration(a.time).asSeconds() - moment.duration(b.time).asSeconds())
+    : [];
   if (loading)
     return (
       <div className="spinner__wrapper">
@@ -224,7 +199,7 @@ const UploadMedia = props => {
               <div className="comments_indicator" onClick={toggleCommentBlock}>
                 <Chat />
                 <span className="comments__total">
-                {commentFinal && commentFinal.length && commentFinal.filter(comment => comment.text.length > 0).length}
+                  {commentFinal && commentFinal.length && commentFinal.filter(comment => comment.text.length > 0).length}
                 </span>
               </div>
               <div className="share_indicator" onClick={toggleShareBlock}>
@@ -245,57 +220,45 @@ const UploadMedia = props => {
               setErrorMessage={setErrorMessage}
               setComments={setComments}
             />
-            {
-              showShareModal && currentMedia.screens.length > 0 && (
-                <ShareModal
-                  path={currentMedia.mediaSrc}
-                  name={currentMedia.mediaName}
-                  thumbnail={currentMedia.screens[0].screenSrc}
-                />
-              )
-            }
-            {
-              loadingSlider && (
-                <div className="spinner__wrapper--slider">
-                  <h3>Generate Timeline Bar</h3>
-                  <ClockLoader className="spinner" color="#696871" loading={setLoadingSlider} size={25} />
-                </div>
-              )
-            }
+            {showShareModal && currentMedia.screens.length > 0 && (
+              <ShareModal
+                path={currentMedia.mediaSrc}
+                name={currentMedia.mediaName}
+                thumbnail={currentMedia.screens[0].screenSrc}
+              />
+            )}
+            {loadingSlider && (
+              <div className="spinner__wrapper--slider">
+                <h3>Generate Timeline Bar</h3>
+                <ClockLoader className="spinner" color="#696871" loading={setLoadingSlider} size={25} />
+              </div>
+            )}
             {/* {currentMedia.isImage && <div className="TimeLine" />} */}
-            {
-              !loadingSlider && currentMedia.screens.length > 0 && !currentMedia.isImage && (
-                <TimeLine
-                  currentMedia={currentMedia}
-                  setCurrentMedia={setCurrentMedia}
-                  showCutBox={showCutBox}
-                  setMoveTo={setMoveTo}
-                  currentTime={currentTime}
-                  isShowComment={isShowComment}
-                  activeComment={activeComment}
-                  handleCommentChange={handleCommentChange}
-                  handleCommentEnter={handleCommentEnter}
-                  comments={comments}
-                  activeIndex={activeIndex}
-                  setIsShowComment={setIsShowComment}
-                  setActiveComment={setActiveComment}
-                  setActiveIndex={setActiveIndex}
-                  editComment={editComment}
-                  setCurrentTime={setCurrentTime}
-                  editCommentValue={editCommentValue}
-                  setEditCommentValue={setEditCommentValue}
-                />
-              )
-            }
-            {
-              currentMedia.isImage ? (
-                <div className="image__coment">
-                  <textarea placeholder="Add edit notes here:" rows="5" value={activeComment} onChange={handleImageComment} />{" "}
-                </div>
-              ) : (
-                ""
-              )
-            }
+            {!loadingSlider && currentMedia.screens.length > 0 && !currentMedia.isImage && (
+              <TimeLine
+                currentMedia={currentMedia}
+                setCurrentMedia={setCurrentMedia}
+                showCutBox={showCutBox}
+                setMoveTo={setMoveTo}
+                currentTime={currentTime}
+                isShowComment={isShowComment}
+                activeComment={activeComment}
+                handleCommentChange={handleCommentChange}
+                handleCommentEnter={handleCommentEnter}
+                comments={comments}
+                activeIndex={activeIndex}
+                setIsShowComment={setIsShowComment}
+                setActiveComment={setActiveComment}
+                setActiveIndex={setActiveIndex}
+              />
+            )}
+            {currentMedia.isImage ? (
+              <div className="image__coment">
+                <textarea placeholder="Add edit notes here:" rows="5" value={activeComment} onChange={handleImageComment}/>{" "}
+              </div>
+            ) : (
+              ""
+            )}
             <div className="generate__btns">
               <button onClick={handleCutVideo} style={{ backgroundColor: showCutBox && "gray" }}>
                 <Cut />
@@ -316,29 +279,27 @@ const UploadMedia = props => {
               </button>
             </div>
 
-            {
-              props.project.content && props.project.content.length > 0 && (
-                <CarouselMedia
-                  content={props.project.content}
-                  setComments={setComments}
-                  setLoadingVideo={setLoading}
-                  setLoadingSlider={setLoadingSlider}
-                  user={props.user}
-                  setMedia={setMedia}
-                  currentMedia={currentMedia}
-                  setCurrentTime={setCurrentTime}
-                  setErrorMessage={setErrorMessage}
-                  projectName={props.project.projectName}
-                />
-              )
-            }
-          </div >
+            {props.project.content && props.project.content.length > 0 && (
+              <CarouselMedia
+                content={props.project.content}
+                setComments={setComments}
+                setLoadingVideo={setLoading}
+                setLoadingSlider={setLoadingSlider}
+                user={props.user}
+                setMedia={setMedia}
+                currentMedia={currentMedia}
+                setCurrentTime={setCurrentTime}
+                setErrorMessage={setErrorMessage}
+                projectName={props.project.projectName}
+              />
+            )}
+          </div>
         ) : (
           <EmptyProject setComments={setComments} setLoadingVideo={setLoading} setLoadingSlider={setLoadingSlider} />
         )}
-      </div >
+      </div>
       {showCommentBlock && <CommentBlock arrComments={commentFinal} />}
-    </div >
+    </div>
   );
 };
 const mapStateToProps = state => ({

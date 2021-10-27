@@ -1,27 +1,4 @@
 const mongoose = require('mongoose');
-const moment = require('moment');
-
-const paymentSchema = new mongoose.Schema({
-  paymentId: {
-    type: String
-  },
-  holder: {
-    type: String,
-    trim: true
-  },
-  cardNumberLast4str: String,
-  paidBy: String,
-  plan: {
-    type: {
-      title: String,
-      price: String,
-      totalCost: String,
-      paidWith: String,
-      paidDate: Date,
-      paidExpiresDate: Date
-    }
-  }
-})
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -43,11 +20,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
-  phone: {
+  firstName: {
     type: String,
     trim: true
   },
-  organisation: String,
+  lastName: {
+    type: String,
+    trim: true
+  },
   password: {
     type: String,
     minlength: 8
@@ -71,13 +51,37 @@ const userSchema = new mongoose.Schema({
     },
     select: false
   },
+  paymentId: {
+    type: String
+  },
+  trial: {
+    active: {
+      type: Boolean,
+      default: false
+    },
+    activated: {
+      type: Date
+    },
+    activatedExpires: {
+      type: Date
+    }
+  },
   socialLinks: {
     type: {
       instagramLink: String,
       youTubeLink: String
     }
   },
-  payments: [paymentSchema]
+  plan: {
+    type: {
+      title: String,
+      price: String,
+      totalCost: String,
+      paidWith: String,
+      paidDate: Date,
+      paidExpiresDate: Date
+    }
+  }
 }, {timestamps: true})
 
 userSchema.set('toJSON', {getters: true, virtuals: true});

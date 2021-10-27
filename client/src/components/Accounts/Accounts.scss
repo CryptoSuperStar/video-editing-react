@@ -1,222 +1,58 @@
-.Account, .support__block {
-  margin: 90px 20px 30px;
-  font-family: Montserrat, sans-serif;
+.Accounts {
+  margin: 150px 25px 30px;
   h3 {
-    margin: 25px 0;
-    font-size: 24px;
+    font-family: "Active-Regular", sans-serif;
+    margin-top: 25px;
+    font-size: 32px;
     color: black;
-    font-weight: bold;
   }
-  section {
+}
+
+.Accounts__info {
+  margin-top: 25px;
+  span {
+    font-family: "Montserrat", "Helvetica Neue", sans-serif;
+    display: inline-block;
+  }
+  & > div, .plan > div, .connected_socials > div {
     margin-top: 15px;
-    border: 1px solid #EAEDF7;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(28,41,90,.04);
-    padding: 15px;
-    background-color: white;
-    h3 {
-      color: #242F57;
-      margin: 0;
-    }
   }
-  .Account__header, .billing__header, .billing__info, .support__header {
-    display: flex;
-    //align-items: center;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    button {
-      background: none;
-      border: none;
-      text-transform: uppercase;
-      height: 20px;
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      span {
-        font-size: 14px;
-        color: #3B8590;
-        margin-left: 15px;
-        font-weight: bold;
-      }
-    }
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-left: 10px;
   }
-  .account_line {
-    height: 1px;
-    width: 100%;
-    background-color: #EAEDF7;
-    box-shadow: 0 2px 4px rgba(28,41,90,.04);
-  }
-  .user_info {
-    display: flex;
-    align-items: center;
-    margin: 15px 0;
-    img {
-      width: 65px;
-      height: 65px;
-      border-radius: 50%;
-    }
+  .plan, .connected_socials {
     div {
       margin-left: 15px;
-      display: flex;
-      flex-direction: column;
-      span:first-child {
-        font-size: 16px;
-        line-height: 26px;
-      }
-      span:last-child {
-        font-size: 12px;
-      }
     }
   }
-  .organisation {
-    margin: 15px 0 0;
-    h5 {
-      font-size: 16px;
-      font-weight: 400;
-      line-height: 26px;
-    }
-    span {
-      font-size: 12px;
-    }
+  h5 {
+    font-family: "Active-Regular", sans-serif;
+    font-size: 26px;
+    color: black;
   }
-  .billing__info {
-    margin-top: 15px;
-    .billing__accounts {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-grow: 1;
-    }
-    .billing__plan {
-      font-family: Montserrat, sans-serif;
-      display: flex;
-      justify-content: space-between;
-      div {
-        display: flex;
-        flex-direction: column;
-      }
-      .billing__plan--title {
-        text-transform: capitalize;
-        font-size: 16px;
-        line-height: 26px;
-        display: flex;
-        align-items: center;
-        img {
-          margin-left: 15px;
-        }
-      }
-      .billing__plan--exp {
-        font-size: 12px;
-        line-height: 16px;
-      }
-      .cancelPlan {
-        font-size: 14px;
-        color: red;
-        border: 1px solid rgba(255,0,0,.2);
-        border-radius: 5px;
-        padding: 10px;
-      }
-    }
-    .card__info {
-      display: flex;
-      margin-right: 25px;
-      img {
-        height: 60px;
-      }
-      .payment__detail {
-        display: flex;
-        flex-direction: column;
-        span:first-child {
-          font-size: 16px;
-          line-height: 26px;
-          text-transform: capitalize;
-        }
-        span:last-child {
-          font-size: 12px;
-          line-height: 26px;
-        }
-      }
-    }
-  }
-  .general__header {
-    margin-bottom: 15px;
-  }
-  .general__buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    button {
-      background: none;
-      border: none;
-      padding: 15px 0 15px;
-      cursor: pointer;
-      font-size: 14px;
-      line-height: 24px;
-      color: #242F57;
-    }
+  strong {
+    font-family: CircularStd-Bold, sans-serif;
+    color: black;
+    font-weight: 500;
   }
 }
 
 @media all and (max-width: 575px){
-  .Account, .support__block {
-    margin: 0;
-    padding: 20px 0 0;
-    background-color: #FAFAF8;
+  .Accounts {
+    margin: 0 15px;
     h3 {
-      text-align: center;
-      font-size: 20px;
-      margin: 0 0 25px;
+      font-size: 28px;
     }
-    section {
-      border: none;
-      margin-top: 0;
-      border-radius: 0;
+  }
+  .Accounts__info {
+    span {
+      font-size: 14px;
     }
-    .Account__header, .billing__header, .billing__info, .support__header {
-      h3 {
-        font-size: 18px;
-        font-weight: 400;
-        color: black;
-      }
-    }
-    .billing__info {
-      flex-direction: column;
-      position: relative;
-      button {
-        margin-top: 15px;
-      }
-      .billing__accounts {
-        flex-direction: column;
-        .card__info {
-          margin-top: 15px;
-          margin-right: 0;
-          width: 100%;
-          justify-content: flex-start;
-          align-items: flex-start;
-        }
-      }
-      .billing__plan {
-        width: 100%;
-        div {
-          width: 100%;
-        }
-        .billing__plan--title {
-          width: 100%;
-        }
-        .cancelPlan {
-          position: absolute;
-          right: 15px;
-          bottom: 0;
-        }
-      }
-    }
-    .general__header {
-      h3 {
-        text-align: left;
-        font-size: 18px;
-        font-weight: 400;
-        color: black;
-      }
+    strong {
+      font-size: 14px;
     }
   }
 }

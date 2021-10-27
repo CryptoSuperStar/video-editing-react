@@ -7,7 +7,6 @@ import {ReactComponent as ProjectsIcon} from "../../assets/img/search.svg";
 import {ReactComponent as SettingsIcon} from "../../assets/img/settings.svg";
 import {ReactComponent as PolicyIcon} from "../../assets/img/agreement-terms.svg";
 import {ReactComponent as Plus} from "../../assets/img/add.svg";
-import {ReactComponent as PhoneIcon} from "../../assets/img/phone.svg";
 
 const DashboardSideNav = () => {
   
@@ -24,9 +23,9 @@ const DashboardSideNav = () => {
         <DashboardIcon />
         <span>Dashboard</span>
       </NavLink>
-      <NavLink to="/dashboard/account" >
+      <NavLink to="/dashboard/accounts" >
         <AccountIcon />
-        <span>Account</span>
+        <span>Accounts</span>
       </NavLink>
       <NavLink to="/dashboard/upload" className="menu__upload--button">
         <Plus />
@@ -39,10 +38,6 @@ const DashboardSideNav = () => {
       <NavLink to="/dashboard/settings" className="web__view">
         <SettingsIcon />
         <span>Settings</span>
-      </NavLink>
-      <NavLink to="/dashboard/support" className="web__view">
-        <PhoneIcon fill="white"/>
-        <span>Support</span>
       </NavLink>
       <NavLink to="/term_conds_policy" className="web__view">
         <PolicyIcon />
