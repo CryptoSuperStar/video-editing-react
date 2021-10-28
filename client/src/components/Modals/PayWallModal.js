@@ -8,20 +8,33 @@ import PaypalExpressBtn from "react-paypal-express-checkout";
 import {toast} from "react-toastify";
 import axios from "axios";
 import moment from "moment";
-import {REACT_APP_PAYPAL_API} from "../../utils/misc";
+import {REACT_APP_PAYPAL_API,REACT_APP_API_URL} from "../../utils/misc";
 import {ReactComponent as CreditCard} from "../../assets/img/credit-card.svg";
 import {ReactComponent as PayPal} from "../../assets/img/paypal.svg";
 import {ReactComponent as ApplePay} from "../../assets/img/apple-pay.svg";
 import {ReactComponent as ArrowLeft} from "../../assets/img/arrow-left.svg";
-import {REACT_APP_API_URL} from "../../utils/misc";
 import {updateUser} from "../../store/actions/auth.action";
 import './PayWallModal.scss';
+import penDot from "../../assets/img/penDot.png";
 
 const PayWallModal = (props) => {
   
   const stripe = useStripe();
   const elements = useElements();
   
+  let payment = {
+      paymentId: '',
+      holder: '',
+      cardNumberLast4str: '',
+      paidBy: null,
+      plan: {
+        title: '',
+        price: '',
+        totalCost: '',
+        paidDate: '',
+        paidExpiresDate: ''
+      }
+  }
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [plans, setPlans] = useState([{
@@ -35,6 +48,7 @@ const PayWallModal = (props) => {
     active: false,
     totalPrice: 75
   }]);
+  
   const [payments, setPayments] = useState([{
     title: "credit card",
     src: <CreditCard />,
@@ -74,6 +88,7 @@ const PayWallModal = (props) => {
       // Check the availability of the Payment Request API first.
       pr.canMakePayment().then((result) => {
         if (result) {
+          console.log('result2',result)
           pr.on('paymentmethod', handlePaymentMethodReceived);
           setPaymentRequest(pr);
         }
@@ -86,7 +101,8 @@ const PayWallModal = (props) => {
     const paymentDetails = {
       payment_method: event.paymentMethod.id
     };
-    const response = await axios.post(`${REACT_APP_API_URL}/create-payment-intent`, {paymentDetails, total}).then((response) => {
+    const response = await axios.post(`${REACT_APP_API_URL}/create-payment-intent`,
+      {paymentDetails, total}).then((response) => {
         //SUCCESS: put client secret and id into an object and return it
         return {
           secret: response.data.client_secret,
@@ -106,6 +122,7 @@ const PayWallModal = (props) => {
     const result = await stripe.confirmCardPayment(
       response.secret
     );
+    
     if (result.error) {
       console.log(result.error);
       toast.error(result.error)
@@ -135,32 +152,41 @@ const PayWallModal = (props) => {
     setPayments(newPayments);
   }
   
-  const collectPaymentsData = (paymentId, first, last) => {
-    let plan = plans.filter(plan => plan.active)[0]
-    const paymentData = {
-      firstName: first ? first : firstName,
-      lastName: last ? last : lastName,
+  const collectPaymentsData = (paymentId) => {
+    let plan = plans.filter(plan => plan.active)[0];
+    
+    const paymentData = [{
+      ...payment,
+      paidBy: payment.paidBy ? payment.paidBy : activePayment,
       paymentId,
+      holder: `${firstName} ${lastName}`,
       plan: {
         title: plan.title.toLowerCase(),
         price: plan.cost,
         totalCost: plan.totalPrice,
-        paidWith: activePayment,
-        paidDate: moment().format('DD-MM-YYYY'),
+        paidDate: moment().format('MMMM Do YYYY'),
         paidExpiresDate: plan.title.toLowerCase() === "annual"
-          ? moment().add(1, 'years').format('DD-MM-YYYY')
-          : moment().add(1, 'M').format('DD-MM-YYYY')
+          ? moment().add(1, 'years').format('MMMM Do YYYY')
+          : moment().add(1, 'M').format('MMMM Do YYYY')
       }
+    }]
+    let newUserInfo = {
+      ...props.user,
+      payments: paymentData
     }
-    props.dispatch(updateUser(props.user._id, paymentData, props.setShowPayWall))
+    console.log(newUserInfo);
+    props.dispatch(updateUser(props.user._id, newUserInfo, props.setShowPayWall))
   }
   
-  const onSuccess = (payment) => {
+  const onSuccess = (pay) => {
     // Congratulation, it came here means everything's fine!
-    console.log("The payment was succeeded!", payment);
+    console.log("The payment was succeeded!", pay);
     if (payment.paid) {
-      const [lastName, firstName] = payment.address.recipient_name.split(' ');
-      collectPaymentsData(payment.paymentID, firstName, lastName)
+      const [lastName, firstName] = pay.address.recipient_name.split(' ');
+      payment = {...payment,
+        holder: firstName + ' ' + lastName
+      }
+      collectPaymentsData(pay.paymentID, firstName, lastName)
     }
     // You can bind the "payment" object's value to your state or props or whatever here, please see below for sample returned data
   }
@@ -192,7 +218,8 @@ const PayWallModal = (props) => {
         type: 'card',
         card: elements.getElement(CardNumberElement)
       });
-    
+      setActivePayment(paymentMethod.card.brand)
+      payment = {...payment, cardNumberLast4str: paymentMethod.card.last4, paidBy: paymentMethod.card.brand};
       if (error) {
         console.log('[error]', error);
         toast.error(error)
@@ -201,6 +228,7 @@ const PayWallModal = (props) => {
       //create a new payment request and get irs client secret + id from the server
       const intentData = await axios.post(`${REACT_APP_API_URL}/stripe`, {total})
         .then((response) => {
+          
             //SUCCESS: put client secret and id into an object and return it
             return {
               secret: response.data.client_secret,
@@ -213,6 +241,7 @@ const PayWallModal = (props) => {
             return error;
           }
         );
+      
       //STEP 3:
       //confirm the payment and use the new payment method
       const result = await stripe.confirmCardPayment(intentData.secret, {payment_method: paymentMethod.id});
@@ -306,24 +335,29 @@ const PayWallModal = (props) => {
           && <div className="pay__modal--creditCard">
             <div style={{display: 'flex'}}><label className="pay__form--firstName">
               <span>First Name</span>
-              <input type="text" value={firstName} onChange={e => setFirstName(e.target.value)}/>
+              <input type="text" value={firstName} onChange={e => setFirstName(e.target.value)} required/>
+              <img src={penDot} alt="pen"/>
             </label>
               <label className="pay__form--lastName">
                 <span>Last Name</span>
-                <input type="text" value={lastName} onChange={e => setLastName(e.target.value)}/>
+                <input type="text" value={lastName} onChange={e => setLastName(e.target.value)} required/>
+                <img src={penDot} alt="pen"/>
               </label></div>
             <label className="pay__form--creditCard">
               <span>Card Number</span>
               <CardNumberElement id="creditCard__number"/>
+              <img src={penDot} alt="pen"/>
             </label>
             <div className="creditCard__last">
               <label>
                 <span>Expiry</span>
                 <CardExpiryElement id="creditCard__expire"/>
+                <img src={penDot} alt="pen"/>
               </label>
               <label>
                 <span>CVV</span>
                 <CardCvcElement id="creditCard__cvv"/>
+                <img src={penDot} alt="pen"/>
               </label>
             </div>
           </div>}

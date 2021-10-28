@@ -12,7 +12,8 @@ const {
   facebookController,
   appleController,
   updateUserController,
-  connectSocial
+  connectSocial,
+  resetPassword
 } = require("../controllers/auth.contoller")
 
 
@@ -28,6 +29,7 @@ router.post('/login_register_apple', appleController);
 
 router.post('/update_user', updateUserController);
 router.put('/updateSocial', auth, connectSocial);
+router.post('/resetPassword', auth, resetPassword);
 
 
 

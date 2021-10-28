@@ -225,6 +225,15 @@
 
 .pay__modal--form {
   margin-top: 50px;
+  label {
+    position: relative;
+    img {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
   .pay__modal--creditCard{
     display: flex;
     flex-wrap: wrap;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ToolTip = ({title, text, src, name}) => {
+const ToolTip = ({title, text, src, name, comp}) => {
   return (
     <section className={name}>
       <div className="DemoLayer__title">{title}</div>

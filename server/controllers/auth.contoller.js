@@ -8,6 +8,7 @@ const fetch = require('node-fetch');
 const appleSignin = require("apple-signin-auth");
 
 const {User} = require('../models/user.model.js');
+const {use} = require("express/lib/router");
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT);
 
@@ -83,6 +84,38 @@ exports.loginController = async (req, res) => {
   } catch (e) {
     console.error(e.message);
     res.status(500).send({msg: 'Server Error'})
+  }
+}
+
+exports.resetPassword = async (req, res) => {
+  const id = req.userId;
+  const {oldPass, newPass} = req.body;
+  try {
+    let user = await User.findById(id);
+    if (!user) return res.status(400).json({ msg: 'Invalid Credentials1' });
+    console.log('user1',user);
+    if (user.registeredWith === 'SSO') {
+      const isMatch = await bcrypt.compare(oldPass, user.password);
+      if (!isMatch) return res.status(400).json({ msg: 'Invalid Credentials2' });
+      // Encrypt password
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(newPass, salt);
+      User.findByIdAndUpdate(id, {$set: user}, {new: true}, (err, data) => {
+        console.log('user2', data);
+        if (err) {
+          console.log(err);
+          return res.status(400).send({msg: err});
+        }
+        jwt.sign(data.id, process.env.JWT_SECRET, (err, token) => {
+          if (err) throw err;
+          console.log(token);
+          res.json(token)
+        })
+      })
+    }
+  } catch (e) {
+    console.log(e);
+    return res.status(400);
   }
 }
 

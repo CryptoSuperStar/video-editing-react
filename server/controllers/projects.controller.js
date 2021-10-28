@@ -8,6 +8,7 @@ const moment = require('moment');
 require("moment-duration-format");
 const MEDIA_SRC = 'client/build';
 // const MEDIA_SRC = 'client/public';
+
 function clearTemp(link) {
   if (fs.existsSync(link)) {
     fs.rmSync(link, { recursive: true, force: true });
@@ -102,11 +103,13 @@ exports.takeScreenShotController = async (req, res) => {
               screenSrc: uploadedVideo.Location,
               timeInSeconds: (stepInSeconds * (i + 1) - (stepInSeconds / 2)),
               time: timeInFormat,
-              comment: {
-                text: '',
-                time: timeInFormat,
-                createdAt: ''
-              }
+              comment: [
+                {
+                  text: '',
+                  time: timeInFormat,
+                  createdAt: ''
+                }
+              ]
             })
           })
           Promise.all(screens).then(() => {

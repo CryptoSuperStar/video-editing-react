@@ -1,0 +1,39 @@
+.updateUserModal, .ResetPasswordModal, .ShareLinkModal {
+  .pay__wall--modal {
+    height: auto;
+  }
+  .pay__modal--form {
+    label {
+      position: relative;
+      img {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+  }
+  .pay__form--creditCard {
+    display: block;
+    input {
+      box-sizing: border-box;
+      width: 100%;
+      border: 1px solid var(--star-dust);
+      padding: 15px;
+      letter-spacing: 0.00px;
+      line-height: 18px;
+      color: var(--scarpa-flow);
+      font-family: "Montserrat", "Helvetica Neue", sans-serif;
+      font-size: var(--font-size-xl);
+    }
+  }
+}
+
+@media all and (max-width: 575px){
+  .updateUserModal {
+    .pay__wall--modal {
+      height: 100%;
+      top: 40px;
+    }
+  }
+}
