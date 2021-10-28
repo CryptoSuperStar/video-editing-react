@@ -4,10 +4,13 @@
 # You can specify a custom docker image from Docker Hub as your build environment.
 image: atlassian/default-image:2
 
+clone:
+ depth: full
+
 pipelines:
   default:
       - step:
           name: 'Build and Test'
           script:
-            - git push https://heroku:e043cedb-b2c7-4d6b-8aaf-51d7db148c91@git.heroku.com/provids.git HEAD
+            - git push https://heroku:HEROKU_API_KEY@git.heroku.com/HEROKU_APP_NAME.git HEAD
     
