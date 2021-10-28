@@ -211,10 +211,10 @@ const UploadMedia = props => {
                   {commentFinal && commentFinal.length && commentFinal.filter(comment => comment.text.length > 0).length}
                 </span>
               </div>
-              <div className="share_indicator" onClick={toggleShareBlock}>
+              <div className="share_indicator" onClick={toggleShareBlock} style={{opacity: showDemo && '20%'}}>
                 <Share />
               </div>
-              <div className="question_indicator">
+              <div className="question_indicator" style={{opacity: showDemo && '20%'}}>
                 <Info />
               </div>
             </div>
