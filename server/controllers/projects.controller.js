@@ -89,7 +89,7 @@ exports.takeScreenShotController = async (req, res) => {
           let newScreensArray = [];
           let screens = [...Array(quantity)].map(async (item, i) => {
             let timeInFormat = moment.duration((stepInSeconds * (i + 1) - (stepInSeconds / 2)), 'seconds')
-              .format("mm:ss:SSS", { trim: false })
+              .format("hh:mm:ss", { trim: false })
 
             const fileContent = await fs.readFileSync(`${MEDIA_SRC}/temp/${userId}/${bucket}/${newName}-${i + 1}.jpg`);
             let params = {
