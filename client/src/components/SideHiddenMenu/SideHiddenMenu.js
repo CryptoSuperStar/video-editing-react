@@ -8,7 +8,7 @@ const SideHiddenMenu = (props) => {
   
   const history = useHistory();
   
-  const unregisteredLinks = ["Accounts", 'Upload', "Projects"]
+  const unregisteredLinks = ["Account", 'Upload', "Projects", "Settings", "Support"]
   
   const handleButton = link => {
     props.handleShowMenu(false);

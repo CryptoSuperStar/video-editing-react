@@ -77,7 +77,9 @@
     display: flex;
     background-color: var(--zircon);
     flex-direction: column-reverse;
-    
+    .dashboard__content {
+      overflow: auto;
+    }
   }
   .dashboard_nav {
     height: 7vh;
@@ -110,6 +112,9 @@
         display: none;
       }
       &:nth-child(7) {
+        display: none;
+      }
+      &:nth-child(8) {
         display: none;
       }
       svg {

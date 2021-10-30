@@ -16,6 +16,7 @@ import Settings from "./components/Settings/Settings";
 import {authUser} from "./store/actions/auth.action";
 import GoogleCallback from "./components/GoogleCallback/GoogleCallback";
 import Policy from "./components/Policy/Policy";
+import Support from "./components/Support/Support";
 
 function App(props) {
   
@@ -47,11 +48,12 @@ function App(props) {
           <Route exact path="/" component={Landing}/>
           <Route exact path="/sign_in" component={LoginRegister}/>
           <Route exact path="/sign_up" component={LoginRegister}/>
-          <Route exact path="/term_conds_policy" component={Policy}/>
+          <PrivateRoute exact path="/term_conds_policy" component={Policy}/>
           <PrivateRoute exact path="/dashboard/upload" component={UploadMedia}/>
-          <PrivateRoute exact path="/dashboard/accounts" component={Accounts}/>
+          <PrivateRoute exact path="/dashboard/account" component={Accounts}/>
           <PrivateRoute exact path="/dashboard/projects" component={Projects}/>
           <PrivateRoute exact path="/dashboard/settings" component={Settings}/>
+          <PrivateRoute exact path="/dashboard/support" component={Support}/>
           <PrivateRoute exact path="/dashboard/googleCallback" component={GoogleCallback}/>
         </Switch>
         </FullScreen>
