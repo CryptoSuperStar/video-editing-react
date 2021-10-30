@@ -120,7 +120,7 @@ export const updateUser = (id, data, func) => async dispatch => {
       type: 'UPDATE_USER',
       payload: res.data
     });
-    toast.success(`You paid $${res.data.user.plan.totalCost}`);
+    toast.success(`Success.`);
     func(false)
   } catch (e) {
     console.log(e);

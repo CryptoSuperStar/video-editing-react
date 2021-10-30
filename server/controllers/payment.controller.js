@@ -6,6 +6,7 @@ exports.paymentController = (async (req, res) => {
   const userPrice = parseInt(req.body.total)*100;
   
   //create a payment intent
+  
   const intent = await stripe.paymentIntents.create({
     
     //use the specified price
@@ -37,12 +38,10 @@ exports.paymentConfirmController = (async (req, res) => {
         if (err){
           console.log(err);
         }
-        
         //respond to the client that the server confirmed the transaction
         if (paymentIntent.status === 'succeeded') {
           
           /*YOUR CODE HERE*/
-          
           console.log("confirmed stripe payment: " + clientId);
           res.json({success: true});
         } else {
