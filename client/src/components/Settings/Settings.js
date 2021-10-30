@@ -1,9 +1,8 @@
 import React from 'react';
-import './Settings.scss';
 
 const Settings = () => {
   return (
-    <div className="settings__block">
+    <div style={{marginTop: '150px'}}>
       <h3>Settings</h3>
     </div>
   );

@@ -36,7 +36,7 @@ const UploadMedia = props => {
   const [showCutBox, setShowCutBox] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [comments, setComments] = useState([]);
-  const [activeComment, setActiveComment] = useState('');
+  const [activeComment, setActiveComment] = useState("");
   const [imageCommentDate, setImageCommentDate] = useState("");
   const [editCommentValue, setEditCommentValue] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -95,7 +95,6 @@ const UploadMedia = props => {
       curMedia.screens.sort((a, b) => a.timeInSeconds - b.timeInSeconds);
     }
     setCurrentMedia(curMedia);
-    console.log(curMedia,'curMedia');
     if (curMedia.mediaName && curMedia.screens.length > 0) {
       let commentsArray = curMedia.screens.map(item => item.comment);
       localStorage.comments = JSON.stringify(commentsArray);
@@ -106,7 +105,14 @@ const UploadMedia = props => {
       setActiveComment(curMedia.comment || '');
       setImageCommentDate(currentMedia.createdAt || '');
     }
+    if (curMedia.comments) {
+      localStorage.comments = JSON.stringify(curMedia?.comments);
+      setComments(curMedia?.comments);
+
+    }
+    setActiveComment('')
   }
+
   const handleClear = () => {
     setComments([]);
     setCurrentMedia({ mediaName: '', mediaSrc: '', screens: [], duration: 0, endTime: 0, startTime: 0 });
@@ -131,7 +137,6 @@ const UploadMedia = props => {
   const handleCommentChange = (e) => {
     setActiveComment(e.target.value);
   };
-
   const handleCommentEnter = e => {
     setIsShowComment(false);
     let newCommentsArray = [...comments];
@@ -141,8 +146,9 @@ const UploadMedia = props => {
     let comment = {
       text: activeComment,
       createdAt: new Date(),
-      time: moment.duration(currentTime, "seconds").format("hh:mm:ss", { trim: false })
-    };
+      rawTime: currentTime,
+      time: moment.duration(currentTime, 'seconds').format("mm:ss:SSS", { trim: false })
+    }
     if (newActiveIndex !== -1) {
       newCommentsArray[activeIndex][newActiveIndex] = comment;
     } else {
@@ -157,28 +163,6 @@ const UploadMedia = props => {
     localStorage.updateComment = true;
     setActiveComment("");
   };
-  // const handleCommentEnter = e => {
-  //   setIsShowComment(false);
-  //   let newCommentsArray = [...comments];
-
-  //   let comment = {
-  //     text: activeComment,
-  //     createdAt: new Date(),
-  //     rawTime: currentTime,
-  //     time: moment.duration(currentTime, 'seconds').format("hh:mm:ss", { trim: false })
-  //   }
-  //   if (editCommentValue) {
-  //     newCommentsArray[activeIndex].text = comment.text;
-  //     setEditCommentValue(false)
-  //   } else {
-  //     newCommentsArray.push(comment);
-  //   }
-  //   commentFinal = newCommentsArray.sort((a, b) => a.rawTime - b.rawTime);
-  //   setComments(commentFinal);
-  //   localStorage.comments = JSON.stringify(newCommentsArray);
-  //   localStorage.updateComment = true;
-  //   setActiveComment("");
-  // };
   const handleImageComment = (event) => {
     localStorage.imageComments = event.target.value;
     setActiveComment(event.target.value)
@@ -224,7 +208,7 @@ const UploadMedia = props => {
               <div className="comments_indicator" onClick={toggleCommentBlock}>
                 <Chat />
                 <span className="comments__total">
-                {commentFinal && commentFinal.length && commentFinal.filter(comment => comment.text.length > 0).length}
+                  {commentFinal && commentFinal.length && commentFinal.filter(comment => comment.text.length > 0).length}
                 </span>
               </div>
               <div className="share_indicator" onClick={toggleShareBlock} style={{opacity: showDemo && '20%'}}>

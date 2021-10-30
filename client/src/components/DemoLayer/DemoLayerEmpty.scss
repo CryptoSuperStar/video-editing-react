@@ -58,7 +58,7 @@
   .EmptyLayer {
     .DemoLayer__tooltip {
       left: 50%;
-      top: auto;
+      top: 390px;
       transform: translateX(-130%);
       .arrow-demo {
         left: 90px;
@@ -82,13 +82,12 @@
   }
   .EmptyLayer {
     .DemoLayer__tooltip {
-      top: auto;
+      top: 23%;
       left: 0;
       transform: none;
-      bottom: 67%;
       .arrow-demo {
         max-height: none !important;
-        //height: 175px;
+        height: 300px;
         width: 70px;
         left: 75%;
       }

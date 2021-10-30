@@ -9,5 +9,5 @@ pipelines:
       - step:
           name: 'Build and Test'
           script:
-            - git push https://heroku:e043cedb-b2c7-4d6b-8aaf-51d7db148c91@git.heroku.com/provids.git HEAD
+            - git push -f https://heroku:$HEROKU_API_KEY@git.heroku.com/provids.git HEAD
     
