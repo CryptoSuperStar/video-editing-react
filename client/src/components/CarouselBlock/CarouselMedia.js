@@ -89,6 +89,10 @@ const CarouselMedia = (props) => {
       newCurrentMedia = newCurrentMedia.screens.map((item, i) => {
         return newComments[i].text.length > 0 ? { ...item, comment: newComments[i] } : item
       })
+      // newCurrentMedia = newCurrentMedia.screens.map((item, i) => {
+      //   return newComments[i].text.length > 0 ? { ...item, comment: newComments[i] } : item
+      // })
+      // newContent[index].comments = newComments;
       newContent[index].screens = newCurrentMedia;
       props.setComments([]);
     }

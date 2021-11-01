@@ -41,7 +41,7 @@ const Support = () => {
             <span>Description</span>
             <textarea
               placeholder="Lorem ipsum dolor sit amet, consectetur e suspendisse sed."
-              rows="5"
+              rows="8"
               value={request}
               onChange={e => setRequest(e.target.value)}
             />

@@ -16,6 +16,7 @@ const Header = (props) => {
   const [isDashboard, setIsDashboard] = useState(false);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
+  const [fullName, setFullName] = useState(null);
   
   useEffect(() => {
      if (localStorage.isAuthenticated === 'true' && localStorage.token) {
@@ -26,6 +27,14 @@ const Header = (props) => {
   useEffect(() => {
     setLoading(props.loading)
   },[])
+  
+  useEffect(() => {
+    if (props.user.firstName) {
+      setFullName(`${props.user.firstName} ${props.user.lastName ? props.user.lastName : ''}`)
+    } else if (props.user.userName) {
+      setFullName(props.user.userName)
+    } else setFullName(props.user.email);
+  }, [props.user])
   
   const dashboardMenu = (
     <div className="dashboard__menu--block">
@@ -40,7 +49,7 @@ const Header = (props) => {
           <img src={props.user ? props.user.avatar : avatar} alt="avatar"/>
           <span className="menu__user--name"
                 onClick={() => props.history.push('/dashboard/account')}
-          >{props.user && (props.user.userName || props.user.email)} </span>
+          >{props.user && fullName} </span>
           <button type="button" onClick={() => {
             localStorage.removeItem('token');
             props.dispatch({type: 'LOGOUT'});

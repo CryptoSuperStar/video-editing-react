@@ -92,7 +92,6 @@ const UpdateAddPayment = (props) => {
         payments: [...newPayments]
       }
     }
-    console.log(newUserInfo);
     props.dispatch(updateUser(props.user._id, newUserInfo, props.setShowPayWall))
   }
   
@@ -101,6 +100,8 @@ const UpdateAddPayment = (props) => {
     console.log("The payment was succeeded!", payment);
     if (payment.paid) {
       const [lastName, firstName] = payment.address.recipient_name.split(' ');
+      setFirstName(firstName);
+      setLastName(lastName);
       collectPaymentsData(payment.paymentID, firstName, lastName)
     }
     // You can bind the "payment" object's value to your state or props or whatever here, please see below for sample returned data
