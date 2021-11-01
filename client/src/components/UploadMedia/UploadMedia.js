@@ -95,14 +95,13 @@ const UploadMedia = props => {
       curMedia.screens.sort((a, b) => a.timeInSeconds - b.timeInSeconds);
     }
     setCurrentMedia(curMedia);
-    console.log(curMedia,'curMedia');
-    if (curMedia.mediaName && curMedia.screens.length > 0) {
-      let commentsArray = curMedia.screens.map(item => item.comment);
-      localStorage.comments = JSON.stringify(commentsArray);
-      setComments(commentsArray);
+    if (curMedia.comments) {
+      localStorage.comments = JSON.stringify(curMedia?.comments);
+      setComments(curMedia?.comments);
+
     }
     setActiveComment('')
-    if(curMedia.isImage){
+    if (curMedia.isImage) {
       setActiveComment(curMedia.comment || '');
       setImageCommentDate(currentMedia.createdAt || '');
     }
@@ -132,53 +131,53 @@ const UploadMedia = props => {
     setActiveComment(e.target.value);
   };
 
-  const handleCommentEnter = e => {
-    setIsShowComment(false);
-    let newCommentsArray = [...comments];
-    let newActiveIndex = newCommentsArray[activeIndex].findIndex(
-      com => com.time === moment.duration(currentTime, "seconds").format("hh:mm:ss", { trim: false })
-    );
-    let comment = {
-      text: activeComment,
-      createdAt: new Date(),
-      time: moment.duration(currentTime, "seconds").format("hh:mm:ss", { trim: false })
-    };
-    if (newActiveIndex !== -1) {
-      newCommentsArray[activeIndex][newActiveIndex] = comment;
-    } else {
-      newCommentsArray[activeIndex].push(comment);
-    }
-    let newScreens = currentMedia.screens.map((scr, i) => {
-      return i === activeIndex ? { ...scr, comment: newCommentsArray[activeIndex] } : scr;
-    });
-    setCurrentMedia({ ...currentMedia, screens: newScreens });
-    setComments(newCommentsArray);
-    localStorage.comments = JSON.stringify(newCommentsArray);
-    localStorage.updateComment = true;
-    setActiveComment("");
-  };
   // const handleCommentEnter = e => {
   //   setIsShowComment(false);
   //   let newCommentsArray = [...comments];
-
+  //   let newActiveIndex = newCommentsArray[activeIndex].findIndex(
+  //     com => com.time === moment.duration(currentTime, "seconds").format("hh:mm:ss", { trim: false })
+  //   );
   //   let comment = {
   //     text: activeComment,
   //     createdAt: new Date(),
-  //     rawTime: currentTime,
-  //     time: moment.duration(currentTime, 'seconds').format("hh:mm:ss", { trim: false })
-  //   }
-  //   if (editCommentValue) {
-  //     newCommentsArray[activeIndex].text = comment.text;
-  //     setEditCommentValue(false)
+  //     time: moment.duration(currentTime, "seconds").format("hh:mm:ss", { trim: false })
+  //   };
+  //   if (newActiveIndex !== -1) {
+  //     newCommentsArray[activeIndex][newActiveIndex] = comment;
   //   } else {
-  //     newCommentsArray.push(comment);
+  //     newCommentsArray[activeIndex].push(comment);
   //   }
-  //   commentFinal = newCommentsArray.sort((a, b) => a.rawTime - b.rawTime);
-  //   setComments(commentFinal);
+  //   let newScreens = currentMedia.screens.map((scr, i) => {
+  //     return i === activeIndex ? { ...scr, comment: newCommentsArray[activeIndex] } : scr;
+  //   });
+  //   setCurrentMedia({ ...currentMedia, screens: newScreens });
+  //   setComments(newCommentsArray);
   //   localStorage.comments = JSON.stringify(newCommentsArray);
   //   localStorage.updateComment = true;
   //   setActiveComment("");
   // };
+  const handleCommentEnter = e => {
+    setIsShowComment(false);
+    let newCommentsArray = [...comments];
+
+    let comment = {
+      text: activeComment,
+      createdAt: new Date(),
+      rawTime: currentTime,
+      time: moment.duration(currentTime, 'seconds').format("hh:mm:ss", { trim: false })
+    }
+    if (editCommentValue) {
+      newCommentsArray[activeIndex].text = comment.text;
+      setEditCommentValue(false)
+    } else {
+      newCommentsArray.push(comment);
+    }
+    commentFinal = newCommentsArray.sort((a, b) => a.rawTime - b.rawTime);
+    setComments(commentFinal);
+    localStorage.comments = JSON.stringify(newCommentsArray);
+    localStorage.updateComment = true;
+    setActiveComment("");
+  };
   const handleImageComment = (event) => {
     localStorage.imageComments = event.target.value;
     setActiveComment(event.target.value)
@@ -186,15 +185,15 @@ const UploadMedia = props => {
 
   const toggleCommentBlock = () => setShowCommentBlock(!showCommentBlock);
   const toggleShareBlock = () => setShowShareModal(!showShareModal);
-  if(!currentMedia.isImage){
-    comments && comments.length > 0 && comments.map((item, index) => item.map((innerItem, i) => commentFinal.push(innerItem)));
-    commentFinal = commentFinal
-      ? commentFinal.sort((a, b) => moment.duration(a.time).asSeconds() - moment.duration(b.time).asSeconds())
-      : [];
-  }else{
-    commentFinal.push({createdAt: imageCommentDate || new Date(), text: activeComment, time: ""});
-  }
-  
+  // if (!currentMedia.isImage) {
+  //   comments && comments.length > 0 && comments.map((item, index) => item.map((innerItem, i) => commentFinal.push(innerItem)));
+  //   commentFinal = commentFinal
+  //     ? commentFinal.sort((a, b) => moment.duration(a.time).asSeconds() - moment.duration(b.time).asSeconds())
+  //     : [];
+  // } else {
+  //   commentFinal.push({ createdAt: imageCommentDate || new Date(), text: activeComment, time: "" });
+  // }
+
   if (loading)
     return (
       <div className="spinner__wrapper">
@@ -224,7 +223,7 @@ const UploadMedia = props => {
               <div className="comments_indicator" onClick={toggleCommentBlock}>
                 <Chat />
                 <span className="comments__total">
-                {commentFinal && commentFinal.length && commentFinal.filter(comment => comment.text.length > 0).length}
+                  {comments && comments.length && comments.filter(comment => comment.text.length > 0).length}
                 </span>
               </div>
               <div className="share_indicator" onClick={toggleShareBlock} style={{opacity: showDemo && '20%'}}>
@@ -337,7 +336,7 @@ const UploadMedia = props => {
           <EmptyProject setComments={setComments} setLoadingVideo={setLoading} setLoadingSlider={setLoadingSlider} />
         )}
       </div >
-      {showCommentBlock && <CommentBlock arrComments={commentFinal} />}
+      {showCommentBlock && <CommentBlock arrComments={comments} />}
     </div >
   );
 };
