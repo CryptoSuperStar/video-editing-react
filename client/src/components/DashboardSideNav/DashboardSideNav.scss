@@ -62,6 +62,7 @@
 @media all and (max-width: 860px) {
   .dashboard_nav {
     font-size: var(--font-size-s);
+    z-index: 100;
     strong {
       margin: 110px 0 25px;
     }
