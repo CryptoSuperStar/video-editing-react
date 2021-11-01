@@ -129,27 +129,27 @@ const VideoPlayer = (props) => {
             : (props.currentMedia.screens.length > 0
               && `url(${props.currentMedia.screens[1].screenSrc})`)
         }}>
-        {!props.currentMedia.isImage && !props.currentMedia.isSupported && <span className="warning__message">Sorry, File is not supported.</span>}
-        {props.errorMessage && <span className="warning__message">Sorry, File is not supported.</span>}
+        {!props.currentMedia.isImage && !props.currentMedia.isSupported && <span className="warning__message">The file is not supported. However, You can add comments on the timeline.</span>}
+        {props.errorMessage && <span className="warning__message">The file is not supported. However, You can add comments on the timeline.</span>}
         {props.currentMedia.isImage ?
           <div className="image__block"><img src={props.currentMedia.mediaSrc} alt={props.currentMedia.mediaSrc} /></div>
           : videoBlock()}
       </div>
 
-      {isShowControl && !props.errorMessage && !props.currentMedia.isImage &&
-        <div className="video-controls" id="video-controls" style={{ width: widthVideo + 'px' }}>
+      {isShowControl && !props.errorMessage && !props.currentMedia.isImage && props.currentMedia.isSupported &&
+        < div className="video-controls" id="video-controls" style={{ width: widthVideo + 'px' }}>
           <button data-title={!isPlay ? "Play" : "Pause"} id="play" onClick={togglePlay}>
             {isPlay ? <PauseButton /> : <PlayButton />}
           </button>
           <div className="time">
             <time id="time-elapsed">
-              {moment.duration(currentTime, 'seconds').format("hh:mm:ss", { trim: false })}
+              {moment.duration(currentTime, 'seconds').format("mm:ss:SSS", { trim: false })}
             </time>
             <span> / </span>
-            <time id="duration">{moment.duration(endAt, 'seconds').format("hh:mm:ss", { trim: false })}</time>
+            <time id="duration">{moment.duration(endAt, 'seconds').format("mm:ss:SSS", { trim: false })}</time>
           </div>
         </div>}
-    </div>
+    </div >
   );
 }
 
