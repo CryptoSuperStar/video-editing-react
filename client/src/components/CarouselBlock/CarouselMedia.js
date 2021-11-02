@@ -116,7 +116,8 @@ const CarouselMedia = (props) => {
       e.stopPropagation();
       setShowDraggable(!showDraggable);
       setShowArrow(false);
-    }}>
+    }}
+    >
       {!showDraggable ? <Carousel slidesToShow={window.innerWidth <= 575 ? 3 : 5}
         heightMode="first"
         defaultControlsConfig={{

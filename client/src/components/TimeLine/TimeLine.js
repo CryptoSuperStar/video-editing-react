@@ -112,7 +112,7 @@ const TimeLine = props => {
   }
 
   return (
-    <div className="TimeLine">
+    <div className="TimeLine" style={{zIndex: localStorage.showCutBox === 'true' && '101'}}>
       <div className="TimeLine__inner" ref={timeLineBox}>
         <div className="video-progress"
           style={{ left: shift + "%", zIndex: "11" }} />
@@ -152,7 +152,10 @@ const TimeLine = props => {
         </Fragment>
 
         {props.isShowComment &&
-          <div className="comment__inner" style={{ left: window.innerWidth > 575 && shift - 3.2 + "%" }}>
+          <div className="comment__inner" style={{
+            left: window.innerWidth > 575 && shift - 3.2 + "%" ,
+            zIndex: localStorage.isShowComment && '101'
+          }}>
             <textarea
               autoFocus={true}
               name="text"

@@ -6,8 +6,8 @@ const FFmpeg = require('fluent-ffmpeg');
 const { v4: uuidv4 } = require('uuid');
 const moment = require('moment');
 require("moment-duration-format");
-const MEDIA_SRC = 'client/build';
-// const MEDIA_SRC = 'client/public';
+// const MEDIA_SRC = 'client/build';
+const MEDIA_SRC = 'client/public';
 
 function clearTemp(link) {
   if (fs.existsSync(link)) {
