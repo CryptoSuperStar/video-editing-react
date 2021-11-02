@@ -2,7 +2,7 @@
   width: 100%;
   margin-top: 15px;
   textarea, {
-    outline: 1px solid #c3c9e1;
+    outline: none;
     box-sizing: border-box;
     width: 100%;
     margin-top: 15px;
@@ -10,7 +10,11 @@
     border-radius: 5px;
     padding: 15px;
     background-color: #FAFCFE;
-    color: #97A0C3;
+    font-family: Montserrat, sans-serif;
+    color: black;
+    &::placeholder {
+      color: #97A0C3;
+    }
   }
   label  {
     &:first-child {
@@ -41,7 +45,7 @@
         display: block;
         font-size: 16px;
         width: 100%;
-        outline: 1px solid #c3c9e1;
+        outline: none;
         box-sizing: border-box;
         margin-top: 15px;
         border: 1px solid #D2D5E1;
@@ -59,7 +63,7 @@
     button {
       flex-basis: 25%;
       background-color: #3B8590;
-      border: 1px solid #306D76;
+      border: none;
       border-radius: 5px;
       text-align: center;
       color: white;
@@ -100,12 +104,19 @@
         top: 3px;
         left: 5px;
         padding: 0 5px;
-        font-size: 12px;
+        font-size: 12px !important;
         background-color: white;
+        color: #9B9B9B !important;
+        font-weight: normal !important;
       }
     }
     textarea {
       background-color: white;
+      border: 1px solid rgba(112, 112, 112, .2);
+      font-size: 20px;
+      &::placeholder {
+        color: #9B9B9B !important;
+      }
     }
     .form__bottom {
       flex-direction: column;
@@ -115,6 +126,8 @@
         select {
           padding: 10px 5px;
           background-color: white;
+          color: black;
+          border: 1px solid rgba(112, 112, 112, .2);
           option {
             background-color: white;
           }

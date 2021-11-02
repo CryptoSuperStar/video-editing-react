@@ -2,12 +2,16 @@ const initialState = {
   user: {
     email: '',
     userName: '',
+    firstName: null,
+    lastName: null,
     avatar: '',
     registeredWith: '',
     twitterId: '',
     facebookId: '',
     paymentId: '',
-    plan: {}
+    phone: '',
+    organisation: '',
+    payments: []
   },
   isAuthenticated: false,
   loading: false
