@@ -113,11 +113,13 @@ const UploadMedia = props => {
   }
 
   const handleCutVideo = () => {
+    localStorage.showCutBox = !showCutBox;
     setShowCutBox(!showCutBox);
   }
 
   const handleActiveScreenshot = (idx) => {
-    setIsShowComment(true);
+    setIsShowComment(!isShowComment);
+    localStorage.isShowComment = !isShowComment;
     // setActiveComment(comments[idx] && comments[idx].text)
   }
   const editComment = (idx) => {
