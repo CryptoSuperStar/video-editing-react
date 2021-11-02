@@ -74,6 +74,7 @@
       }
       &.comm_tooltip {
         right: 45%;
+        top: 7vh;
         .arrow-demo {
           right: 0;
           top: 20px;
@@ -83,8 +84,7 @@
       }
       &.cut_tooltip {
         left: 3%;
-        top: auto;
-        bottom: 36vh;
+        top: 27vh;
         .arrow-demo {
           left: 10px;
           position: relative;
@@ -92,8 +92,7 @@
         }
       }
       &.clear_tooltip {
-        top: auto;
-        bottom: 36vh;
+        top: 47vh;
         left: 27%;
         .arrow-demo {
           height: 8vh;
@@ -102,18 +101,17 @@
         }
       }
       &.video_tooltip {
-        top: 76vh;
-        left: 20%;
+        top: 74vh;
+        left: 15%;
         .arrow-demo {
           position: absolute;
-          top: -25px;
-          left: 140px;
+          top: -1vh;
+          left: 85%;
           height: 5vh;
         }
       }
       &.addC_tooltip {
-        top: auto;
-        bottom: 55vh;
+        top: 37vh;
         left: auto;
         right: 0;
         .arrow-demo {
@@ -124,7 +122,7 @@
         }
       }
       &.videAdd_tooltip {
-        top: 88vh;
+        top: 86vh;
         left: auto;
         right: 0;
         .arrow-demo {

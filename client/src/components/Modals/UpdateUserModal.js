@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
 import {updateUser} from "../../store/actions/auth.action";
 import penDot from '../../assets/img/penDot.png';
@@ -14,8 +14,17 @@ const UpdateUserModal = (props) => {
   const [phone, setPhone] = useState('');
   const [company, setCompany] = useState('');
   
-  const handleSubmit = () => {
-    let updatedUser = {...props.user, email, phone, userName: `${firstName} ${lastName}`,organisation: company};
+  useEffect(() => {
+    setFirstName(props.user.firstName);
+    setLastName(props.user.lastName);
+    setEmail(props.user.email);
+    setPhone(props.user.phone);
+    setCompany(props.user.organisation)
+  },[])
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let updatedUser = {...props.user, email, phone, firstName, lastName, organisation: company};
     props.dispatch(updateUser(props.user._id, updatedUser, props.setShowUpdateModal))
   }
   

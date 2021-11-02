@@ -33,6 +33,7 @@ const Accounts = (props) => {
   const [showShareModal, setShareModal] = useState(false);
   const [type, setType] = useState('');
   const [payId, setPayId] = useState('');
+  const [fullName, setFullName] = useState(null);
   
   useEffect(() => {
     if (props.user._id) {
@@ -40,6 +41,14 @@ const Accounts = (props) => {
       setLoading(false)
     }
   },[props.user._id, props.user])
+  
+  useEffect(() => {
+    if (userInfo) {
+      if (userInfo.firstName) {
+        setFullName(`${userInfo.firstName} ${userInfo.lastName ? userInfo.lastName : ''}`)
+      } else setFullName(props.user.userName)
+    }
+  }, [userInfo])
   
   const cancelSubscribe = (id) => {
     const updatedPayments = userInfo.payments.filter(pay => pay._id !== id);
@@ -84,7 +93,7 @@ const Accounts = (props) => {
           <div className="user_info">
             <img src={userInfo.avatar} alt="avatar"/>
             <div>
-              <span>{userInfo.userName}</span>
+              <span>{fullName}</span>
               <span>{userInfo.email}</span>
             </div>
           </div>
