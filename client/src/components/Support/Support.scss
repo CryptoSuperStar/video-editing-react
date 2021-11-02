@@ -39,6 +39,7 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    margin-top: 20px;
     label {
       flex-basis: 50%;
       select {
@@ -83,6 +84,7 @@
       align-items: center;
       justify-content: space-between;
       cursor: pointer;
+      font-weight: bold;
     }
     .support__question--text {
       margin: 10px 5px;
@@ -126,6 +128,7 @@
         select {
           font-size: 18px;
           padding: 15px 7px;
+          line-height: 25px;
           background-color: white;
           color: black;
           border: 1px solid rgba(112, 112, 112, .2);

@@ -156,7 +156,7 @@ export const resetPassword = (oldPass, newPass, func) => async dispatch => {
     try {
       const res = await axios.post(`${REACT_APP_API_URL}/resetPassword`, {oldPass, newPass});
       localStorage.token = res.data;
-      toast.success('Password was updated')
+      toast.success('Your Profile details have been updated')
       func(false);
     } catch (e) {
       console.log(e)
