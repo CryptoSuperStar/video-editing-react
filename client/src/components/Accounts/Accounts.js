@@ -185,12 +185,13 @@ const Accounts = (props) => {
           <div className="account_line"/>
           <div className="general__buttons">
             <button onClick={() => setResetPassModal(true)}>Reset Password</button>
-            <button onClick={() => setShareModal(true)}>Invite Friends</button>
+            {/*<button onClick={() => setShareModal(true)}>Invite Friends</button>*/}
             <button onClick={() => {
               localStorage.removeItem('token');
               props.dispatch({type: 'LOGOUT'});
               props.history.push('/');
             }}>Log Out</button>
+            <button onClick={() => props.history.push('/term_conds_policy')}>Policy</button>
           </div>
         </section>
       </>

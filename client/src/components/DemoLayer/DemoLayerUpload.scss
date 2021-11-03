@@ -126,7 +126,6 @@
         top: 22vh;
         left: auto;
         right: 0;
-        width: 43%;
         .arrow-demo {
           width: 6vh;
           height: 32vh;
@@ -136,9 +135,8 @@
         }
       }
       &.videAdd_tooltip {
-        top: 78vh;
-        left: auto;
-        right: 0;
+        top: 80vh;
+        left: 50%;
         .arrow-demo {
           position: absolute;
           left: auto;
