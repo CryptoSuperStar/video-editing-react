@@ -36,7 +36,7 @@ const DemoLayerUpload = ({setShowDemo}) => {
         />
         <ToolTip title="Option 3"
                  text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-                 src={window.innerWidth <= 575 ? arrowVideo : false}
+                 src={window.innerWidth <= 575 ? arrowClear : false}
                  name="DemoLayer__tooltip video_tooltip"
                  comp={arrowCut}
         />
