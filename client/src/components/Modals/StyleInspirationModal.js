@@ -97,7 +97,7 @@ const StyleInspirationModal = (props) => {
   };
 
   return (
-    <div className="modal__wrapper">
+    <div className="modal__wrapper" style={{zIndex: localStorage.showDemoLayer === 'true' && '130'}}>
       <div className="style__modal">
         <div className="connectSocial__cross" onClick={() => props.setShowStyleModal(false)}>
           <Cancel fill="black" />
