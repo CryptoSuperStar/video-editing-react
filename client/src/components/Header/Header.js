@@ -62,7 +62,7 @@ const Header = (props) => {
   )
   
   return (
-    <div className="Header__block container">
+    <div className="Header__block container" style={{zIndex: localStorage.showDemoLayer === 'true' && '100'}}>
       <Link className="logo__block" to="/">
         <img src={logo} alt="logo"/>
         <span className="logo__title">ProVid.</span>

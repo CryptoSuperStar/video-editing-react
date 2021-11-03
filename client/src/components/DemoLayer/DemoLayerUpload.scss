@@ -65,6 +65,16 @@
 }
 
 @media all and (max-width: 575px){
+  .DemoLayer {
+    .DemoLayer__title {
+      font-size: 14px;
+      line-height: 16px;
+    }
+    .DemoLayer__text {
+      font-size: 12px;
+      line-height: 14px;
+    }
+  }
   .DemoLayer.UploadLayer {
     .DemoLayer__tooltip {
       text-align: left;
@@ -76,7 +86,7 @@
         right: 45%;
         top: 7vh;
         .arrow-demo {
-          right: 0;
+          left: 75%;
           top: 20px;
           position: absolute;
           transform: rotate(-90deg);
@@ -101,34 +111,38 @@
         }
       }
       &.video_tooltip {
-        top: 74vh;
-        left: 15%;
+        top: 37vh;
+        left: 44%;
         .arrow-demo {
           position: absolute;
-          top: -1vh;
-          left: 85%;
-          height: 5vh;
+          top: 9vh;
+          left: 30%;
+          //width: 10vh;
+          height: 18.5vh;
+          transform: scale(-1,1);
         }
       }
       &.addC_tooltip {
-        top: 37vh;
+        top: 22vh;
         left: auto;
         right: 0;
+        width: 43%;
         .arrow-demo {
-          height: 17vh;
+          width: 6vh;
+          height: 32vh;
           position: absolute;
           right: 15px;
           margin-top: 30px;
         }
       }
       &.videAdd_tooltip {
-        top: 86vh;
+        top: 78vh;
         left: auto;
         right: 0;
         .arrow-demo {
           position: absolute;
           left: auto;
-          right: 40px;
+          right: 45%;
           top: -37px;
         }
       }
