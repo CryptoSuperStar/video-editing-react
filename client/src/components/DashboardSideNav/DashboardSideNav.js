@@ -36,18 +36,18 @@ const DashboardSideNav = () => {
         <ProjectsIcon />
         <span>Projects</span>
       </NavLink>
-      <NavLink to="/dashboard/settings" className="web__view">
+      {/*<NavLink to="/dashboard/settings" className="web__view">
         <SettingsIcon />
         <span>Settings</span>
-      </NavLink>
+      </NavLink>*/}
       <NavLink to="/dashboard/support" className="web__view">
         <PhoneIcon fill="white"/>
         <span>Support</span>
       </NavLink>
-      <NavLink to="/term_conds_policy" className="web__view">
+      {/*<NavLink to="/term_conds_policy" className="web__view">
         <PolicyIcon />
         <span>Policy</span>
-      </NavLink>
+      </NavLink>*/}
     </div>
   );
 };

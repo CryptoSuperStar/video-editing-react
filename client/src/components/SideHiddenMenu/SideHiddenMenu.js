@@ -8,7 +8,7 @@ const SideHiddenMenu = (props) => {
   
   const history = useHistory();
   
-  const unregisteredLinks = ["Account", 'Upload', "Projects", "Settings", "Support"]
+  const unregisteredLinks = ["Account", 'Upload', "Projects", "Support"]
   
   const handleButton = link => {
     props.handleShowMenu(false);
@@ -49,11 +49,11 @@ const SideHiddenMenu = (props) => {
               </button>
             </li>
           ))}
-          <li>
+          {/*<li>
             <button onClick={() => handleButton( 'term_conds_policy')}>
               Policy<RightArrow />
             </button>
-          </li>
+          </li>*/}
         </ul>
       </div>
     </div>
