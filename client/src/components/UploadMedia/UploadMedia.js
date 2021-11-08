@@ -39,6 +39,7 @@ const UploadMedia = props => {
   const [activeComment, setActiveComment] = useState('');
   const [imageCommentDate, setImageCommentDate] = useState("");
   const [editCommentValue, setEditCommentValue] = useState(false);
+  const [editCommentIndex, setEditCommentIndex] = useState([0, 0]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isShowComment, setIsShowComment] = useState(false);
   const [showCommentBlock, setShowCommentBlock] = useState(false);
@@ -48,7 +49,24 @@ const UploadMedia = props => {
   const [moveTo, setMoveTo] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [showDemo, setShowDemo] = useState(false);
+  const [commentsLength, setCommentsLength] = useState(0)
   let commentFinal = [];
+
+  useEffect(() => {
+    if (comments) {
+      let length = 0
+      comments.map((item, index) => {
+        item.map((com) => {
+          if (com.text) {
+            length++
+          }
+        }
+        )
+      })
+      setCommentsLength(length)
+    }
+  }, [comments])
+
   useEffect(() => {
     if (localStorage.showDemoLayer === "true") {
       setShowDemo(true);
@@ -70,7 +88,27 @@ const UploadMedia = props => {
     },
     [localStorage.currentProjectId]
   );
+  useEffect(
+    () => {
+      if (currentMedia.mediaName && currentMedia.screens.length > 0) {
+        let commentsArray = currentMedia.screens.map(item => item.comment);
+        localStorage.comments = JSON.stringify(commentsArray);
+        setComments(commentsArray);
+      }
+    },
+    [localStorage.currentMedia, props.project.content]
+  );
 
+  useEffect(
+    () => {
+      if (currentMedia.mediaName && currentMedia.screens.length > 0) {
+        let commentsArray = currentMedia.screens.map(item => item.comment);
+        localStorage.comments = JSON.stringify(commentsArray);
+        setComments(commentsArray);
+      }
+    },
+    [props.project.projectName, localStorage.currentMedia, currentMedia.screens.length]
+  );
   useEffect(
     () => {
       if (localStorage.currentMedia && props.project.projectName && props.project.content.length > 0) {
@@ -95,11 +133,11 @@ const UploadMedia = props => {
       curMedia.screens.sort((a, b) => a.timeInSeconds - b.timeInSeconds);
     }
     setCurrentMedia(curMedia);
-    if (curMedia.comments) {
-      localStorage.comments = JSON.stringify(curMedia?.comments);
-      setComments(curMedia?.comments);
+    // if (curMedia.comments) {
+    //   localStorage.comments = JSON.stringify(curMedia?.comments);
+    //   setComments(curMedia?.comments);
 
-    }
+    // }
     setActiveComment('')
     if (curMedia.isImage) {
       setActiveComment(curMedia.comment || '');
@@ -122,79 +160,52 @@ const UploadMedia = props => {
     localStorage.isShowComment = !isShowComment;
     // setActiveComment(comments[idx] && comments[idx].text)
   }
-  const editComment = (idx) => {
+  const editComment = (index1, index2) => {
     setIsShowComment(true);
-    setActiveIndex(idx);
-    setActiveComment(comments[idx] && comments[idx]?.text)
+    setEditCommentIndex([index1, index2]);
+    setActiveComment(comments[index1][index2] && comments[index1][index2]?.text)
     setEditCommentValue(true);
 
   }
   const handleCommentChange = (e) => {
     setActiveComment(e.target.value);
   };
-
-  // const handleCommentEnter = e => {
-  //   setIsShowComment(false);
-  //   let newCommentsArray = [...comments];
-  //   let newActiveIndex = newCommentsArray[activeIndex].findIndex(
-  //     com => com.time === moment.duration(currentTime, "seconds").format("hh:mm:ss", { trim: false })
-  //   );
-  //   let comment = {
-  //     text: activeComment,
-  //     createdAt: new Date(),
-  //     time: moment.duration(currentTime, "seconds").format("hh:mm:ss", { trim: false })
-  //   };
-  //   if (newActiveIndex !== -1) {
-  //     newCommentsArray[activeIndex][newActiveIndex] = comment;
-  //   } else {
-  //     newCommentsArray[activeIndex].push(comment);
-  //   }
-  //   let newScreens = currentMedia.screens.map((scr, i) => {
-  //     return i === activeIndex ? { ...scr, comment: newCommentsArray[activeIndex] } : scr;
-  //   });
-  //   setCurrentMedia({ ...currentMedia, screens: newScreens });
-  //   setComments(newCommentsArray);
-  //   localStorage.comments = JSON.stringify(newCommentsArray);
-  //   localStorage.updateComment = true;
-  //   setActiveComment("");
-  // };
-  const handleCommentEnter = e => {
-    setIsShowComment(false);
-    let newCommentsArray = [...comments];
-
-    let comment = {
-      text: activeComment,
-      createdAt: new Date(),
-      rawTime: currentTime,
-      time: moment.duration(currentTime, 'seconds').format("hh:mm:ss", { trim: false })
-    }
-    if (editCommentValue) {
-      newCommentsArray[activeIndex].text = comment.text;
-      setEditCommentValue(false)
-    } else {
-      newCommentsArray.push(comment);
-    }
-    commentFinal = newCommentsArray.sort((a, b) => a.rawTime - b.rawTime);
-    setComments(commentFinal);
-    localStorage.comments = JSON.stringify(newCommentsArray);
-    localStorage.updateComment = true;
-    setActiveComment("");
-  };
   const handleImageComment = (event) => {
     localStorage.imageComments = event.target.value;
     setActiveComment(event.target.value)
   }
 
+  const handleCommentEnter = e => {
+    setIsShowComment(false);
+    let newCommentsArray = [...comments];
+    let newScreens;
+    if (editCommentValue && newCommentsArray[editCommentIndex[0]][editCommentIndex[1]]) {
+      newCommentsArray[editCommentIndex[0]][editCommentIndex[1]].text = activeComment;
+      newScreens = currentMedia.screens.map((scr, i) => {
+        return i === editCommentIndex[0] ? { ...scr, comment: newCommentsArray[editCommentIndex[0]] } : scr;
+      });
+    } else {
+      let comment = {
+        text: activeComment,
+        createdAt: new Date(),
+        rawTime: currentTime,
+        time: moment.duration(currentTime, 'seconds').format("mm:ss:SSS", { trim: false })
+      }
+      newCommentsArray[activeIndex].push(comment);
+      commentFinal = newCommentsArray[activeIndex].sort((a, b) => a.rawTime - b.rawTime);
+      newCommentsArray[activeIndex] = commentFinal;
+      newScreens = currentMedia.screens.map((scr, i) => {
+        return i === activeIndex ? { ...scr, comment: newCommentsArray[activeIndex] } : scr;
+      });
+    }
+    setCurrentMedia({ ...currentMedia, screens: newScreens });
+    setComments(newCommentsArray);
+    localStorage.comments = JSON.stringify(newCommentsArray);
+    localStorage.updateComment = true;
+    setActiveComment("");
+  };
   const toggleCommentBlock = () => setShowCommentBlock(!showCommentBlock);
   const toggleShareBlock = () => setShowShareModal(!showShareModal);
-  // if (!currentMedia.isImage) {
-  //   comments && comments.length > 0 && comments.map((item, index) => item.map((innerItem, i) => commentFinal.push(innerItem)));
-  //   commentFinal = commentFinal
-  //     ? commentFinal.sort((a, b) => moment.duration(a.time).asSeconds() - moment.duration(b.time).asSeconds())
-  //     : [];
-  // } else {
-  //   commentFinal.push({ createdAt: imageCommentDate || new Date(), text: activeComment, time: "" });
-  // }
 
   if (loading)
     return (
@@ -225,13 +236,13 @@ const UploadMedia = props => {
               <div className="comments_indicator" onClick={toggleCommentBlock}>
                 <Chat />
                 <span className="comments__total">
-                  {comments && comments.length && comments.filter(comment => comment.text.length > 0).length}
+                  {commentsLength}
                 </span>
               </div>
-              <div className="share_indicator" onClick={toggleShareBlock} style={{opacity: showDemo && '20%'}}>
+              <div className="share_indicator" onClick={toggleShareBlock} style={{ opacity: showDemo && '20%' }}>
                 <Share />
               </div>
-              <div className="question_indicator" style={{opacity: showDemo && '20%'}}>
+              <div className="question_indicator" style={{ opacity: showDemo && '20%' }}>
                 <Info />
               </div>
             </div>
