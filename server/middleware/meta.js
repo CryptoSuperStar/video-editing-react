@@ -1,8 +1,8 @@
 const FFmpeg = require('fluent-ffmpeg');
 
 module.exports = (req, res, next) => {
-  FFmpeg.ffprobe(req.body.link, async (err, meta)=>{
-    
+  FFmpeg.ffprobe(req.body.link, async (err, meta) => {
+
     let supported = false;
     let isImage = false;
     switch ((meta.streams[0].codec_name).toLowerCase()) {
@@ -16,9 +16,10 @@ module.exports = (req, res, next) => {
       case 'theora':
       case 'vp8':
       case 'vp9':
+      case 'aac':
         supported = true;
     }
-  
+
     switch ((meta.streams[0].codec_name).toLowerCase()) {
       case 'mjpeg':
       case 'png':
