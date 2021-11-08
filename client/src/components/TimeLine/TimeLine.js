@@ -118,12 +118,12 @@ const TimeLine = props => {
         <div className="video-progress"
           style={{ left: shift + "%", zIndex: "11" }} />
 
-        {props.comments &&
+        {/* {props.comments &&
           props.comments.map((comment, i) => comment.text.length > 0 &&
             <div key={i} onClick={(e) => { props.editComment(i) }} className="comment__indicate" style={{ left: (comment.rawTime * 100 / props.currentMedia.duration) + "%", zIndex: "10", cursor: "pointer" }}>
 
               <span />
-            </div>)}
+            </div>)} */}
 
         <div className="TimeLine__inner--images">{props.currentMedia.screens.map((scr, i) => (
           <div className="TimeLine__image--item" onClick={(e) =>

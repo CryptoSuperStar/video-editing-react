@@ -161,21 +161,26 @@ const UploadMedia = props => {
   const handleCommentEnter = e => {
     setIsShowComment(false);
     let newCommentsArray = [...comments];
-
+    let newActiveIndex = newCommentsArray[activeIndex].findIndex(
+      com => com.time === moment.duration(currentTime, "seconds").format("hh:mm:ss", { trim: false })
+    );
     let comment = {
       text: activeComment,
       createdAt: new Date(),
       rawTime: currentTime,
-      time: moment.duration(currentTime, 'seconds').format("hh:mm:ss", { trim: false })
+      time: moment.duration(currentTime, 'seconds').format("mm:ss:SSS", { trim: false })
     }
-    if (editCommentValue) {
-      newCommentsArray[activeIndex].text = comment.text;
-      setEditCommentValue(false)
+    console.log(comment,'comment');
+    if (newActiveIndex !== -1) {
+      newCommentsArray[activeIndex][newActiveIndex] = comment;
     } else {
-      newCommentsArray.push(comment);
+      newCommentsArray[activeIndex].push(comment);
     }
-    commentFinal = newCommentsArray.sort((a, b) => a.rawTime - b.rawTime);
-    setComments(commentFinal);
+    let newScreens = currentMedia.screens.map((scr, i) => {
+      return i === activeIndex ? { ...scr, comment: newCommentsArray[activeIndex] } : scr;
+    });
+    setCurrentMedia({ ...currentMedia, screens: newScreens });
+    setComments(newCommentsArray);
     localStorage.comments = JSON.stringify(newCommentsArray);
     localStorage.updateComment = true;
     setActiveComment("");
@@ -187,14 +192,14 @@ const UploadMedia = props => {
 
   const toggleCommentBlock = () => setShowCommentBlock(!showCommentBlock);
   const toggleShareBlock = () => setShowShareModal(!showShareModal);
-  // if (!currentMedia.isImage) {
-  //   comments && comments.length > 0 && comments.map((item, index) => item.map((innerItem, i) => commentFinal.push(innerItem)));
-  //   commentFinal = commentFinal
-  //     ? commentFinal.sort((a, b) => moment.duration(a.time).asSeconds() - moment.duration(b.time).asSeconds())
-  //     : [];
-  // } else {
-  //   commentFinal.push({ createdAt: imageCommentDate || new Date(), text: activeComment, time: "" });
-  // }
+  if (!currentMedia.isImage) {
+    comments && comments.length > 0 && comments.map((item, index) => item.map((innerItem, i) => commentFinal.push(innerItem)));
+    commentFinal = commentFinal
+      ? commentFinal.sort((a, b) => moment.duration(a.time).asSeconds() - moment.duration(b.time).asSeconds())
+      : [];
+  } else {
+    commentFinal.push({ createdAt: imageCommentDate || new Date(), text: activeComment, time: "" });
+  }
 
   if (loading)
     return (
@@ -225,7 +230,7 @@ const UploadMedia = props => {
               <div className="comments_indicator" onClick={toggleCommentBlock}>
                 <Chat />
                 <span className="comments__total">
-                  {comments && comments.length && comments.filter(comment => comment.text.length > 0).length}
+                  {commentFinal && commentFinal.length && commentFinal.filter(comment => comment.text.length > 0).length}
                 </span>
               </div>
               <div className="share_indicator" onClick={toggleShareBlock} style={{opacity: showDemo && '20%'}}>
@@ -289,7 +294,7 @@ const UploadMedia = props => {
               )
             }
             {
-              currentMedia.isImage ? (
+              currentMedia.isImage && isShowComment ? (
                 <div className="image__coment">
                   <textarea placeholder="Add edit notes here:" rows="5" value={activeComment} onChange={handleImageComment} />{" "}
                 </div>
@@ -338,8 +343,8 @@ const UploadMedia = props => {
           <EmptyProject setComments={setComments} setLoadingVideo={setLoading} setLoadingSlider={setLoadingSlider} />
         )}
       </div >
-      {showCommentBlock && <CommentBlock arrComments={comments} />}
-    </div >
+      {showCommentBlock && <CommentBlock arrComments={commentFinal} />}
+    </div>
   );
 };
 const mapStateToProps = state => ({
