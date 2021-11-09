@@ -110,20 +110,16 @@ const TimeLine = props => {
         <div className="video-progress"
           style={{ left: shift + "%", zIndex: "11" }} />
 
-        {props.currentMedia.screens.map((scr, index1) => (
-          scr.comment && scr.comment.map((comment, index2) => (comment.text.length > 0 &&
-            <div key={index2} onClick={(e) => { props.editComment(index1, index2) }} className="comment__indicate" style={{ left: (comment.rawTime * 100 / props.currentMedia.duration) + "%", zIndex: "10", cursor: "pointer" }}>
+        {props.comments &&
+          props.comments.map((comment, i) => comment.text.length > 0 &&
+            <div key={i} onClick={(e) => { props.editComment(i) }} className="comment__indicate" style={{ left: (comment.rawTime * 100 / props.currentMedia.duration) + "%", zIndex: "10", cursor: "pointer" }}>
 
               <span />
-            </div>))
-        ))
-        }
+            </div>)}
 
         <div className="TimeLine__inner--images">{props.currentMedia.screens.map((scr, i) => (
-          <div className="TimeLine__image--item" onClick={(e) => {
-            props.setActiveIndex(i);
-            handleStepTime(e)
-          }}
+          <div className="TimeLine__image--item" onClick={(e) =>
+            handleStepTime(e)}
             key={scr._id}>
             <p>{scr.time}</p>
             <div className="insteadOfImg" style={{ backgroundImage: `url(${scr.screenSrc})` }} />
@@ -131,14 +127,10 @@ const TimeLine = props => {
         ))}</div>
 
         <Fragment   >
-          {props.showCutBox && <div className="resizable__box"
-            onClick={(e) => {
-              handleStepTime(e)
-            }}
-            style={{
-              left: leftArrowPad + "%",
-              right: rightArrowPad + '%'
-            }}>
+          {props.showCutBox && <div className="resizable__box" onClick={(e) => handleStepTime(e)} style={{
+            left: leftArrowPad + "%",
+            right: rightArrowPad + '%'
+          }}>
             <div className="resizable__box--left-arrow" style={{ left: '-5px' }}
               onMouseDown={leftPad} onTouchStart={leftPad}>
               <Arrow />
@@ -163,7 +155,7 @@ const TimeLine = props => {
               rows="1"
               placeholder="Add Your Comment"
               value={props.activeComment}
-              defaultValue={""}
+              defaultValue={props.editCommentValue && props.activeIndex ? props.comments[props.activeIndex].text : ""}
               onChange={e => props.handleCommentChange(e)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
@@ -187,10 +179,9 @@ const TimeLine = props => {
             }}>X
             </div>
             <Moon onClick={props.handleCommentEnter} />
-          </div>
-        }
+          </div>}
       </div>
-    </div>
+    </div >
   );
 };
 
