@@ -8,6 +8,7 @@
   background-color: var(--white);
   border-radius: 10px;
   z-index: 17;
+  margin-top: 40px;
   .connectSocial__cross {
     position: fixed;
     top: 15px;
@@ -30,7 +31,7 @@
     }
   }
   h3 {
-    margin-top: 70px;
+    margin-top: 16px;
     letter-spacing: 0.00px;
     line-height: 40px;
     color: var(--black);
@@ -329,8 +330,8 @@
 .pay__modal--submit, button.go__pro {
   border: none;
   width: 80%;
-  padding: 25px 0;
-  margin: 50px auto;
+  padding: 16px 0;
+  margin: 25px auto;
   background-color: var(--smalt-blue);
   border-radius: 5px;
   letter-spacing: -0.66px;

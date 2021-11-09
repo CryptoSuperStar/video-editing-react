@@ -20,6 +20,10 @@
   cursor: pointer;
 }
 
+.logo__block img {
+  height: 40px;
+}
+
 .logo__title {
   color: var(--black);
   font-family: "SFPro Display-Bold", sans-serif;
@@ -239,8 +243,7 @@
     position: relative;
   }
   .logo__block img {
-    width: 19px;
-    height: 24px;
+    height: 28px;
   }
   .logo__title {
     font-size: var(--font-size-xl);
