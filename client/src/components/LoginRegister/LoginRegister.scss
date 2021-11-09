@@ -67,7 +67,7 @@
   }
 }
 
-.twitter_login__button, .facebook__button, .google__button, .email__button {
+.facebook__button, .google__button, .email__button {
   box-sizing: border-box;
   background-color: #00a2f9;
   border-radius: 22px !important;
@@ -249,7 +249,7 @@
   .LoginRegister__image {
    display: none;
  }
-  .twitter_login__button, .facebook__button, .google__button, .email__button, .apple-auth-btn {
+ .facebook__button, .google__button, .email__button, .apple-auth-btn {
     width: 80%;
   }
   .LoginRegister__social_login > span {
