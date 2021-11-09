@@ -42,7 +42,7 @@ const StyleInspirationModal = (props) => {
     setPlatforms(newPlatforms);
   }
   const updateImageComments = (id) => {
-    let newCurrentMedia = {...props.currentMedia};
+    let newCurrentMedia = { ...props.currentMedia };
     let newContent = [...props.content];
     let index = props.content.findIndex(content => content._id === id);
     newContent[index] = newCurrentMedia;
@@ -61,12 +61,10 @@ const StyleInspirationModal = (props) => {
     newContent[index] = newCurrentMedia;
     if (localStorage.comments) {
       let newComments = JSON.parse(localStorage.comments);
-      // newCurrentMedia = newCurrentMedia.screens.map((item, i) => {
-      //   return newComments[i].text.length > 0 ? { ...item, comment: newComments[i] } : item
-      // })
-
-      // newContent[index].screens = newCurrentMedia;
-      newContent[index].comments = newComments;
+      newCurrentMedia = newCurrentMedia.screens.map((item, i) => {
+        return newComments[i].length > 0 ? { ...item, comment: newComments[i] } : item
+      })
+      newContent[index].screens = newCurrentMedia;
       props.setComments([]);
     }
     return newContent;
@@ -99,7 +97,7 @@ const StyleInspirationModal = (props) => {
 
 
   return (
-    <div className="modal__wrapper" style={{zIndex: localStorage.showDemoLayer === 'true' && '130'}}>
+    <div className="modal__wrapper" style={{ zIndex: localStorage.showDemoLayer === 'true' && '130' }}>
       <div className="style__modal">
         <div className="connectSocial__cross" onClick={() => props.setShowStyleModal(false)}>
           <Cancel fill="black" />
