@@ -110,6 +110,7 @@ const VideoPlayer = (props) => {
     onClick={togglePlay}
     onTimeUpdate={handleUpdateTime}
     autoPlay={isAutoPlay}
+    playsInline={true}
   >
     Video not supported
   </video>

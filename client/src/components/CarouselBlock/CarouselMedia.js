@@ -86,10 +86,10 @@ const CarouselMedia = (props) => {
     newContent[index] = newCurrentMedia;
     if (localStorage.comments && newCurrentMedia.screens.length) {
       let newComments = JSON.parse(localStorage.comments);
-      newCurrentMedia = newCurrentMedia.screens.map((item, i) => {
-        return newComments[i].length > 0 ? { ...item, comment: newComments[i] } : item
-      })
-      // newContent[index].comments = newComments;
+      // newCurrentMedia = newCurrentMedia.screens.map((item, i) => {
+      //   return newComments[i].text.length > 0 ? { ...item, comment: newComments[i] } : item
+      // })
+      newContent[index].comments = newComments;
       props.setComments([]);
     }
     props.dispatch(updateContent(newContent));
