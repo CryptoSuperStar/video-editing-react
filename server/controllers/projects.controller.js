@@ -103,7 +103,6 @@ exports.takeScreenShotController = async (req, res) => {
               screenSrc: uploadedVideo.Location,
               timeInSeconds: (stepInSeconds * (i + 1) - (stepInSeconds / 2)),
               time: timeInFormat,
-              comment: []
             })
           })
           Promise.all(screens).then(() => {
