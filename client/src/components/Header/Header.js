@@ -3,7 +3,7 @@ import {Link, withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import MoonLoader from "react-spinners/MoonLoader";
 import './Header.scss';
-import logo from '../../assets/img/logo.png';
+import logo from '../../assets/img/logo-v1.png'
 import {ReactComponent as HamburgerMenu} from "../../assets/img/icons8-menu.svg";
 import {ReactComponent as Cancel} from "../../assets/img/close-2.svg";
 import {ReactComponent as Plus} from "../../assets/img/add.svg";
@@ -65,7 +65,6 @@ const Header = (props) => {
     <div className="Header__block container" style={{zIndex: localStorage.showDemoLayer === 'true' && '100'}}>
       <Link className="logo__block" to="/">
         <img src={logo} alt="logo"/>
-        <span className="logo__title">ProVid.</span>
       </Link>
       {isDashboard &&
       <div className="search__bar">

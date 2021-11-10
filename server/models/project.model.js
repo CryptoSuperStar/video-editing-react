@@ -1,6 +1,14 @@
 const mongoose = require('mongoose');
 
 const ContentSchema = new mongoose.Schema({
+  comments: [
+    {
+      text: String,
+      rawTime: String,
+      time: String,
+      createdAt: Date
+    }
+  ],
   mediaSrc: String,
   mediaName: String,
   duration: String,
@@ -22,14 +30,6 @@ const ContentSchema = new mongoose.Schema({
     screenSrc: String,
     time: String,
     timeInSeconds: String,
-    comment: [
-      {
-        text: String,
-        rawTime: String,
-        time: String,
-        createdAt: Date
-      }
-    ]
   }]
 })
 

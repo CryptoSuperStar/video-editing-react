@@ -2,7 +2,6 @@ import React, {useState, useEffect, Fragment} from 'react';
 import {connect} from "react-redux";
 import './LoginRegister.scss';
 import {Link, Redirect} from "react-router-dom";
-import TwitterLogin from 'react-twitter-auth/lib/react-twitter-auth-component.js';
 import FacebookLogin from 'react-facebook-login';
 import { GoogleLogin  } from 'react-google-login';
 import AppleSignin from 'react-apple-signin-auth';
@@ -47,16 +46,7 @@ const LoginRegister = (props) => {
     setShowConnectSocial(false);
     console.error(error);
   }
-  
-  const onSuccessTwitter = (response) => {
-    response.json().then(({token}) => {
-      if (token) {
-        // localStorage.token = token;
-        setShowConnectSocial(true)
-      }
-    });
-  }
-  
+    
   const responseFacebook = response => {
     console.log(response);
     props.dispatch(loginRegisterFacebook(response.userID, response.accessToken, setShowConnectSocial, isLogin));
@@ -115,16 +105,6 @@ const LoginRegister = (props) => {
           {showLoginRegister
             ? loginRegisterForm
             : (<div className="LoginRegister__social_login">
-              <TwitterLogin
-                loginUrl="http://localhost:3000/api/auth/twitter"
-                onFailure={onFailedTwitter}
-                onSuccess={onSuccessTwitter}
-                requestTokenUrl="http://localhost:3000/api/auth/twitter/reverse"
-                text={`${isLogin} with Twitter`}
-                className="twitter_login__button"
-                showIcon={true}
-                disabled={true}
-              />
               <FacebookLogin
                 appId={REACT_APP_FACEBOOK_API}
                 autoLoad={false}
