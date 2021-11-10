@@ -55,7 +55,7 @@ const Projects = (props) => {
     let newProjects = props.projects.filter(project => project._id !== id);
     setMyProjects(newProjects);
   }
-  
+  console.log(myProjects,'myProjects');
   if(loading) return <div className="spinner__wrapper">
     <MoonLoader className="spinner" color="#000" loading={loading} size={50}/>
   </div>
@@ -80,7 +80,7 @@ const Projects = (props) => {
                }}>
             <span className="delete__video--btn" onClick={e => deleteProjectHandle(e, project._id, project.bucket)}>X</span>
             <div className="project__item--image"
-                 style={{background: project.content[0].screens.length > 1 ? `url(${project.content[0].screens[1].screenSrc}) no-repeat center center` : 'black'}}>
+                 style={{background: project.content[0]?.screens.length > 1 ? `url(${project.content[0]?.screens[1].screenSrc}) no-repeat center center` : 'black'}}>
               <div className="project__item--theme">Theme {project.themeName}</div>
               <div className="project__item--plan">{props.user.paymentId ? 'Premium' : 'Free'}</div>
             </div>

@@ -163,6 +163,17 @@ const UploadMedia = props => {
 
   const toggleCommentBlock = () => setShowCommentBlock(!showCommentBlock);
   const toggleShareBlock = () => setShowShareModal(!showShareModal);
+<<<<<<< HEAD
+  if (!currentMedia.isImage) {
+    comments && comments.length > 0 && comments.map((item, index) => item.map((innerItem, i) => commentFinal.push(innerItem)));
+    commentFinal = commentFinal
+      ? commentFinal.sort((a, b) => moment.duration(a.time).asSeconds() - moment.duration(b.time).asSeconds())
+      : [];
+  } else {
+    commentFinal.push({ createdAt: imageCommentDate || new Date(), text: activeComment, time: "" });
+  }
+  
+=======
   // if (!currentMedia.isImage) {
   //   comments && comments.length > 0 && comments.map((item, index) => item.map((innerItem, i) => commentFinal.push(innerItem)));
   //   commentFinal = commentFinal
@@ -172,6 +183,7 @@ const UploadMedia = props => {
   //   commentFinal.push({ createdAt: imageCommentDate || new Date(), text: activeComment, time: "" });
   // }
 
+>>>>>>> 807d21fde5eec806565a8bee716b66ce35bd23bd
   if (loading)
     return (
       <div className="spinner__wrapper">
@@ -201,7 +213,11 @@ const UploadMedia = props => {
               <div className="comments_indicator" onClick={toggleCommentBlock}>
                 <Chat />
                 <span className="comments__total">
+<<<<<<< HEAD
+                  {commentFinal && commentFinal.length && commentFinal.filter(comment => comment.text.length > 0).length}
+=======
                   {comments && comments.length && comments.filter(comment => comment.text.length > 0).length}
+>>>>>>> 807d21fde5eec806565a8bee716b66ce35bd23bd
                 </span>
               </div>
               <div className="share_indicator" onClick={toggleShareBlock} style={{ opacity: showDemo && '20%' }}>
@@ -265,7 +281,7 @@ const UploadMedia = props => {
               )
             }
             {
-              currentMedia.isImage ? (
+              currentMedia.isImage && isShowComment ? (
                 <div className="image__coment">
                   <textarea placeholder="Add edit notes here:" rows="5" value={activeComment} onChange={handleImageComment} />{" "}
                 </div>
@@ -314,8 +330,8 @@ const UploadMedia = props => {
           <EmptyProject setComments={setComments} setLoadingVideo={setLoading} setLoadingSlider={setLoadingSlider} />
         )}
       </div >
-      {showCommentBlock && <CommentBlock arrComments={comments} />}
-    </div >
+      {showCommentBlock && <CommentBlock arrComments={commentFinal} isImage={currentMedia.isImage}/>}
+    </div>
   );
 };
 const mapStateToProps = state => ({

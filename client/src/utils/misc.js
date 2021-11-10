@@ -1,6 +1,6 @@
 export const REACT_APP_STRIPE_API="pk_test_51Ixgc5BKFUBRejW8DjUWLsF9SrmqfaNsne3b4oXZLMwnoAnqHadszIGjzM9QLVlsddpqOOWPPQvy3guOjhWJXBrZ00JIaUS9WK"
 export const REACT_APP_PAYPAL_API="AWeDNaI2YA5XXchK03Ab6N3nEtvqA5qWehu141U30QnzHXTkCepTdXhd265EVawMu7VdBtKmWZcV1XaF"
-export const REACT_APP_API_URL = '/api';
+export const REACT_APP_API_URL = 'http://localhost:4000/api';
 export const REACT_APP_GOOGLE_API="744541087085-isqqn9680v7q4i0onr2b7d9kl10cklui.apps.googleusercontent.com"
 export const REACT_APP_FACEBOOK_API="422165066147777";
 // export const REACT_APP_FACEBOOK_API="613993049757883";
