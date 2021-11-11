@@ -50,10 +50,9 @@ const StyleInspirationModal = (props) => {
       let newComments = localStorage.imageComments;
       newContent[index].comment = newComments;
       newContent[index].createdAt = new Date();
-    // }
+    }
     return newContent;
   }
-
   const updateComments = (id) => {
     let newCurrentMedia = { ...props.currentMedia };
     let newContent = [...props.content];
@@ -96,7 +95,6 @@ const StyleInspirationModal = (props) => {
     props.setLoading(true);
     props.dispatch(createProjectMedia(project, history, props.setLoading))
   };
-
 
   return (
     <div className="modal__wrapper" style={{zIndex: localStorage.showDemoLayer === 'true' && '130'}}>
