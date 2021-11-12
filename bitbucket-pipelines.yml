@@ -4,8 +4,6 @@
 # You can specify a custom docker image from Docker Hub as your build environment.
 image: atlassian/default-image:2
 
-clone:
- depth: full
 
 pipelines:
   default:
