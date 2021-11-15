@@ -1,6 +1,6 @@
 import axios from 'axios';
-import {REACT_APP_API_URL} from '../../utils/misc';
-import {toast} from "react-toastify";
+import { REACT_APP_API_URL } from '../../utils/misc';
+import { toast } from "react-toastify";
 import setAuthToken from '../../utils/authToken';
 
 export const authUser = () => async dispatch => {
@@ -60,8 +60,8 @@ export const loginUserSSO = (data, history) => async dispatch => {
 
 export const loginRegisterGoogle = (idToken, func, action) => async dispatch => {
   try {
-    const res = await axios.post(`${REACT_APP_API_URL}/login_register_google`, {idToken});
-    
+    const res = await axios.post(`${REACT_APP_API_URL}/login_register_google`, { idToken });
+
     dispatch({
       type: 'LOGIN_REGISTER_GOOGLE',
       payload: res.data
@@ -74,11 +74,12 @@ export const loginRegisterGoogle = (idToken, func, action) => async dispatch => 
     })
     toast.error(`Google ${action} error. ${error.response.data.msg}`)
     func(false)
-}}
+  }
+}
 
 export const loginRegisterFacebook = (userId, accessToken, func, action) => async dispatch => {
   try {
-    const res = await axios.post(`${REACT_APP_API_URL}/login_register_facebook`, {userId, accessToken});
+    const res = await axios.post(`${REACT_APP_API_URL}/login_register_facebook`, { userId, accessToken });
     dispatch({
       type: 'LOGIN_REGISTER_FACEBOOK',
       payload: res.data
@@ -95,9 +96,9 @@ export const loginRegisterFacebook = (userId, accessToken, func, action) => asyn
 }
 
 export const loginRegisterApple = (response, func, action) => async dispatch => {
-  const {authorization, user} = response;
+  const { authorization, user } = response;
   try {
-    const res = await axios.post(`${REACT_APP_API_URL}/login_register_apple`, {authorization, user});
+    const res = await axios.post(`${REACT_APP_API_URL}/login_register_apple`, { authorization, user });
     dispatch({
       type: 'LOGIN_REGISTER_APPLE',
       payload: res.data
@@ -115,7 +116,7 @@ export const loginRegisterApple = (response, func, action) => async dispatch => 
 
 export const updateUser = (id, data, func) => async dispatch => {
   try {
-    const res = await axios.post(`${REACT_APP_API_URL}/update_user`, {id, data});
+    const res = await axios.post(`${REACT_APP_API_URL}/update_user`, { id, data });
     dispatch({
       type: 'UPDATE_USER',
       payload: res.data
@@ -135,7 +136,7 @@ export const setConnectSocial = (social, link) => async dispatch => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
     try {
-      const res = await axios.put(`${REACT_APP_API_URL}/updateSocial`, {social, link})
+      const res = await axios.put(`${REACT_APP_API_URL}/updateSocial`, { social, link })
       dispatch({
         type: 'CONNECT_SOCIAL',
         payload: res.data
@@ -154,7 +155,7 @@ export const resetPassword = (oldPass, newPass, func) => async dispatch => {
     setAuthToken(localStorage.token);
     console.log(oldPass, newPass)
     try {
-      const res = await axios.post(`${REACT_APP_API_URL}/resetPassword`, {oldPass, newPass});
+      const res = await axios.post(`${REACT_APP_API_URL}/resetPassword`, { oldPass, newPass });
       localStorage.token = res.data;
       toast.success('Your Profile details have been updated')
       func(false);
@@ -162,5 +163,29 @@ export const resetPassword = (oldPass, newPass, func) => async dispatch => {
       console.log(e)
       toast.error("Something went wrong")
     }
+  }
+}
+export const confirmPromoCode = (promoCode, func) => async dispatch => {
+  try {
+    const res = await axios.post(`${REACT_APP_API_URL}/confirm-promo-code`, { promoCode });
+
+    console.log(res)
+    if (res.data.success === true) {
+      dispatch({
+        type: 'UPDATE_USER',
+        payload: res.data
+      });
+      toast.success(`Promo code confirm`);
+    } else {
+      toast.error(`Wrong Promo code`);
+
+    }
+    func(false)
+  } catch (e) {
+    console.log(e);
+    toast.error("Something went wrong")
+    dispatch({
+      type: "UPDATE_USER_ERROR"
+    })
   }
 }

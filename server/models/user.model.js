@@ -85,17 +85,25 @@ const userSchema = new mongoose.Schema({
       youTubeLink: String
     }
   },
-  payments: [paymentSchema]
-}, {timestamps: true})
+  payments: [paymentSchema],
+  promocode: {
+    type: String,
+    trim: true
+  },
+  trial: {
+    active: Boolean,
+    default: false
+  }
+}, { timestamps: true })
 
-userSchema.set('toJSON', {getters: true, virtuals: true});
+userSchema.set('toJSON', { getters: true, virtuals: true });
 
-userSchema.statics.upsertTwitterUser = async function(token, tokenSecret, profile, cb) {
+userSchema.statics.upsertTwitterUser = async function (token, tokenSecret, profile, cb) {
   console.log(profile);
   let that = this;
   return await this.findOne({
     'twitterProvider.id': profile.id
-  }, async function(err, user) {
+  }, async function (err, user) {
     // no user was found, lets create a new one
     if (!user) {
       let newUser = new that({
@@ -108,7 +116,7 @@ userSchema.statics.upsertTwitterUser = async function(token, tokenSecret, profil
           tokenSecret: tokenSecret
         }
       });
-      await newUser.save(function(error, savedUser) {
+      await newUser.save(function (error, savedUser) {
         if (error) {
           console.log(error);
         }
