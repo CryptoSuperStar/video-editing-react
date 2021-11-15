@@ -21,7 +21,7 @@ function PromoCodeModal(props) {
                 <h5>Promo Code</h5>
                 <form onSubmit={handleSubmit}>
                     <input type="text" placeholder="Enter your Promo code here" value={promoCode} onChange={e => setPromoCode(e.target.value)} required />
-                    <button className="pay__modal--submit" type="submit" >Apply promo code</button>
+                    <button className="pay__modal--submit" type="submit" >Apply Promo Code</button>
                 </form>
             </div>
         </div>
