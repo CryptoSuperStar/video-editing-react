@@ -176,11 +176,11 @@ export const confirmPromoCode = (promoCode, func) => async dispatch => {
         payload: res.data
       });
       toast.success(`Promo code confirm`);
+      func(false)
     } else {
       toast.error(`Wrong Promo code`);
 
     }
-    func(false)
   } catch (e) {
     console.log(e);
     toast.error("Something went wrong")
