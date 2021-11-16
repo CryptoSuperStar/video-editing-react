@@ -22,24 +22,31 @@ exports.createTempProjectController = async (req, res) => {
   const supported = req.supported;
   const isImage = req.isImage;
   try {
-    let name = link.split('/');
-    name = name[name.length - 1];
-    let project = new Project({
-      projectName: name,
-      bucket,
-      content: [{
-        mediaSrc: link,
-        mediaName: name,
-        isImage,
-        isSupported: supported
-      }],
-      author: _id
+    let mediaName = link.split('/');
+    mediaName = mediaName[mediaName.length - 1];
+    let projectName;
+    await Project.find({ author: req.userId }, async (err, projects) => {
+      let count = projects.length ? (projects?.[projects.length - 1].projectName).split('#') : [];
+      count = parseInt(count?.[count.length - 1], 10)
+      projectName = `Project #${count >= projects.length ? count + 1 : projects.length + 1}`;
+      let project = new Project({
+        projectName: projectName,
+        bucket,
+        content: [{
+          mediaSrc: link,
+          mediaName: mediaName,
+          isImage,
+          isSupported: supported
+        }],
+        author: _id
+      });
+      await project.save(((err, doc) => {
+        if (err) return res.status(400).send({ msg: `Database Error ${err}` });
+        console.log(doc);
+        return res.status(200).json({ project: doc, currentMedia: doc.content[0]._id, isImage });
+      }));
     });
-    await project.save(((err, doc) => {
-      if (err) return res.status(400).send({ msg: `Database Error ${err}` });
-      console.log(doc);
-      return res.status(200).json({ project: doc, currentMedia: doc.content[0]._id, isImage });
-    }));
+
 
   } catch (e) {
     console.log(e);
