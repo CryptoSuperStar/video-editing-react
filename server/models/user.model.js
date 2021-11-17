@@ -90,6 +90,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
+  isPromoCodeVerified: {
+    type: Boolean,
+    default: false
+  },
   trial: {
     active: Boolean,
     default: false

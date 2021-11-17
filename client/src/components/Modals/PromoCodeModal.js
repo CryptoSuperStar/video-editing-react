@@ -12,7 +12,7 @@ function PromoCodeModal(props) {
     return (
         <div className=" modal__wrapper">
             <div className="style__modal">
-                <div className="connectSocial__cross" onClick={() => props.setShowPromoCodeWall(false)}>
+                <div className="connectSocial__cross" onClick={() => { props.setShowPayAccess(true); props.setShowPromoCodeWall(false) }}>
                     <Cancel fill="black" className="connectSocial__cross--cancel" />
                     <ArrowLeft className="connectSocial__cross--arrowLeft" />
                 </div>

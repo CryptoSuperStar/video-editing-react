@@ -30,7 +30,7 @@ const Projects = (props) => {
 
   useEffect(() => {
     if (props.user.userName) {
-      !props.user.payments.length &&
+      (!props.user.payments.length && !props.user?.isPromoCodeVerified) &&
         setTimeout(() => {
           setShowPayAccess(true);
         }, 500)
@@ -66,10 +66,10 @@ const Projects = (props) => {
       {showPayAccess && <PayAccessModal setShowPayAccess={setShowPayAccess} setShowPayWall={setShowPayWall} setShowPromoCodeWall={setShowPromoCodeWall} />}
       {showPayWall &&
         <Elements stripe={stripePromise}>
-          <PayWallModal setShowPayWall={setShowPayWall} user={props.user} />
+          <PayWallModal setShowPayWall={setShowPayWall} setShowPayAccess={setShowPayAccess} user={props.user} />
         </Elements>}
       {
-        showPromoCodeWall && <PromoCodeModal setShowPromoCodeWall={setShowPromoCodeWall} user={props.user} />
+        showPromoCodeWall && <PromoCodeModal setShowPayAccess={setShowPayAccess} setShowPromoCodeWall={setShowPromoCodeWall} user={props.user} />
       }
       <h3>Your Projects</h3>
       <div className="projects__block">

@@ -168,8 +168,6 @@ export const resetPassword = (oldPass, newPass, func) => async dispatch => {
 export const confirmPromoCode = (promoCode, func) => async dispatch => {
   try {
     const res = await axios.post(`${REACT_APP_API_URL}/confirm-promo-code`, { promoCode });
-
-    console.log(res)
     if (res.data.success === true) {
       dispatch({
         type: 'UPDATE_USER',
