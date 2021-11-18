@@ -4,9 +4,10 @@ import accessImage from "../../assets/img/base@1x.png";
 import { ReactComponent as ArrowRight } from "../../assets/img/right-arrow-svgrepo-com.svg";
 import { ReactComponent as ArrowLeft } from "../../assets/img/arrow-left.svg";
 import { ReactComponent as Tick } from "../../assets/img/accept_added_check_complite_yes_icon.svg";
+import { useHistory } from 'react-router-dom';
 
 const PayAccessModal = (props) => {
-
+  const history = useHistory();
   const renderTick = text => (
     <div className="pay__modal--tick_item">
       <div className="pay__modal--tick_image">
@@ -19,12 +20,11 @@ const PayAccessModal = (props) => {
   return (
     <div className="modal__wrapper">
       <div className="pay__access--modal">
-        <div className="connectSocial__cross" onClick={() => props.setShowPayAccess(false)}>
+        <div className="connectSocial__cross" onClick={() => { props.setShowPayAccess(false); history.push("/dashboard/upload") }}>
           <Cancel fill="black" className="connectSocial__cross--cancel" />
           <ArrowLeft className="connectSocial__cross--arrowLeft" />
         </div>
         <h3>Access All Premium Features</h3>
-        <p>Lorem ipsum dolor sit amet</p>
         <div className="access__modal--image_block">
           <img src={accessImage} alt="access_image" />
           <h5>Start your 7-day Free trial now!</h5>

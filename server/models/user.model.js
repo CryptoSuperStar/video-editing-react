@@ -94,10 +94,6 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  trial: {
-    active: Boolean,
-    default: false
-  }
 }, { timestamps: true })
 
 userSchema.set('toJSON', { getters: true, virtuals: true });
