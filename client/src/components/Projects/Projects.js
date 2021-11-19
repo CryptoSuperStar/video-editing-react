@@ -87,9 +87,8 @@ const Projects = (props) => {
             <div className="project__item--image"
               style={{ background: project.content[0].screens.length > 1 ? `url(${project.content[0].screens[1].screenSrc}) no-repeat center center` : 'black' }}>
               <div className="project__item--theme">Theme {project.themeName}</div>
-              <div className="project__item--plan">{props.user.paymentId ? 'Premium' : 'Free'}</div>
             </div>
-            <span className="project__item--name"><strong>#{i + 1}</strong> {project.projectName}</span>
+            <span className="project__item--name"> {project.projectName}</span>
             {project.projectStatus
               && <strong className="project__item--publish">{project.projectStatus}</strong>
 
