@@ -26,6 +26,10 @@ const ContentSchema = new mongoose.Schema({
     default: 0
   },
   endTime: String,
+  revision: {
+    type: Number,
+    default: 0,
+  },
   screens: [{
     screenSrc: String,
     time: String,
@@ -45,6 +49,16 @@ const projectSchema = new mongoose.Schema({
   isPublished: {
     type: Boolean,
     default: false
+  },
+  projectStatus: {
+    type: String,
+    default: "Draft",
+    trim: true
+  },
+  editedProjects: [ContentSchema],
+  projectRevision: {
+    type: Number,
+    default: 0,
   },
   typeMedia: String,
   bucket: String,

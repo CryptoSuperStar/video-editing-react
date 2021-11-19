@@ -279,10 +279,18 @@ exports.cutTempProjectController = async (req, res) => {
 exports.createProjectController = async (req, res) => {
   const { project } = req.body;
   try {
+    let status;
+    let projectRevision;
+    await Project.findById(project._id, (err, oldProject) => {
+      status = oldProject?.projectStatus === "Draft" ? "In Progress" : "In Revision";
+      projectRevision = oldProject?.projectStatus === "Draft" ? 0 : oldProject?.projectRevision + 1;
+    })
     let newerProject = {
       ...project,
       themeName: project.styleInspiration.platform,
-      isPublished: true
+      isPublished: true,
+      projectStatus: status,
+      projectRevision: projectRevision
     };
     Project.findByIdAndUpdate(project._id, { $set: newerProject }, { new: true },
       (err, prj) => {

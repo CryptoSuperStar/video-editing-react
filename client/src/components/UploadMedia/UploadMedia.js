@@ -48,6 +48,7 @@ const UploadMedia = props => {
   const [moveTo, setMoveTo] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [showDemo, setShowDemo] = useState(false);
+  const editableStatus = ["Draft", "Complete"]
   let commentFinal = [];
   useEffect(() => {
     if (localStorage.showDemoLayer === "true") {
@@ -87,7 +88,8 @@ const UploadMedia = props => {
     }
   }, [currentMedia])
   const setMedia = () => {
-    let curMedia = props.project.content.filter(item => item._id === localStorage.currentMedia)[0];
+    const newContent = props.project.editedProjects.length > 0 ? props.project.editedProjects.find(item => item.revision === props.project.projectRevision) : false
+    let curMedia = newContent ? newContent : props.project.content.filter(item => item._id === localStorage.currentMedia)[0];
     if (!curMedia) {
       curMedia = props.project.content[0];
     }
@@ -95,7 +97,7 @@ const UploadMedia = props => {
       curMedia.screens.sort((a, b) => a.timeInSeconds - b.timeInSeconds);
     }
     setCurrentMedia(curMedia);
-    if (curMedia.comments) {
+    if (curMedia.comments && props.project.projectStatus !== "Complete") {
       localStorage.comments = JSON.stringify(curMedia?.comments);
       setComments(curMedia?.comments);
 
@@ -246,6 +248,7 @@ const UploadMedia = props => {
                   currentMedia={currentMedia}
                   setCurrentMedia={setCurrentMedia}
                   showCutBox={showCutBox}
+                  projectStatus={props.project?.projectStatus}
                   setMoveTo={setMoveTo}
                   currentTime={currentTime}
                   isShowComment={isShowComment}
@@ -274,20 +277,28 @@ const UploadMedia = props => {
               )
             }
             <div className="generate__btns">
-              <button onClick={handleCutVideo} style={{ backgroundColor: showCutBox && "gray" }}>
+              <button
+                onClick={(e) => { (editableStatus.includes(props.project?.projectStatus)) && handleCutVideo(e) }}
+                style={{ backgroundColor: (showCutBox || !(editableStatus.includes(props.project?.projectStatus))) && "gray" }}>
                 <Cut />
                 <span>Cut</span>
               </button>
-              <button onClick={handleClear}>
+              <button
+                onClick={(e) => { (props.project?.projectStatus === "Draft") && handleClear(e) }}
+
+                style={{ backgroundColor: !(props.project?.projectStatus === "Draft") && "gray" }}>
                 <Delete />
                 <span>Clear</span>
               </button>
-              <button onClick={() => setShowStyleModal(true)}>
+              <button onClick={() => { (editableStatus.includes(props.project?.projectStatus)) && setShowStyleModal(true) }}
+                style={{ backgroundColor: !(editableStatus.includes(props.project?.projectStatus)) && "gray" }}>
                 <img src={cam} alt="cam" />
                 <span>Generate Video</span>
               </button>
 
-              <button onClick={handleActiveScreenshot} style={{ backgroundColor: isShowComment && "gray" }}>
+              <button
+                onClick={(e) => { (editableStatus.includes(props.project?.projectStatus)) && handleActiveScreenshot(e) }}
+                style={{ backgroundColor: (isShowComment || !(editableStatus.includes(props.project?.projectStatus))) && "gray" }}>
                 <Chat />
                 <span>Comment</span>
               </button>
@@ -297,6 +308,7 @@ const UploadMedia = props => {
               props.project.content && props.project.content.length > 0 && (
                 <CarouselMedia
                   content={props.project.content}
+                  projectStatus={props.project?.projectStatus}
                   setComments={setComments}
                   setLoadingVideo={setLoading}
                   setLoadingSlider={setLoadingSlider}

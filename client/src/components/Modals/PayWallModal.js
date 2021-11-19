@@ -284,7 +284,7 @@ const PayWallModal = (props) => {
   return (
     <div className="modal__wrapper">
       <div className="pay__wall--modal">
-        <div className="connectSocial__cross" onClick={() => { props.setShowPayWall(false); props.setShowPayAccess(true) }}>
+        <div className="connectSocial__cross" onClick={() => { props.setShowPayWall(false); (props.setShowPayAccess && props.setShowPayAccess(true)) }}>
           <Cancel fill="black" className="connectSocial__cross--cancel" />
           <ArrowLeft className="connectSocial__cross--arrowLeft" />
         </div>
