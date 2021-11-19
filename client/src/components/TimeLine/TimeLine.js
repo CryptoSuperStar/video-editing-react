@@ -156,7 +156,7 @@ const TimeLine = props => {
               placeholder="Add Your Comment"
               value={props.activeComment}
               defaultValue={props.editCommentValue && props.activeIndex ? props.comments[props.activeIndex].text : ""}
-              onChange={e => props.handleCommentChange(e)}
+              onChange={e => { (props.projectStatus === "Draft" || props.projectStatus === "Complete") && props.handleCommentChange(e) }}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   props.handleCommentEnter()

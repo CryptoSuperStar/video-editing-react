@@ -27,8 +27,14 @@ const CarouselMedia = (props) => {
   const [showArrow, setShowArrow] = useState(true);
 
   useEffect(() => {
-    setContents(props.project.content);
-  }, [props.currentMedia.screens])
+    const newContent = props.project.editedProjects.length > 0 && props.project.editedProjects.find(item => item.revision === props.project.projectRevision)
+    if (newContent) {
+      setContents([newContent]);
+    } else {
+      setContents(props.project.content);
+
+    }
+  }, [props.currentMedia.screens, props.project.content, props.project.editedProjects, props.project.projectRevision, props.project.projectStatus])
 
   const handleChange = (e) => {
     props.setComments([]);
@@ -149,11 +155,11 @@ const CarouselMedia = (props) => {
             }}
           >
             <p>{media.mediaName}</p>
-            <span className="delete__video--btn" onClick={(e) =>
-              deleteVideoHandle(e, media._id)}>X</span>
+            {props.project.projectStatus === "Draft" && <span className="delete__video--btn" onClick={(e) =>
+              deleteVideoHandle(e, media._id)}>X</span>}
           </div>
         ))}
-        <div className="mediaFiles__slider--inner" ref={sliderItemWidth}
+        {props.project.projectStatus === "Draft" && <div className="mediaFiles__slider--inner" ref={sliderItemWidth}
           onClick={() => {
             if ((localStorage.updateComment && localStorage.updateComment === 'true')
               || (localStorage.editedVideoTime && localStorage.editedVideoTime === 'true')) {
@@ -162,11 +168,13 @@ const CarouselMedia = (props) => {
           }
           }
         >
-          <input type="file" ref={fileInput} onChange={handleChange} id="mediaFiles__button" />
+          <input type="file" ref={fileInput} onChange={(e) => {
+            handleChange(e)
+          }} id="mediaFiles__button" />
           <label htmlFor="mediaFiles__button">
             <Plus2 />
           </label>
-        </div>
+        </div>}
       </Carousel>
         :
         <DraggableContentList

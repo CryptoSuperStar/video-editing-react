@@ -42,11 +42,11 @@ const StyleInspirationModal = (props) => {
     setPlatforms(newPlatforms);
   }
   const updateImageComments = (id) => {
-    let newCurrentMedia = {...props.currentMedia};
+    let newCurrentMedia = { ...props.currentMedia };
     let newContent = [...props.content];
     let index = props.content.findIndex(content => content._id === id);
     newContent[index] = newCurrentMedia;
-    if(localStorage.imageComments) {
+    if (localStorage.imageComments) {
       let newComments = localStorage.imageComments;
       newContent[index].comment = newComments;
       newContent[index].createdAt = new Date();
@@ -73,17 +73,29 @@ const StyleInspirationModal = (props) => {
 
   const handleDone = () => {
     let newContent
-    if(!props.isImage){
+    if (!props.isImage) {
       if ((localStorage.updateComment && localStorage.updateComment === 'true')
         || (localStorage.editedVideoTime && localStorage.editedVideoTime === 'true')) {
         newContent = updateComments(localStorage.currentMedia);
       } else {
         newContent = props.content
       }
-    }else{
+    } else {
       newContent = updateImageComments(localStorage.currentMedia)
     }
-    const project = {
+    const editedProjects = [...props.project.editedProjects]
+    editedProjects.push({
+      ...newContent[0],
+      revision: props.project.projectRevision + 1
+    })
+    const project = props.project?.projectStatus === "Complete" ? {
+      ...props.project,
+      styleInspiration: {
+        link,
+        platform: platforms.filter(item => item.active)[0].title
+      },
+      editedProjects: editedProjects
+    } : {
       ...props.project,
       styleInspiration: {
         link,
@@ -97,7 +109,7 @@ const StyleInspirationModal = (props) => {
   };
 
   return (
-    <div className="modal__wrapper" style={{zIndex: localStorage.showDemoLayer === 'true' && '130'}}>
+    <div className="modal__wrapper" style={{ zIndex: localStorage.showDemoLayer === 'true' && '130' }}>
       <div className="style__modal">
         <div className="connectSocial__cross" onClick={() => props.setShowStyleModal(false)}>
           <Cancel fill="black" />
