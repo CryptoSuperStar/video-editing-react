@@ -27,14 +27,11 @@ const CarouselMedia = (props) => {
   const [showArrow, setShowArrow] = useState(true);
 
   useEffect(() => {
-    const newContent = props.project.editedProjects.length > 0 && props.project.editedProjects.find(item => item.revision === props.project.projectRevision)
-    if (newContent) {
-      setContents([newContent]);
-    } else {
-      setContents(props.project.content);
 
-    }
-  }, [props.currentMedia.screens, props.project.content, props.project.editedProjects, props.project.projectRevision, props.project.projectStatus])
+    setContents(props.content);
+
+
+  }, [props.content])
 
   const handleChange = (e) => {
     props.setComments([]);
@@ -142,17 +139,23 @@ const CarouselMedia = (props) => {
                 ? `url(${media.isImage ? media.mediaSrc : media.screens[1].screenSrc})` : 'black'
             }}
             onClick={async () => {
-              if (localStorage.updateComment && localStorage.updateComment === 'true') {
-                await updateComments(localStorage.currentMedia);
+              if (props.project?.projectStatus === "Draft") {
+                if (localStorage.updateComment && localStorage.updateComment === 'true') {
+                  await updateComments(localStorage.currentMedia);
+                }
+                if (localStorage.editedVideoTime && localStorage.editedVideoTime === 'true') {
+                  await updateComments(localStorage.currentMedia)
+                }
               }
-              if (localStorage.editedVideoTime && localStorage.editedVideoTime === 'true') {
-                await updateComments(localStorage.currentMedia)
+              if (props.currentMedia.revision === props.project.projectRevision && props.currentMedia.revision > 0 && localStorage.comments) {
+                localStorage.editedVideoComments = localStorage.comments;
               }
-              props.setComments([]);
               localStorage.currentMedia = media._id;
+              props.setComments([]);
               props.setErrorMessage(null);
               props.setMedia();
-            }}
+            }
+            }
           >
             <p>{media.mediaName}</p>
             {props.project.projectStatus === "Draft" && <span className="delete__video--btn" onClick={(e) =>

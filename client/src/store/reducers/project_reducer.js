@@ -1,5 +1,5 @@
 import moment from 'moment';
-import momentDurationFormatSetup from"moment-duration-format";
+import momentDurationFormatSetup from "moment-duration-format";
 momentDurationFormatSetup(moment);
 
 const initialState = {
@@ -35,7 +35,7 @@ const initialState = {
   loading: false
 };
 
-const projectReducer = (state = initialState, {type, payload}) => {
+const projectReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case 'CREATE_PROJECT':
       localStorage.currentProjectId = payload.project._id;
@@ -59,7 +59,8 @@ const projectReducer = (state = initialState, {type, payload}) => {
       }
     case 'GET_PROJECT':
       if (!localStorage.currentMedia) {
-        localStorage.currentMedia = payload.project.content[0]._id
+        const editedProject = payload.project.editedProjects.length > 0 ? payload.project.editedProjects.find(item => item.revision === payload.project.projectRevision) : false;
+        localStorage.currentMedia = editedProject ? editedProject._id : payload.project.content[0]._id
       }
       return {
         ...state,
@@ -92,7 +93,7 @@ const projectReducer = (state = initialState, {type, payload}) => {
       let newContent = payload.project.content.map(cont => {
         return {
           ...cont,
-          screens: cont.screens.sort((a,b) => {
+          screens: cont.screens.sort((a, b) => {
             return moment.duration(a.time).asSeconds() - moment.duration(b.time).asSeconds()
           })
         }
