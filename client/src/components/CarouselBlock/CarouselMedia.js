@@ -27,14 +27,11 @@ const CarouselMedia = (props) => {
   const [showArrow, setShowArrow] = useState(true);
 
   useEffect(() => {
-    const newContent = props.project.editedProjects.length > 0 && props.project.editedProjects.find(item => item.revision === props.project.projectRevision)
-    if (newContent) {
-      setContents([newContent]);
-    } else {
-      setContents(props.project.content);
 
-    }
-  }, [props.currentMedia.screens, props.project.content, props.project.editedProjects, props.project.projectRevision, props.project.projectStatus])
+    setContents(props.content);
+
+
+  }, [props.content])
 
   const handleChange = (e) => {
     props.setComments([]);

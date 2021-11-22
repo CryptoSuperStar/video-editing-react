@@ -84,10 +84,14 @@ const StyleInspirationModal = (props) => {
       newContent = updateImageComments(localStorage.currentMedia)
     }
     const editedProjects = [...props.project.editedProjects]
-    editedProjects.push({
-      ...newContent[0],
-      revision: props.project.projectRevision + 1
-    })
+    if (props.project?.projectStatus === "Complete") {
+      const revisionContent = newContent[newContent.length - 1];
+      delete revisionContent._id;
+      editedProjects.push({
+        ...revisionContent,
+        revision: props.project.projectRevision + 1
+      })
+    }
     const project = props.project?.projectStatus === "Complete" ? {
       ...props.project,
       styleInspiration: {
