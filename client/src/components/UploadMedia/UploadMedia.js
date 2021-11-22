@@ -112,7 +112,12 @@ const UploadMedia = props => {
     if (curMedia.comments && !(["Complete", "Done"].includes(props.project?.projectStatus)) && curMedia.revision === props.project.projectRevision) {
       localStorage.comments = JSON.stringify(curMedia?.comments);
       setComments(curMedia?.comments);
-
+    }
+    if (localStorage.editedVideoComments && curMedia.revision === props.project.projectRevision) {
+      let editedVideoComments = JSON.parse(localStorage?.editedVideoComments);
+      setComments(editedVideoComments);
+      localStorage.comments = JSON.stringify(editedVideoComments);
+      localStorage.removeItem("editedVideoComments");
     }
     setActiveComment('')
     if (curMedia.isImage) {

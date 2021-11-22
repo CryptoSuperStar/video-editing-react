@@ -139,17 +139,23 @@ const CarouselMedia = (props) => {
                 ? `url(${media.isImage ? media.mediaSrc : media.screens[1].screenSrc})` : 'black'
             }}
             onClick={async () => {
-              if (localStorage.updateComment && localStorage.updateComment === 'true') {
-                await updateComments(localStorage.currentMedia);
+              if (props.project?.projectStatus === "Draft") {
+                if (localStorage.updateComment && localStorage.updateComment === 'true') {
+                  await updateComments(localStorage.currentMedia);
+                }
+                if (localStorage.editedVideoTime && localStorage.editedVideoTime === 'true') {
+                  await updateComments(localStorage.currentMedia)
+                }
               }
-              if (localStorage.editedVideoTime && localStorage.editedVideoTime === 'true') {
-                await updateComments(localStorage.currentMedia)
+              if (props.currentMedia.revision === props.project.projectRevision && props.currentMedia.revision > 0 && localStorage.comments) {
+                localStorage.editedVideoComments = localStorage.comments;
               }
-              props.setComments([]);
               localStorage.currentMedia = media._id;
+              props.setComments([]);
               props.setErrorMessage(null);
               props.setMedia();
-            }}
+            }
+            }
           >
             <p>{media.mediaName}</p>
             {props.project.projectStatus === "Draft" && <span className="delete__video--btn" onClick={(e) =>
