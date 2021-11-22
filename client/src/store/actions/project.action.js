@@ -111,7 +111,7 @@ export const createProjectMedia = (project, history, setLoading) => async dispat
       dispatch({
         type: "CREATE_FULL_PROJECT"
       })
-      toast.success("Project was created");
+      toast.success(project.projectStatus === "Complete" ? "Your project is submitted for revision" : "Project was created");
       setLoading(false)
       localStorage.removeItem('duration');
       localStorage.removeItem('comments');

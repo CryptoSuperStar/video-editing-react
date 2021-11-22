@@ -30,12 +30,14 @@ const UploadMedia = props => {
     duration: 0,
     startTime: 0,
     endTime: 0,
-    screens: []
+    screens: [],
+    revision: 0
   });
   const [showStyleModal, setShowStyleModal] = useState(false);
   const [showCutBox, setShowCutBox] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [comments, setComments] = useState([]);
+  const [projectContent, setProjectContent] = useState([]);
   const [activeComment, setActiveComment] = useState('');
   const [imageCommentDate, setImageCommentDate] = useState("");
   const [editCommentValue, setEditCommentValue] = useState(false);
@@ -71,14 +73,23 @@ const UploadMedia = props => {
     },
     [localStorage.currentProjectId]
   );
-
+  useEffect(() => {
+    if (props.project.projectName) {
+      const editedProject = props.project.editedProjects.length > 0 ? props.project.editedProjects.find(item => item.revision === props.project.projectRevision) : false
+      if (editedProject) {
+        setProjectContent([...props.project.content, editedProject]);
+      } else {
+        setProjectContent(props.project.content);
+      }
+    }
+  }, [props.project.content, props.project.editedProjects, props.project.projectName, props.project.projectRevision])
   useEffect(
     () => {
       if (localStorage.currentMedia && props.project.projectName && props.project.content.length > 0) {
         setMedia();
       }
     },
-    [localStorage.currentMedia, props.project.content]
+    [localStorage.currentMedia, props.project.content, projectContent, props.project.projectName]
   );
 
   useEffect(() => {
@@ -88,19 +99,25 @@ const UploadMedia = props => {
     }
   }, [currentMedia])
   const setMedia = () => {
-    const newContent = props.project.editedProjects.length > 0 ? props.project.editedProjects.find(item => item.revision === props.project.projectRevision) : false
-    let curMedia = newContent ? newContent : props.project.content.filter(item => item._id === localStorage.currentMedia)[0];
+    const editedProject = props.project.editedProjects.length > 0 ? props.project.editedProjects.find(item => item.revision === props.project.projectRevision) : false
+    let curMedia = projectContent.filter(item => item._id === localStorage.currentMedia)[0];
+
     if (!curMedia) {
-      curMedia = props.project.content[0];
+      curMedia = editedProject ? editedProject : props.project.content[0];
     }
     if (curMedia.screens.length > 0) {
       curMedia.screens.sort((a, b) => a.timeInSeconds - b.timeInSeconds);
     }
     setCurrentMedia(curMedia);
-    if (curMedia.comments && props.project.projectStatus !== "Complete") {
+    if (curMedia.comments && !(["Complete", "Done"].includes(props.project?.projectStatus)) && curMedia.revision === props.project.projectRevision) {
       localStorage.comments = JSON.stringify(curMedia?.comments);
       setComments(curMedia?.comments);
-
+    }
+    if (localStorage.editedVideoComments && curMedia.revision === props.project.projectRevision) {
+      let editedVideoComments = JSON.parse(localStorage?.editedVideoComments);
+      setComments(editedVideoComments);
+      localStorage.comments = JSON.stringify(editedVideoComments);
+      localStorage.removeItem("editedVideoComments");
     }
     setActiveComment('')
     if (curMedia.isImage) {
@@ -192,7 +209,7 @@ const UploadMedia = props => {
           setLoading={setLoading}
           comments={comments}
           currentMedia={currentMedia}
-          content={props.project.content}
+          content={projectContent}
           setComments={setComments}
         />
       )}
@@ -206,7 +223,7 @@ const UploadMedia = props => {
                   {comments && comments.length && comments.filter(comment => comment.text.length > 0).length}
                 </span>
               </div>
-              <div className="share_indicator" onClick={toggleShareBlock} style={{ opacity: showDemo && '20%' }}>
+              <div className="share_indicator" onClick={(e) => { (["Complete", "Done"].includes(props.project?.projectStatus)) && toggleShareBlock(e) }} style={{ opacity: showDemo && '20%' }}>
                 <Share />
               </div>
               <div className="question_indicator" style={{ opacity: showDemo && '20%' }}>
@@ -218,7 +235,7 @@ const UploadMedia = props => {
               setCurrentMedia={setCurrentMedia}
               moveTo={moveTo}
               setMedia={setMedia}
-              content={props.project.content}
+              content={projectContent}
               setCurrentTime={setCurrentTime}
               errorMessage={errorMessage}
               setErrorMessage={setErrorMessage}
@@ -278,8 +295,8 @@ const UploadMedia = props => {
             }
             <div className="generate__btns">
               <button
-                onClick={(e) => { (editableStatus.includes(props.project?.projectStatus)) && handleCutVideo(e) }}
-                style={{ backgroundColor: (showCutBox || !(editableStatus.includes(props.project?.projectStatus))) && "gray" }}>
+                onClick={(e) => { (props.project?.projectStatus === "Draft") && handleCutVideo(e) }}
+                style={{ backgroundColor: (showCutBox || !(props.project?.projectStatus === "Draft")) && "gray" }}>
                 <Cut />
                 <span>Cut</span>
               </button>
@@ -290,24 +307,24 @@ const UploadMedia = props => {
                 <Delete />
                 <span>Clear</span>
               </button>
-              <button onClick={() => { (editableStatus.includes(props.project?.projectStatus)) && setShowStyleModal(true) }}
-                style={{ backgroundColor: !(editableStatus.includes(props.project?.projectStatus)) && "gray" }}>
+              <button onClick={() => { (editableStatus.includes(props.project?.projectStatus) && (props.project.projectRevision === currentMedia.revision)) && setShowStyleModal(true) }}
+                style={{ backgroundColor: (!(editableStatus.includes(props.project?.projectStatus)) || (props.project.projectRevision !== currentMedia.revision)) && "gray" }}>
                 <img src={cam} alt="cam" />
                 <span>Generate Video</span>
               </button>
 
               <button
-                onClick={(e) => { (editableStatus.includes(props.project?.projectStatus)) && handleActiveScreenshot(e) }}
-                style={{ backgroundColor: (isShowComment || !(editableStatus.includes(props.project?.projectStatus))) && "gray" }}>
+                onClick={(e) => { (editableStatus.includes(props.project?.projectStatus) && (props.project.projectRevision === currentMedia.revision)) && handleActiveScreenshot(e) }}
+                style={{ backgroundColor: (isShowComment || !(editableStatus.includes(props.project?.projectStatus)) || (props.project.projectRevision !== currentMedia.revision)) && "gray" }}>
                 <Chat />
                 <span>Comment</span>
               </button>
             </div>
 
             {
-              props.project.content && props.project.content.length > 0 && (
+              props.project.content && projectContent.length > 0 && (
                 <CarouselMedia
-                  content={props.project.content}
+                  content={projectContent}
                   projectStatus={props.project?.projectStatus}
                   setComments={setComments}
                   setLoadingVideo={setLoading}
