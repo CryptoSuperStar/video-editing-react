@@ -81,7 +81,7 @@ const CarouselMedia = (props) => {
     let newContent = arrayMoveImmutable(contents, oldIndex, newIndex)
     props.dispatch(updateContent(newContent));
   };
-
+  // this function is no longer required because we are updating comment in mongoDB on press "Enter" while adding comments.
   const updateComments = (id) => {
     let newCurrentMedia = { ...props.currentMedia };
     let newContent = [...props.project.content];
@@ -147,10 +147,9 @@ const CarouselMedia = (props) => {
                   await updateComments(localStorage.currentMedia)
                 }
               }
-              if (props.currentMedia.revision === props.project.projectRevision && props.currentMedia.revision > 0 && localStorage.comments) {
-                localStorage.editedVideoComments = localStorage.comments;
-              }
+
               localStorage.currentMedia = media._id;
+              props.setShowShareModal(false);
               props.setComments([]);
               props.setErrorMessage(null);
               props.setMedia();
