@@ -116,7 +116,6 @@ const projectReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         projects: payload.projects,
-        project: {}
       }
     }
     case 'CREATE_FULL_PROJECT':

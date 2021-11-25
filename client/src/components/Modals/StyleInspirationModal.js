@@ -110,6 +110,9 @@ const StyleInspirationModal = (props) => {
     props.setShowStyleModal(false);
     props.setLoading(true);
     props.dispatch(createProjectMedia(project, history, props.setLoading))
+    if (editedProjects) {
+      localStorage.removeItem("editedVideoComments");
+    }
   };
 
   return (

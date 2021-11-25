@@ -112,27 +112,52 @@ exports.takeScreenShotController = async (req, res) => {
               time: timeInFormat,
             })
           })
+
           Promise.all(screens).then(() => {
             Project.findById({ _id: id }, (err, project) => {
+
               if (err) return res.status(400).send({ msg: `Database Error ${err.message}` });
-              let currentContent = project.content.map(item => {
-                return item.mediaName === newName ? {
-                  _id: item._id,
-                  mediaName: item.mediaName,
-                  mediaSrc: item.mediaSrc,
-                  duration: duration,
-                  endTime: duration,
-                  screens: newScreensArray,
-                  isSupported: item.isSupported,
-                  isImage: item.isImage
-                } : item
-              })
-              Project.findByIdAndUpdate({ _id: id }, { $set: { content: currentContent } }, { new: true },
-                (err, data) => {
-                  if (err) return res.status(400).send({ msg: `Database Error ${err}` });
-                  clearTemp(`${MEDIA_SRC}/temp/${userId}/${bucket}`);
-                  return res.status(200).json({ project: data })
+              const editedProject = project.editedProjects.length > 0 ? project.editedProjects.find(item => item.revision === project.projectRevision) : false
+              if (project.projectStatus === "Complete" && editedProject && project.projectRevision === 0) {
+                let currentEditedProjects = project.editedProjects.map(item => {
+                  return item.revision === project.projectRevision ? {
+                    _id: item._id,
+                    mediaName: item.mediaName,
+                    mediaSrc: item.mediaSrc,
+                    revision: item.revision,
+                    duration: duration,
+                    endTime: duration,
+                    screens: newScreensArray,
+                    isSupported: req.supported,
+                    isImage: req.isImage
+                  } : item
                 })
+                Project.findByIdAndUpdate({ _id: id }, { $set: { editedProjects: currentEditedProjects } }, { new: true },
+                  (err, data) => {
+                    if (err) return res.status(400).send({ msg: `Database Error ${err}` });
+                    clearTemp(`${MEDIA_SRC}/temp/${userId}/${bucket}`);
+                    return res.status(200).json({ project: data })
+                  })
+              } else {
+                let currentContent = project.content.map(item => {
+                  return item.mediaName === newName ? {
+                    _id: item._id,
+                    mediaName: item.mediaName,
+                    mediaSrc: item.mediaSrc,
+                    duration: duration,
+                    endTime: duration,
+                    screens: newScreensArray,
+                    isSupported: item.isSupported,
+                    isImage: item.isImage
+                  } : item
+                })
+                Project.findByIdAndUpdate({ _id: id }, { $set: { content: currentContent } }, { new: true },
+                  (err, data) => {
+                    if (err) return res.status(400).send({ msg: `Database Error ${err}` });
+                    clearTemp(`${MEDIA_SRC}/temp/${userId}/${bucket}`);
+                    return res.status(200).json({ project: data })
+                  })
+              }
             })
           })
 
