@@ -11,7 +11,7 @@ import { ReactComponent as Delete } from "../../assets/img/delete.svg";
 import { ReactComponent as Chat } from "../../assets/img/chat.svg";
 import { ReactComponent as Share } from "../../assets/img/share.svg";
 import { ReactComponent as Info } from "../../assets/img/information.svg";
-import { clearTempProject, getProject } from "../../store/actions/project.action";
+import { clearTempProject, takeScreenshots, updateContent, getProject } from "../../store/actions/project.action";
 import CommentBlock from "../CommentBlock/CommentBlock";
 import ShareModal from "../Modals/ShareModal";
 import EmptyProject from "../EmptyProject/EmptyProject";
@@ -51,6 +51,7 @@ const UploadMedia = props => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [showDemo, setShowDemo] = useState(false);
   const editableStatus = ["Draft", "Complete"]
+  const editedProject = props.project?.editedProjects?.length > 0 ? props.project?.editedProjects.find(item => item.revision === props.project.projectRevision) : false
   let commentFinal = [];
   useEffect(() => {
     if (localStorage.showDemoLayer === "true") {
@@ -94,12 +95,25 @@ const UploadMedia = props => {
 
   useEffect(() => {
     setActiveComment('')
-    if (currentMedia.isImage) {
+    if (currentMedia.isImage && ["Draft", "In Progress"].includes(props.project?.projectStatus)) {
       setActiveComment(currentMedia.comment || '');
     }
   }, [currentMedia])
+  useEffect(() => {
+    if (props.project.projectStatus === "Complete" && !editedProject?.screens?.length > 0) {
+      setLoadingSlider(true);
+      props.dispatch(takeScreenshots(
+        props.project._id,
+        props.project.bucket,
+        editedProject.mediaSrc,
+        editedProject.mediaName
+        , setLoadingSlider))
+    }
+  }, [editedProject.mediaName, editedProject.mediaSrc, editedProject?.screens?.length])
   const setMedia = () => {
-    const editedProject = props.project.editedProjects.length > 0 ? props.project.editedProjects.find(item => item.revision === props.project.projectRevision) : false
+
+
+
     let curMedia = projectContent.filter(item => item._id === localStorage.currentMedia)[0];
 
     if (!curMedia) {
@@ -113,14 +127,14 @@ const UploadMedia = props => {
       localStorage.comments = JSON.stringify(curMedia?.comments);
       setComments(curMedia?.comments);
     }
-    if (localStorage.editedVideoComments && curMedia.revision === props.project.projectRevision) {
+    if (localStorage.editedVideoComments && curMedia._id === editedProject._id) {
       let editedVideoComments = JSON.parse(localStorage?.editedVideoComments);
       setComments(editedVideoComments);
       localStorage.comments = JSON.stringify(editedVideoComments);
-      localStorage.removeItem("editedVideoComments");
+
     }
     setActiveComment('')
-    if (curMedia.isImage) {
+    if (curMedia.isImage && ["Draft", "In Progress"].includes(props.project?.projectStatus)) {
       setActiveComment(curMedia.comment || '');
       setImageCommentDate(currentMedia.createdAt || '');
     }
@@ -152,7 +166,20 @@ const UploadMedia = props => {
     setActiveComment(e.target.value);
   };
 
-
+  const updateComments = (id) => {
+    let newCurrentMedia = { ...currentMedia };
+    let newContent = [...props.project.content];
+    let index = projectContent.findIndex(content => content._id === id);
+    newContent[index] = newCurrentMedia;
+    if (localStorage.comments && newCurrentMedia.screens.length) {
+      let newComments = JSON.parse(localStorage.comments);
+      // newCurrentMedia = newCurrentMedia.screens.map((item, i) => {
+      //   return newComments[i].text.length > 0 ? { ...item, comment: newComments[i] } : item
+      // })
+      newContent[index].comments = newComments;
+    }
+    props.dispatch(updateContent(newContent));
+  }
   const handleCommentEnter = e => {
     setIsShowComment(false);
     let newCommentsArray = [...comments];
@@ -173,13 +200,30 @@ const UploadMedia = props => {
     setComments(commentFinal);
     localStorage.comments = JSON.stringify(newCommentsArray);
     localStorage.updateComment = true;
+    if (props.project.projectStatus === "Draft") {
+      updateComments(currentMedia._id);
+    } else if ((editedProject ? editedProject?._id === currentMedia._id : false)) {
+      localStorage.editedVideoComments = JSON.stringify(newCommentsArray);
+    }
     setActiveComment("");
   };
   const handleImageComment = (event) => {
     localStorage.imageComments = event.target.value;
     setActiveComment(event.target.value)
   }
-
+  const updateImageComments = (id) => {
+    let newCurrentMedia = { ...currentMedia };
+    let newContent = [...projectContent];
+    let index = projectContent.findIndex(content => content._id === id);
+    newContent[index] = newCurrentMedia;
+    if (localStorage.imageComments) {
+      let newComments = localStorage.imageComments;
+      newContent[index].comment = newComments;
+      newContent[index].createdAt = new Date();
+    }
+    props.dispatch(updateContent(newContent));
+    return newContent;
+  }
   const toggleCommentBlock = () => setShowCommentBlock(!showCommentBlock);
   const toggleShareBlock = () => setShowShareModal(!showShareModal);
   // if (!currentMedia.isImage) {
@@ -223,7 +267,7 @@ const UploadMedia = props => {
                   {comments && comments.length && comments.filter(comment => comment.text.length > 0).length}
                 </span>
               </div>
-              <div className="share_indicator" onClick={(e) => { (["Complete", "Done"].includes(props.project?.projectStatus)) && toggleShareBlock(e) }} style={{ opacity: showDemo && '20%' }}>
+              <div className="share_indicator" onClick={(e) => { (["Complete", "Done"].includes(props.project?.projectStatus) && editedProject._id === currentMedia?._id) && toggleShareBlock(e) }} style={{ opacity: showDemo && '20%' }}>
                 <Share />
               </div>
               <div className="question_indicator" style={{ opacity: showDemo && '20%' }}>
@@ -287,7 +331,14 @@ const UploadMedia = props => {
             {
               currentMedia.isImage ? (
                 <div className="image__coment">
-                  <textarea placeholder="Add edit notes here:" rows="5" value={activeComment} onChange={handleImageComment} />{" "}
+                  <textarea placeholder="Add edit notes here:" rows="5"
+                    value={activeComment}
+                    onChange={(e) => { props.project?.projectStatus === "Draft" && handleImageComment(e) }}
+                    onKeyDown={(e) => {
+                      if (!e.shiftKey && e.key === 'Enter') {
+                        updateImageComments(currentMedia._id)
+                      }
+                    }} />{" "}
                 </div>
               ) : (
                 ""
@@ -307,15 +358,15 @@ const UploadMedia = props => {
                 <Delete />
                 <span>Clear</span>
               </button>
-              <button onClick={() => { (editableStatus.includes(props.project?.projectStatus) && (props.project.projectRevision === currentMedia.revision)) && setShowStyleModal(true) }}
-                style={{ backgroundColor: (!(editableStatus.includes(props.project?.projectStatus)) || (props.project.projectRevision !== currentMedia.revision)) && "gray" }}>
+              <button onClick={() => { (editableStatus.includes(props.project?.projectStatus) && (editedProject ? editedProject._id === currentMedia._id : true)) && setShowStyleModal(true) }}
+                style={{ backgroundColor: (!(editableStatus.includes(props.project?.projectStatus)) || (editedProject ? editedProject._id !== currentMedia._id : false)) && "gray" }}>
                 <img src={cam} alt="cam" />
                 <span>Generate Video</span>
               </button>
 
               <button
-                onClick={(e) => { (editableStatus.includes(props.project?.projectStatus) && (props.project.projectRevision === currentMedia.revision)) && handleActiveScreenshot(e) }}
-                style={{ backgroundColor: (isShowComment || !(editableStatus.includes(props.project?.projectStatus)) || (props.project.projectRevision !== currentMedia.revision)) && "gray" }}>
+                onClick={(e) => { (editableStatus.includes(props.project?.projectStatus) && (editedProject ? editedProject._id === currentMedia._id : true)) && handleActiveScreenshot(e) }}
+                style={{ backgroundColor: (isShowComment || !(editableStatus.includes(props.project?.projectStatus)) || (editedProject ? editedProject._id !== currentMedia._id : false)) && "gray" }}>
                 <Chat />
                 <span>Comment</span>
               </button>
@@ -331,7 +382,9 @@ const UploadMedia = props => {
                   setLoadingSlider={setLoadingSlider}
                   user={props.user}
                   setMedia={setMedia}
+                  setShowShareModal={setShowShareModal}
                   currentMedia={currentMedia}
+                  editedProject={editedProject}
                   setCurrentTime={setCurrentTime}
                   setErrorMessage={setErrorMessage}
                   projectName={props.project.projectName}

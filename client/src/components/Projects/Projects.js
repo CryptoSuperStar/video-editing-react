@@ -20,13 +20,12 @@ const Projects = (props) => {
   const [showPromoCodeWall, setShowPromoCodeWall] = useState(false);
   const [myProjects, setMyProjects] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    localStorage.removeItem('duration');
-    localStorage.removeItem('currentProjectId');
-    localStorage.removeItem('currentMedia');
-    localStorage.removeItem('comments');
-  }, [])
+  // useEffect(() => {
+  // localStorage.removeItem('duration');
+  // localStorage.removeItem('currentProjectId');
+  // localStorage.removeItem('currentMedia');
+  // localStorage.removeItem('comments');
+  // }, [])
 
   useEffect(() => {
     if (props.user.userName) {
@@ -79,6 +78,9 @@ const Projects = (props) => {
               localStorage.currentProjectId = project._id;
               localStorage.removeItem('currentMedia');
               localStorage.removeItem('comments');
+              if (project._id !== props.project._id) {
+                localStorage.removeItem("editedVideoComments");
+              }
               localStorage.removeItem('currentPublishedMedia');
               localStorage.removeItem('duration');
               props.history.push(`/dashboard/upload`)
@@ -102,7 +104,8 @@ const Projects = (props) => {
 
 const mapStateToProps = state => ({
   user: state.auth.user,
-  projects: state.project.projects
+  projects: state.project.projects,
+  project: state.project.project
 })
 
 export default connect(mapStateToProps)(Projects);
