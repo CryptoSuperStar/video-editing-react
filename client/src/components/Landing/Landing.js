@@ -279,23 +279,11 @@ const Landing = (props) => {
         <div className="container__inner questions__inner">
           <div className="question__item">
             {renderArrow("Is there a refund policy?")}
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>Money back guaranteed if not satisfied.</p>
           </div>
           <div className="question__item">
-            {renderArrow("How do I learn to use ProVid?")}
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-          </div>
-          <div className="question__item">
-            {renderArrow("Can I connect with others?")}
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-          </div>
-          <div className="question__item">
-            {renderArrow("How to upload my content?")}
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            {renderArrow("How do I learn to use myvideospro.com?")}
+            <p>Upload your videos and tag your notes.</p>
           </div>
           <div className="questions__title">
             <h3 className="screen__title">Control. Build. Grow</h3>
