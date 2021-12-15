@@ -245,7 +245,7 @@ const Landing = (props) => {
             {checkedSwitch ? (
               <div className="plans__item">
                 <h5>Recommended</h5>
-                <div className="price">$<span>49</span>/mo</div>
+                <div className="price">$<span>16.99</span>/mo</div>
                 <div className="billed">Billed Annually</div>
                 <div className="plan__feature">
                   {renderTick("Same price as Google Drive")}
@@ -257,7 +257,7 @@ const Landing = (props) => {
             ) : (
               <div className="plans__item">
                 <h5>Starter</h5>
-                <div className="price">$<span>75</span>/mo</div>
+                <div className="price">$<span>20</span>/mo</div>
                 <div className="billed">Billed Monthly</div>
                 <div className="plan__feature">
                   {renderTick("Same price as Google Drive")}
