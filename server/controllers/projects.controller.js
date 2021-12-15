@@ -35,7 +35,10 @@ exports.createTempProjectController = async (req, res) => {
         content: [{
           mediaSrc: link,
           mediaName: mediaName,
+          mediaType: req.mediaType,
           isImage,
+          duration: req.preDuration,
+          endTime: req.preDuration,
           isSupported: supported
         }],
         author: _id
@@ -43,7 +46,7 @@ exports.createTempProjectController = async (req, res) => {
       await project.save(((err, doc) => {
         if (err) return res.status(400).send({ msg: `Database Error ${err}` });
         console.log(doc);
-        return res.status(200).json({ project: doc, currentMedia: doc.content[0]._id, isImage });
+        return res.status(200).json({ project: doc, currentMedia: doc.content[0]._id, isImage, mediaType: req.mediaType, });
       }));
     });
 
@@ -55,7 +58,7 @@ exports.createTempProjectController = async (req, res) => {
 };
 
 exports.takeScreenShotController = async (req, res) => {
-  const userId = req.userId;
+  const userId = req.body.id;
   const { preDuration } = req;
   const { link, id, name, bucket } = req.body;
   if (!fs.existsSync(`${MEDIA_SRC}/temp`)) {
@@ -84,6 +87,9 @@ exports.takeScreenShotController = async (req, res) => {
       .seekInput(0)
       .output(`${MEDIA_SRC}/temp/${userId}/${bucket}/${newName}-%01d.jpg`)
       .outputOptions('-vf', `fps=1/${stepInSeconds},scale=-1:120`)
+      .on('progress', function (progress) {
+        console.log(progress.percent)
+      })
       .on('end', function () {
         console.log('Screenshots taken');
         try {
@@ -124,6 +130,7 @@ exports.takeScreenShotController = async (req, res) => {
                     _id: item._id,
                     mediaName: item.mediaName,
                     mediaSrc: item.mediaSrc,
+                    mediaType: item.mediaType,
                     revision: item.revision,
                     duration: duration,
                     endTime: duration,
@@ -144,6 +151,7 @@ exports.takeScreenShotController = async (req, res) => {
                     _id: item._id,
                     mediaName: item.mediaName,
                     mediaSrc: item.mediaSrc,
+                    mediaType: item.mediaType,
                     duration: duration,
                     endTime: duration,
                     screens: newScreensArray,
@@ -360,7 +368,10 @@ exports.addMediaToProject = async (req, res) => {
     const newContent = {
       mediaSrc: link,
       mediaName: name,
+      mediaType: req.mediaType,
       isImage,
+      duration: req.preDuration,
+      endTime: req.preDuration,
       isSupported: supported
     }
     Project.findByIdAndUpdate(projectId, { $push: { content: newContent } }, { new: true },
@@ -370,7 +381,7 @@ exports.addMediaToProject = async (req, res) => {
           return res.status(400).send({ msg: err });
         }
         let currentMedia = data.content[data.content.length - 1]._id;
-        return res.status(200).json({ project: data, currentMedia: currentMedia, isImage })
+        return res.status(200).json({ project: data, currentMedia: currentMedia, isImage, mediaType: req.mediaType, })
       })
   } catch (e) {
     console.log(e);
