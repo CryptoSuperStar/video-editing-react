@@ -40,22 +40,6 @@ const Header = (props) => {
     <div className="dashboard__menu--block">
       {loading ? <MoonLoader /> :
         <Fragment>
-          <Link to="/dashboard/upload"
-
-            onClick={() => {
-              if (window.location.pathname === "/dashboard/upload") {
-                localStorage.removeItem('duration');
-                localStorage.removeItem('currentProjectId');
-                localStorage.removeItem('currentMedia');
-                localStorage.removeItem('comments');
-                window.location.reload()
-              }
-
-            }}
-            className="menu__upload--button">
-            <Plus />
-            <span  >Upload</span>
-          </Link>
           <Bell />
           <div className="menu__user">
             <img src={props.user ? props.user.avatar : avatar} alt="avatar" />
@@ -78,11 +62,6 @@ const Header = (props) => {
       <Link className="logo__block" to="/">
         <img src={logo} alt="logo" />
       </Link>
-      {isDashboard &&
-        <div className="search__bar">
-          <input type="text" placeholder="Search..." value={search} onChange={e => setSearch(e.target.value)} />
-          <Search />
-        </div>}
       {props.showMenu
         ? <Cancel className="cancelMenu mobile__view" onClick={() => props.handleShowMenu(false)} />
         : <HamburgerMenu className="hamburgerMenu mobile__view" onClick={() => props.handleShowMenu(true)} />}
