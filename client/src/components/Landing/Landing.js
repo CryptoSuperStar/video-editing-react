@@ -247,11 +247,8 @@ const Landing = (props) => {
               <div className="price">$<span>49</span>/mo</div>
               <div className="billed">Billed Annually</div>
               <div className="plan__feature">
-                {renderTick("Lorem ipsum dolor sit amet")}
-                {renderTick("Consectetur adipiscing elit")}
-                {renderTick("Sed do eiusmod tempor incididunt")}
-                {renderTick("Ut labore et dolore magna aliqua")}
-                {renderTick("Lorem ipsum dolor sit amet")}
+                {renderTick("Same price as Google Drive")}
+                {renderTick("Double the features")}
               </div>
               <div className="plan__btn" onClick={() =>props.history.push('/sign_up')}>
                 Start 7 Days Free Trial</div>
@@ -262,11 +259,8 @@ const Landing = (props) => {
               <div className="price">$<span>75</span>/mo</div>
               <div className="billed">Billed Monthly</div>
               <div className="plan__feature">
-                {renderTick("Lorem ipsum dolor sit amet")}
-                {renderTick("Consectetur adipiscing elit")}
-                {renderTick("Sed do eiusmod tempor incididunt")}
-                {renderTick("Ut labore et dolore magna aliqua")}
-                {renderTick("Lorem ipsum dolor sit amet")}
+                {renderTick("Same price as Google Drive")}
+                {renderTick("Double the features")}
               </div>
               <div className="plan__btn" onClick={() =>props.history.push('/sign_up')}>
                 Start 7 Days Free Trial</div>
