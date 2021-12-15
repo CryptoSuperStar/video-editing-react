@@ -302,7 +302,6 @@ const Landing = (props) => {
           </div>
           <div className="questions__title">
             <h3 className="screen__title">Control. Build. Grow</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
             {localStorage.isAuthenticated === 'false' &&
             <Fragment>
               <Link to="/sign_in">Start 7 Days Free Trial</Link>
