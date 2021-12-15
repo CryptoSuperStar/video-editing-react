@@ -305,7 +305,6 @@ const Landing = (props) => {
             {localStorage.isAuthenticated === 'false' &&
             <Fragment>
               <Link to="/sign_in">Start 7 Days Free Trial</Link>
-              <span>No credit card required</span>
             </Fragment>}
           </div>
         </div>
