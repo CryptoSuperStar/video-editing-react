@@ -239,13 +239,14 @@ export const updateContent = (content) => async dispatch => {
 
 export const deleteVideo = (newContent, videoInfo, bucket) => async dispatch => {
   try {
+    let mediaType = videoInfo.mediaType;
     const res = await axios.put(`${REACT_APP_API_URL}/deleteVideo/${localStorage.currentProjectId}`,
       { newContent, videoInfo, bucket });
     dispatch({
       type: "DELETE_VIDEO",
       payload: res.data
     })
-    toast.success('Video was deleted');
+    toast.success(`${mediaType} was deleted`);
     return res;
   } catch (e) {
     dispatch({

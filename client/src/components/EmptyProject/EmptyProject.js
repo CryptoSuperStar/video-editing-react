@@ -7,6 +7,7 @@ import { REACT_APP_AWS_KEY, REACT_APP_AWS_SECRET_KEY, REACT_APP_BUCKET } from ".
 import { createTempProject, takeScreenshots } from "../../store/actions/project.action";
 import { toast } from "react-toastify";
 import DemoLayerEmpty from "../DemoLayer/DemoLayerEmpty";
+import { mediaTypeVideo } from '../../utils/constant';
 
 const EmptyProject = (props) => {
 
@@ -23,8 +24,8 @@ const EmptyProject = (props) => {
     props.setComments([])
     const file = e.target.files[0]; // accessing file
     const fileSize = file.size / 1048576;
-    if (fileSize > 100) {
-      toast.error('The File size should be less than 100MB')
+    if (fileSize > 2048) {
+      toast.error('The File size should be less than 2GB')
     } else {
       let newFileName = e.target.files[0].name;
       newFileName = newFileName.replace(/ /g, '_')
@@ -42,7 +43,7 @@ const EmptyProject = (props) => {
       ReactS3Client.uploadFile(file, newFileName).then(data => {
         if (data.status === 204) {
           props.dispatch(createTempProject(data.location, bucket, props.setLoadingVideo)).then((res) => {
-            if (!res.isImage) {
+            if (res.mediaType === mediaTypeVideo) {
               props.setLoadingSlider(true);
               props.dispatch(takeScreenshots(
                 res.project._id,
@@ -68,6 +69,7 @@ const EmptyProject = (props) => {
       <div className="upload__media--field" >
         <input type="file" ref={fileInput} id="upload__media--button"
           onChange={handleChange}
+          accept="audio/*,video/*,image/*"
         />
         <label htmlFor="upload__media--button" style={{
           boxShadow: showDemo && "0px 0px 25px 0px #306D76",

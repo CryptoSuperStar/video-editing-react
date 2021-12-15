@@ -95,7 +95,7 @@
       bottom: -1px;
       z-index: 1;
       background-color: white;
-      transition: left linear .5s;
+      transition: left linear .2s;
       border: 1px solid gray;
       border-radius: 2px;
     }
@@ -141,6 +141,17 @@
     bottom: 0;
     top: 31px;
     height: calc(100% - 31px);
+  }
+  .audio-time-line{
+    height: 83%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-color:gray;
+
   }
   .rc-slider-mark {
     position: absolute;

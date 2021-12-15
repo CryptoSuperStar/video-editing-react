@@ -5,6 +5,7 @@ import 'rc-slider/assets/index.css';
 import './TimeLine.scss';
 import { ReactComponent as Moon } from "../../assets/img/waning-moon.svg";
 import { ReactComponent as Arrow } from "../../assets/img/next-2.svg";
+import { mediaTypeAudio } from '../../utils/constant';
 
 momentDurationFormatSetup(moment);
 
@@ -13,7 +14,27 @@ const TimeLine = props => {
   const [leftArrowPad, setLeftArrowPad] = useState(0);
   const [rightArrowPad, setRightArrowPad] = useState(0);
   const [shift, setShift] = useState(0);
+  const [audioTimeStamp, setAudioTimeStamp] = useState([])
 
+  useEffect(() => {
+    if (props.currentMedia.mediaType === mediaTypeAudio) {
+      let quantity = '';
+      if (props.currentMedia.duration <= 30) {
+        quantity = 6;
+      } else if (props.currentMedia.duration > 30 && props.currentMedia.duration <= 60) {
+        quantity = 7;
+      } else {
+        quantity = 9;
+      }
+      let stepInSeconds = props.currentMedia.duration / quantity;
+      let audioTimeStampArray = [...Array(quantity)].map((item, i) => {
+        let timeInFormat = moment.duration((stepInSeconds * (i + 1) - (stepInSeconds / 2)), 'seconds')
+          .format("mm:ss:SSS", { trim: false })
+        return { time: timeInFormat, frequency: [...Array(20)].map(i => Math.floor((Math.random() * 83) + 10)) };
+      })
+      setAudioTimeStamp(audioTimeStampArray);
+    }
+  }, [props.currentMedia.duration, props.currentMedia.mediaType])
   useEffect(
     () => {
       // let curMax = moment.duration(props.screens[props.screens.length - 1].time).asSeconds();
@@ -117,14 +138,26 @@ const TimeLine = props => {
               <span />
             </div>)}
 
-        <div className="TimeLine__inner--images">{props.currentMedia.screens.map((scr, i) => (
-          <div className="TimeLine__image--item" onClick={(e) =>
-            handleStepTime(e)}
-            key={scr._id}>
-            <p>{scr.time}</p>
-            <div className="insteadOfImg" style={{ backgroundImage: `url(${scr.screenSrc})` }} />
-          </div>
-        ))}</div>
+        {props.currentMedia.screens.length > 0 ? <div className="TimeLine__inner--images" onClick={(e) =>
+          handleStepTime(e)}> {props.currentMedia.screens.map((scr, i) => (
+            <div className="TimeLine__image--item"
+              key={scr._id}>
+              <p>{scr.time}</p>
+              <div className="insteadOfImg" style={{ backgroundImage: `url(${scr.screenSrc})` }} />
+            </div>
+          ))}
+        </div> : <div className="TimeLine__inner--images">
+          {audioTimeStamp.map((frame, i) => (
+            <div className="TimeLine__image--item"
+              key={i}>
+              <p>{frame.time}</p>
+              <div onClick={(e) =>
+                handleStepTime(e)} className="audio-time-line" style={{ background: "gray" }}>
+                {frame.frequency.map(i => <div style={{ background: "#00000090", width: "2%", height: `${i}%` }}></div>)}
+              </div>
+            </div>
+          ))}
+        </div>}
 
         <Fragment   >
           {props.showCutBox && <div className="resizable__box" onClick={(e) => handleStepTime(e)} style={{

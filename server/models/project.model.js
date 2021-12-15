@@ -11,6 +11,7 @@ const ContentSchema = new mongoose.Schema({
   ],
   mediaSrc: String,
   mediaName: String,
+  mediaType: String,
   duration: String,
   comment: String,
   isSupported: {

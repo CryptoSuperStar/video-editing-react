@@ -171,7 +171,7 @@ const UploadMedia = props => {
     let newContent = [...props.project.content];
     let index = projectContent.findIndex(content => content._id === id);
     newContent[index] = newCurrentMedia;
-    if (localStorage.comments && newCurrentMedia.screens.length) {
+    if (localStorage.comments) {
       let newComments = JSON.parse(localStorage.comments);
       // newCurrentMedia = newCurrentMedia.screens.map((item, i) => {
       //   return newComments[i].text.length > 0 ? { ...item, comment: newComments[i] } : item
@@ -304,7 +304,7 @@ const UploadMedia = props => {
             }
             {/* {currentMedia.isImage && <div className="TimeLine" />} */}
             {
-              !loadingSlider && currentMedia.screens.length > 0 && !currentMedia.isImage && (
+              !loadingSlider && !currentMedia.isImage && (
                 <TimeLine
                   currentMedia={currentMedia}
                   setCurrentMedia={setCurrentMedia}
@@ -351,13 +351,6 @@ const UploadMedia = props => {
                 <Cut />
                 <span>Cut</span>
               </button>
-              <button
-                onClick={(e) => { (props.project?.projectStatus === "Draft") && handleClear(e) }}
-
-                style={{ backgroundColor: !(props.project?.projectStatus === "Draft") && "gray" }}>
-                <Delete />
-                <span>Clear</span>
-              </button>
               <button onClick={() => { (editableStatus.includes(props.project?.projectStatus) && (editedProject ? editedProject._id === currentMedia._id : true)) && setShowStyleModal(true) }}
                 style={{ backgroundColor: (!(editableStatus.includes(props.project?.projectStatus)) || (editedProject ? editedProject._id !== currentMedia._id : false)) && "gray" }}>
                 <img src={cam} alt="cam" />
@@ -375,6 +368,7 @@ const UploadMedia = props => {
             {
               props.project.content && projectContent.length > 0 && (
                 <CarouselMedia
+                  setIsShowComment={setIsShowComment}
                   content={projectContent}
                   projectStatus={props.project?.projectStatus}
                   setComments={setComments}
