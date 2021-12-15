@@ -89,9 +89,6 @@ const Header = (props) => {
       {isDashboard
         ? dashboardMenu
         : <div className="menu__block web__view">
-          <Link to="*">Demo</Link>
-          <Link to="*">Pages</Link>
-          <Link to="*">Support</Link>
           <Link to="/sign_in">Login</Link>
           <Link to="/sign_up" className="getStarted__btn">Get Started</Link>
         </div>}
