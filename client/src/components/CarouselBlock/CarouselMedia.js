@@ -16,6 +16,7 @@ import {
 } from "../../store/actions/project.action";
 import { toast } from "react-toastify";
 import DraggableContentList from "../DraggableContent/DraggableContentList";
+import { mediaTypeVideo } from '../../utils/constant';
 
 const CarouselMedia = (props) => {
 
@@ -39,8 +40,8 @@ const CarouselMedia = (props) => {
     localStorage.removeItem('comments');
     const file = e.target.files[0]; // accessing file
     const fileSize = file.size / 1048576;
-    if (fileSize > 100) {
-      toast.error('The File size should be less than 100MB')
+    if (fileSize > 2048) {
+      toast.error('The File size should be less than 2GB')
     } else {
       let newFileName = e.target.files[0].name;
       newFileName = newFileName.replace(/ /g, '_');
@@ -58,7 +59,7 @@ const CarouselMedia = (props) => {
         if (data.status === 204) {
           props.dispatch(addMediaToProject(data.location, localStorage.currentProjectId, props.project.bucket, props.setLoadingVideo))
             .then((res) => {
-              if (!res.isImage) {
+              if (res.mediaType === mediaTypeVideo) {
                 props.setLoadingSlider(true);
                 let currentMedia = res.project.content[res.project.content.length - 1];
                 props.dispatch(takeScreenshots(
@@ -133,33 +134,38 @@ const CarouselMedia = (props) => {
         dragging={true}
       >
         {contents.map(media => (
-          <div className="mediaFiles__slider--inner" key={media._id}
-            style={{
-              background: (media.isImage || (media.screens && media.screens.length > 0))
-                ? `url(${media.isImage ? media.mediaSrc : media.screens[1].screenSrc})` : 'black'
-            }}
-            onClick={async () => {
-              if (props.project?.projectStatus === "Draft") {
-                if (localStorage.updateComment && localStorage.updateComment === 'true') {
-                  await updateComments(localStorage.currentMedia);
+          <>
+            <div className="mediaFiles__slider--inner" key={media._id}
+              style={{
+                border: localStorage.currentMedia === media._id ? `5px solid #20319B` : props.editedProject._id === media._id && `5px solid #4ea0d6`,
+                background: (media.isImage || (media.screens && media.screens.length > 0))
+                  ? `url(${media.isImage ? media.mediaSrc : media.screens[1].screenSrc})` : 'black'
+              }}
+              onClick={async () => {
+                if (props.project?.projectStatus === "Draft") {
+                  if (localStorage.updateComment && localStorage.updateComment === 'true') {
+                    await updateComments(localStorage.currentMedia);
+                  }
+                  if (localStorage.editedVideoTime && localStorage.editedVideoTime === 'true') {
+                    await updateComments(localStorage.currentMedia)
+                  }
                 }
-                if (localStorage.editedVideoTime && localStorage.editedVideoTime === 'true') {
-                  await updateComments(localStorage.currentMedia)
-                }
-              }
 
-              localStorage.currentMedia = media._id;
-              props.setShowShareModal(false);
-              props.setComments([]);
-              props.setErrorMessage(null);
-              props.setMedia();
-            }
-            }
-          >
-            <p>{media.mediaName}</p>
-            {props.project.projectStatus === "Draft" && <span className="delete__video--btn" onClick={(e) =>
-              deleteVideoHandle(e, media._id)}>X</span>}
-          </div>
+                localStorage.currentMedia = media._id;
+                props.setIsShowComment(false)
+                props.setShowShareModal(false);
+                props.setComments([]);
+                props.setErrorMessage(null);
+                props.setMedia();
+              }
+              }
+            >
+              {props.editedProject._id === media._id && <snap ></snap>}
+              <p>{media.mediaName}</p>
+              {props.project.projectStatus === "Draft" && <span className="delete__video--btn" onClick={(e) =>
+                deleteVideoHandle(e, media._id)}>X</span>}
+            </div>
+          </>
         ))}
         {props.project.projectStatus === "Draft" && <div className="mediaFiles__slider--inner" ref={sliderItemWidth}
           onClick={() => {
@@ -172,7 +178,9 @@ const CarouselMedia = (props) => {
         >
           <input type="file" ref={fileInput} onChange={(e) => {
             handleChange(e)
-          }} id="mediaFiles__button" />
+          }} id="mediaFiles__button"
+            accept="audio/*,video/*,image/*"
+          />
           <label htmlFor="mediaFiles__button">
             <Plus2 />
           </label>

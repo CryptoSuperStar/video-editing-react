@@ -4,9 +4,10 @@ import { connect } from "react-redux";
 import momentDurationFormatSetup from "moment-duration-format";
 import { ReactComponent as PlayButton } from "../../assets/img/play-button.svg";
 import { ReactComponent as PauseButton } from "../../assets/img/pause-button.svg";
-
+import { ReactComponent as AudioIcon } from "../../assets/img/AudioIcon.svg";
 import './VideoPlayer.scss';
 import { updateContent } from "../../store/actions/project.action";
+import { mediaTypeAudio } from '../../utils/constant';
 
 momentDurationFormatSetup(moment);
 
@@ -85,7 +86,33 @@ const VideoPlayer = (props) => {
     }
     setCurrentTime(player.current.currentTime);
   }
-
+  const audioPlayer = () => <audio
+    ref={player}
+    src={props.currentMedia.mediaSrc}
+    onLoadedData={(e) => {
+      // let timeEnd = moment.duration(player.current.duration, "seconds").format("hh:mm:ss", {trim: false});
+      if (!props.currentMedia.endTime) {
+        setEndAt(player.current.duration);
+      }
+      props.setCurrentMedia({ ...props.currentMedia, duration: player.current.duration });
+    }}
+    onError={(e) => {
+      if (e.target.error.code) {
+        props.setErrorMessage(e.target.error.message)
+      }
+    }
+    }
+    preload="metadata"
+    style={{ width: '60%' }}
+    className="video"
+    id="player__video viewer"
+    onClick={togglePlay}
+    onTimeUpdate={handleUpdateTime}
+    autoPlay={isAutoPlay}
+    playsInline={true}
+  >
+    Audio is not supported
+  </audio>
   const videoBlock = () => <video
     ref={player}
     src={props.currentMedia.mediaSrc}
@@ -130,14 +157,18 @@ const VideoPlayer = (props) => {
             : (props.currentMedia.screens.length > 0
               && `url(${props.currentMedia.screens[1].screenSrc})`)
         }}>
-        {!props.currentMedia.isImage && !props.currentMedia.isSupported && <span className="warning__message">The file is not supported. However, You can add comments on the timeline.</span>}
-        {props.errorMessage && <span className="warning__message">The file is not supported. However, You can add comments on the timeline.</span>}
-        {props.currentMedia.isImage ?
+        {props.currentMedia.mediaType === mediaTypeAudio ? <span className="warning__message" >
+          <AudioIcon />
+        </span>
+          : !props.currentMedia.isImage && !props.currentMedia.isSupported ? <span className="warning__message" >You cannot View the File but you can add Edit Notes.</span> : ""}
+        {/* {props.errorMessage && <span className="warning__message">You cannot View the File but you can add Edit Notes.</span>} */}
+        {props.currentMedia.isImage &&
           <div className="image__block"><img src={props.currentMedia.mediaSrc} alt={props.currentMedia.mediaSrc} /></div>
-          : videoBlock()}
+        }
+        {!props.currentMedia.isImage && (props.currentMedia.mediaType === mediaTypeAudio ? audioPlayer() : videoBlock())}
       </div>
 
-      {isShowControl && !props.errorMessage && !props.currentMedia.isImage && props.currentMedia.isSupported &&
+      {isShowControl && !props.errorMessage && !props.currentMedia.isImage &&
         < div className="video-controls" id="video-controls" style={{ width: widthVideo + 'px' }}>
           <button data-title={!isPlay ? "Play" : "Pause"} id="play" onClick={togglePlay}>
             {isPlay ? <PauseButton /> : <PlayButton />}

@@ -169,7 +169,42 @@
     }
   }
 }
-
+.warning-container{
+  .massage {
+    text-align: center;
+    color: rgba(0,0,0,0.5);
+    line-height: 1.2em;
+    padding: 10px;
+    font-family: "Montserrat", "Helvetica Neue", sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    margin-top: 8px;
+  }
+  .option {
+    display: flex;
+    justify-content: center;
+    .noButton{
+      background-color: red;
+    }
+    .yesButton{
+      background-color: var(--smalt-blue);
+    }
+    div {
+      color: rgb(255, 255, 255);
+      flex-basis: 20%;
+      padding: 15px 0;
+      margin: 15px;
+      cursor: pointer;
+      border-radius: 22px;
+      font-family: Montserrat, "Helvetica Neue", sans-serif;
+      font-size: 15px;
+    &:hover{
+      opacity: 80%;
+    }
+    }
+   
+  }
+}
 .favourite__relevant {
   display: flex;
   justify-content: center;

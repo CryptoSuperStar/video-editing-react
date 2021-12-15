@@ -10,7 +10,7 @@ import { ReactComponent as Tick } from "../../assets/img/accept_added_check_comp
 import { createProjectMedia } from '../../store/actions/project.action';
 
 const StyleInspirationModal = (props) => {
-
+  const [showStyleOption, setShowStyleOption] = useState(false)
   const history = useHistory();
 
   const [platforms, setPlatforms] = useState([{
@@ -121,51 +121,58 @@ const StyleInspirationModal = (props) => {
         <div className="connectSocial__cross" onClick={() => props.setShowStyleModal(false)}>
           <Cancel fill="black" />
         </div>
-        <h3>Style Inspiration</h3>
-        <p>Lorem ipsum dolor sit amet</p>
-        <h5>Style Inspiration</h5>
-        <input type="text" placeholder="Paste your link here" value={link} onChange={e => setLink(e.target.value)} />
-        <h5>Target Platform Length</h5>
-        <div className="connectSocial__links">
-          {platforms.map((platform, i) => (
-            <div className="modal__payments--item" key={i} style={{
-              border: `1px solid ${platform.active ? "#3b8590" : '#36596a55'}`,
-              backgroundColor: platform.active ? '#3b85911a' : 'white'
-            }}
-              onClick={() => changePlatform(i)}
-            >
-              <div className="modal__plans--tick" style={{ backgroundColor: platform.active ? "#3b8590" : "rgba(133,134,149,0.1)" }}>
-                {platform.active && <Tick fill="white" />}
+        {showStyleOption ? <><h3>Style Inspiration</h3>
+          <h5>Style Inspiration</h5>
+          <input type="text" placeholder="Paste your link here" value={link} onChange={e => setLink(e.target.value)} />
+          <h5>Target Platform Length</h5>
+          <div className="connectSocial__links">
+            {platforms.map((platform, i) => (
+              <div className="modal__payments--item" key={i} style={{
+                border: `1px solid ${platform.active ? "#3b8590" : '#36596a55'}`,
+                backgroundColor: platform.active ? '#3b85911a' : 'white'
+              }}
+                onClick={() => changePlatform(i)}
+              >
+                <div className="modal__plans--tick" style={{ backgroundColor: platform.active ? "#3b8590" : "rgba(133,134,149,0.1)" }}>
+                  {platform.active && <Tick fill="white" />}
+                </div>
+                {platform.src}
               </div>
-              {platform.src}
-            </div>
-          ))}
-        </div>
-        <h5>Any favourite relevant?</h5>
-        <div className="favourite__relevant">
-          <div style={{
-            border: `1px solid ${!favouriteRelevant ? "#3b8590" : '#36596a55'}`,
-            backgroundColor: !favouriteRelevant ? '#3b85911a' : 'white'
-          }} onClick={() => setFavouriteRelevant(false)}>No</div>
-          <div style={{
-            border: `1px solid ${favouriteRelevant ? "#3b8590" : '#36596a55'}`,
-            backgroundColor: favouriteRelevant ? '#3b85911a' : 'white'
-          }} onClick={() => setFavouriteRelevant(true)}>Yes</div>
-        </div>
-        <h5>Style Suggestions</h5>
-        <div className="favourite__relevant">
-          <div style={{
-            border: `1px solid ${!suggestion ? "#3b8590" : '#36596a55'}`,
-            backgroundColor: !suggestion ? '#3b85911a' : 'white'
-          }} onClick={() => setSuggestion(false)}>No</div>
-          <div style={{
-            border: `1px solid ${suggestion ? "#3b8590" : '#36596a55'}`,
-            backgroundColor: suggestion ? '#3b85911a' : 'white'
-          }} onClick={() => setSuggestion(true)}>Yes</div>
-        </div>
-        <button className="pay__modal--submit" type="button" onClick={handleDone}>Done</button>
+            ))}
+          </div>
+          <h5>Any favourite relevant?</h5>
+          <div className="favourite__relevant">
+            <div style={{
+              border: `1px solid ${!favouriteRelevant ? "#3b8590" : '#36596a55'}`,
+              backgroundColor: !favouriteRelevant ? '#3b85911a' : 'white'
+            }} onClick={() => setFavouriteRelevant(false)}>No</div>
+            <div style={{
+              border: `1px solid ${favouriteRelevant ? "#3b8590" : '#36596a55'}`,
+              backgroundColor: favouriteRelevant ? '#3b85911a' : 'white'
+            }} onClick={() => setFavouriteRelevant(true)}>Yes</div>
+          </div>
+          <h5>Style Suggestions</h5>
+          <div className="favourite__relevant">
+            <div style={{
+              border: `1px solid ${!suggestion ? "#3b8590" : '#36596a55'}`,
+              backgroundColor: !suggestion ? '#3b85911a' : 'white'
+            }} onClick={() => setSuggestion(false)}>No</div>
+            <div style={{
+              border: `1px solid ${suggestion ? "#3b8590" : '#36596a55'}`,
+              backgroundColor: suggestion ? '#3b85911a' : 'white'
+            }} onClick={() => setSuggestion(true)}>Yes</div>
+          </div>
+          <button className="pay__modal--submit" type="button" onClick={handleDone}>Done</button>
+        </> : <div className='warning-container'>
+          <h3>Warning</h3>
+          <div className='massage'> You are about to submit your project for edits. You won't be able to update while it is being processed. Are you sure?</div>
+          <div className="option">
+            <div className='noButton' onClick={() => props.setShowStyleModal(false)}> No</div>
+            <div className='yesButton' onClick={() => setShowStyleOption(true)}>Yes</div>
+          </div>
+        </div>}
       </div>
-    </div>
+    </div >
   );
 };
 
