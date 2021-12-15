@@ -15,7 +15,7 @@ import FooterNav from "../FooterNav/FooterNav";
 
 const Landing = (props) => {
   
-  const [checkedSwitch, setCheckedSwitch] = useState(false);
+  const [checkedSwitch, setCheckedSwitch] = useState(true);
   const [width, setWidth] = useState(window.innerWidth);
   const [marginLeft, setMarginLeft] = useState(0);
   const [touchStart, setTouchStart] = React.useState(0);
