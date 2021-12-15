@@ -221,9 +221,6 @@ const Landing = (props) => {
       <section className="plans web__view">
         <div className="container__inner">
           <h3 className="screen__title">Pricing & Plans</h3>
-          <span className="plans__text">Lorem ipsum dolor sit amet, consectetur
-            adipiscing elit, sed do eiusmod tempor incididunt.
-          </span>
           <span className="plans__choose">
             Monthly
             <Switch
