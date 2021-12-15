@@ -244,7 +244,7 @@ const Landing = (props) => {
           <div className="plans__items">
             {checkedSwitch ? (
               <div className="plans__item">
-                <h5>Starter</h5>
+                <h5>Recommended</h5>
                 <div className="price">$<span>49</span>/mo</div>
                 <div className="billed">Billed Annually</div>
                 <div className="plan__feature">
@@ -256,7 +256,7 @@ const Landing = (props) => {
               </div>
             ) : (
               <div className="plans__item">
-                <h5>Recommended</h5>
+                <h5>Starter</h5>
                 <div className="price">$<span>75</span>/mo</div>
                 <div className="billed">Billed Monthly</div>
                 <div className="plan__feature">
