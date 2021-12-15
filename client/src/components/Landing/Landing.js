@@ -242,29 +242,31 @@ const Landing = (props) => {
             <span className="save">Save 25%</span>
           </span>
           <div className="plans__items">
-            <div className="plans__item">
-              <h5>Starter</h5>
-              <div className="price">$<span>49</span>/mo</div>
-              <div className="billed">Billed Annually</div>
-              <div className="plan__feature">
-                {renderTick("Same price as Google Drive")}
-                {renderTick("Double the features")}
+            {checkedSwitch ? (
+              <div className="plans__item">
+                <h5>Starter</h5>
+                <div className="price">$<span>49</span>/mo</div>
+                <div className="billed">Billed Annually</div>
+                <div className="plan__feature">
+                  {renderTick("Same price as Google Drive")}
+                  {renderTick("Double the features")}
+                </div>
+                <div className="plan__btn" onClick={() =>props.history.push('/sign_up')}>
+                  Start 7 Days Free Trial</div>
               </div>
-              <div className="plan__btn" onClick={() =>props.history.push('/sign_up')}>
-                Start 7 Days Free Trial</div>
-            </div>
-  
-            <div className="plans__item">
-              <h5>Recommended</h5>
-              <div className="price">$<span>75</span>/mo</div>
-              <div className="billed">Billed Monthly</div>
-              <div className="plan__feature">
-                {renderTick("Same price as Google Drive")}
-                {renderTick("Double the features")}
+            ) : (
+              <div className="plans__item">
+                <h5>Recommended</h5>
+                <div className="price">$<span>75</span>/mo</div>
+                <div className="billed">Billed Monthly</div>
+                <div className="plan__feature">
+                  {renderTick("Same price as Google Drive")}
+                  {renderTick("Double the features")}
+                </div>
+                <div className="plan__btn" onClick={() =>props.history.push('/sign_up')}>
+                  Start 7 Days Free Trial</div>
               </div>
-              <div className="plan__btn" onClick={() =>props.history.push('/sign_up')}>
-                Start 7 Days Free Trial</div>
-            </div>
+            )}
           </div>
         </div>
       </section>
