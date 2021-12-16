@@ -238,7 +238,10 @@ const UploadMedia = props => {
   if (loading)
     return (
       <div className="spinner__wrapper">
+
         <MoonLoader className="spinner" color="#000" loading={loading} size={50} />
+        <div style={{ padding: "20px" }}>Uploading....  Please wait </div>
+
       </div>
     );
   return (
