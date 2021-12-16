@@ -7,22 +7,6 @@ module.exports = (req, res, next) => {
     let isImage = false;
     let mediaType = '';
     switch ((meta.streams[0].codec_type).toLowerCase()) {
-      // case 'av1':
-      // case 'h264':
-      // case 'h263':
-      // case 'h265':
-      // case 'mp4v-es':
-      // case 'mpeg-1':
-      // case 'mpeg-2':
-      // case 'theora':
-      // case 'vp8':
-      // case 'vp9':
-      // case 'aac':
-      case 'video':
-        supported = true;
-        mediaType = "Video";
-    }
-    switch ((meta.streams[0].codec_type).toLowerCase()) {
       // case 'pcm':
       // case 'wav':
       // case 'aiff':
@@ -37,6 +21,24 @@ module.exports = (req, res, next) => {
         supported = true;
         mediaType = "Audio";
     }
+    switch ((meta.streams[0].codec_name).toLowerCase()) {
+      case 'av1':
+      case 'h264':
+      case 'h263':
+      case 'mpeg1video':
+      case 'h265':
+      case 'mp4v-es':
+      case 'mpeg-1':
+      case 'mpeg-2':
+      case 'theora':
+      case 'vp8':
+      case 'vp9':
+      case 'aac':
+        // case 'video':
+        supported = true;
+        mediaType = "Video";
+    }
+
 
     switch ((meta.streams[0].codec_name).toLowerCase()) {
       case 'mjpeg':
