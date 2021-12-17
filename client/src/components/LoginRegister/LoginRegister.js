@@ -1,32 +1,53 @@
-import React, {useState, useEffect, Fragment} from 'react';
-import {connect} from "react-redux";
+import React, { useState, useEffect, Fragment } from 'react';
+import { connect } from "react-redux";
 import './LoginRegister.scss';
-import {Link, Redirect} from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import FacebookLogin from 'react-facebook-login';
-import { GoogleLogin  } from 'react-google-login';
+import { GoogleLogin } from 'react-google-login';
 import AppleSignin from 'react-apple-signin-auth';
-import {REACT_APP_FACEBOOK_API, REACT_APP_GOOGLE_API} from "../../utils/misc";
+import { REACT_APP_FACEBOOK_API, REACT_APP_GOOGLE_API } from "../../utils/misc";
 import emailImage from '../../assets/img/icon-simple-email-1@1x.png'
 import screen10 from '../../assets/img/screen10.png';
 import ConnectSocialModal from "../connectSocialModal/ConnectSocialModal";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import {
   registerUserSSO,
   loginUserSSO,
   loginRegisterGoogle,
-  loginRegisterFacebook, loginRegisterApple, authUser
+  loginRegisterFacebook, loginRegisterApple, authUser,
+  updateUser,
 } from "../../store/actions/auth.action";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 
 const LoginRegister = (props) => {
-  
+
   const [isLogin, setIsLogin] = useState('');
   const [showLoginRegister, setShowLoginRegister] = useState(false);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [userName, setUserName] = useState('');
+  const [organization, setOrganization] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('')
   const [passwordsEquals, setPasswordsEquals] = useState(false);
   const [showConnectSocial, setShowConnectSocial] = useState(false);
-  
+  const [showStepTwo, setShowStepTwo] = useState(false);
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const isValidPassword = (password) => {
+
+    // Regex to check valid password.
+    const regex = "^(?=.*[0-9])"
+      + "(?=.*[a-z])(?=.*[A-Z])"
+      + "(?=.*[!@#?$%^&+=])"
+      + "(?=\\S+$).{8,20}$";
+
+    if (password == null) {
+      return false;
+    }
+    return password.match(regex);
+  }
   useEffect(() => {
     if (props.location.pathname === "/sign_in") {
       setIsLogin('Sign In')
@@ -34,58 +55,81 @@ const LoginRegister = (props) => {
     setEmail('');
     setPassword('');
     setConfirmPassword('')
-  },[props.location.pathname])
-  
+  }, [props.location.pathname])
+
   useEffect(() => {
-    password.trim() === confirmPassword.trim()
+    (password.trim() === confirmPassword.trim() && isValidPassword(password))
       ? setPasswordsEquals(true)
       : setPasswordsEquals(false);
   }, [password, confirmPassword])
-  
+
   const onFailedTwitter = (error) => {
     setShowConnectSocial(false);
     console.error(error);
   }
-    
+
   const responseFacebook = response => {
     console.log(response);
     props.dispatch(loginRegisterFacebook(response.userID, response.accessToken, setShowConnectSocial, isLogin));
     props.dispatch(authUser());
   }
-  
+
   const responseGoogle = response => {
     props.dispatch(loginRegisterGoogle(response.tokenId, setShowConnectSocial, isLogin));
     props.dispatch(authUser());
   }
-  
+
   const responseApple = response => {
     props.dispatch(loginRegisterApple(response, setShowConnectSocial, isLogin));
     props.dispatch(authUser());
   }
-  
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (isLogin === "Sign In") {
-      props.dispatch(loginUserSSO({email, password}, props.history));
-      props.dispatch(authUser());
+      await props.dispatch(loginUserSSO({ email, password }, props.history));
+      await props.dispatch(authUser());
     }
     if (isLogin === "Sign Up" && passwordsEquals) {
-      props.dispatch(registerUserSSO({email, password}, setShowConnectSocial));
+      props.dispatch(registerUserSSO({ firstName, lastName, userName, organization, email, password }, setShowConnectSocial));
       props.dispatch(authUser());
-    } else if(isLogin === "Sign Up" && !passwordsEquals){
+    } else if (isLogin === "Sign Up" && !passwordsEquals) {
       toast.warning("Passwords aren't equals");
     }
   }
-  
+
   const loginRegisterForm = (
     <form className="LoginRegister__form" onSubmit={handleSubmit}>
-      <input type="email" value={email} required minLength="5"  placeholder="Email"
-             onChange={(e) => setEmail(e.target.value)}/>
-      <input type="password" value={password} required minLength="8" placeholder="Password"
-             onChange={e => setPassword(e.target.value)}/>
-      {isLogin === 'Sign Up' &&
-      <input type="password" value={confirmPassword} required minLength="8" placeholder="Confirm Password"
-        onChange={e => setConfirmPassword(e.target.value)}/>}
+      {isLogin === 'Sign Up' && <div>
+        <input type="text" value={firstName} required minLength="2" placeholder="First Name"
+          onChange={(e) => setFirstName(e.target.value)} />
+        <input type="text" value={lastName} required minLength="2" placeholder="Last Name"
+          onChange={(e) => setLastName(e.target.value)} />
+        <input type="text" value={userName} required minLength="5" placeholder="User Name"
+          onChange={(e) => setUserName(e.target.value)} />
+        <input type="text" value={organization} placeholder="Organization"
+          onChange={(e) => setOrganization(e.target.value)} />
+      </div>}
+      <input type="email" value={email} required minLength="5" placeholder="Email"
+        onChange={(e) => setEmail(e.target.value)} />
+      <div className='passwordContainer'>
+        <input type={showPassword ? "text" : "password"} value={password} required placeholder="Password"
+          onChange={e => setPassword(e.target.value)} />
+        <div className='passwordIcon' onClick={() => setShowPassword(!showPassword)}>
+          {showPassword ? <FaEyeSlash /> : <FaEye />}
+        </div>
+      </div>
+
+      {
+        isLogin === 'Sign Up' &&
+        <div className='passwordContainer'>
+          <input type={showConfirmPassword ? "text" : "password"} value={confirmPassword} required placeholder="Confirm Password"
+            onChange={e => setConfirmPassword(e.target.value)} />
+          <div className='passwordIcon' onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+            {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+          </div>
+        </div>
+      }
       <button type="submit">{isLogin === 'Sign In' ? "Sign In" : "Sign Up"}</button>
       {isLogin === 'Sign In' && <Link to="">Forgot password?</Link>}
     </form>
@@ -97,7 +141,7 @@ const LoginRegister = (props) => {
       <div className="LoginRegister container">
         <div className="LoginRegister__text">
           {isLogin === "Sign Up" && <span className="steps mobile__view">Step 1 of 2</span>}
-          <h3 style={{marginTop: isLogin === 'Sign up' && '0'}}>
+          <h3 style={{ marginTop: isLogin === 'Sign up' && '0' }}>
             {isLogin === 'Sign In' ? 'Welcome Back' : 'Sign Up for ProVid'}
           </h3>
           <p className="web__view">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
@@ -151,35 +195,36 @@ const LoginRegister = (props) => {
                 skipScript={false} // default = undefined
                 /** Apple image props */
                 iconProp={{ style: { margin: '10px 0 0 15px' } }} // default = undefined
-                /** render function - called with all props - can be used to fully customize the UI by rendering your own component  */
-                
+              /** render function - called with all props - can be used to fully customize the UI by rendering your own component  */
+
               />
               <button className="email__button" onClick={() => setShowLoginRegister(true)}>
-                <img src={emailImage} alt="email_image"/>
+                <img src={emailImage} alt="email_image" />
                 <span>{isLogin} with Email</span>
               </button>
             </div>)
           }
-          
+
           {isLogin === 'Sign In'
             ? <span>Don't have an account?<Link to="/sign_up"> Sign up</Link></span>
             : <span>Already have an account?<Link to="/sign_in"> Sign in</Link></span>}
-      
+
         </div>
         <div className="LoginRegister__image web__view">
-          <img src={screen10} alt="screen10"/>
+          <img src={screen10} alt="screen10" />
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
             do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
         </div>
       </div>
-    </Fragment>
+      }
+    </Fragment >
   );
 }
 
 const mapStateToProps = state => ({
-    user: state.auth.user,
-    isAuthenticated: state.auth.isAuthenticated
-  }
+  user: state.auth.user,
+  isAuthenticated: state.auth.isAuthenticated
+}
 )
 
 export default connect(mapStateToProps)(LoginRegister);
