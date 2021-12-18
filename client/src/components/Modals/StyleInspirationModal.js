@@ -164,11 +164,10 @@ const StyleInspirationModal = (props) => {
           </div>
           <button className="pay__modal--submit" type="button" onClick={handleDone}>Done</button>
         </> : <div className='warning-container'>
-          <h3>Warning</h3>
           <div className='massage'> You are about to submit your project for edits. You won't be able to update while it is being processed. Are you sure?</div>
           <div className="option">
-            <div className='noButton' onClick={() => props.setShowStyleModal(false)}> No</div>
-            <div className='yesButton' onClick={() => setShowStyleOption(true)}>Yes</div>
+            <button className='pay__modal--submit' onClick={() => props.setShowStyleModal(false)}> No</button>
+            <button className='pay__modal--submit' onClick={() => setShowStyleOption(true)}>Yes</button>
           </div>
         </div>}
       </div>
