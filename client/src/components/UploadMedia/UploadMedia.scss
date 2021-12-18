@@ -178,29 +178,13 @@
     font-family: "Montserrat", "Helvetica Neue", sans-serif;
     font-size: 20px;
     font-weight: 500;
-    margin-top: 8px;
+    margin-top: 60px;
   }
   .option {
     display: flex;
     justify-content: center;
-    .noButton{
-      background-color: red;
-    }
-    .yesButton{
-      background-color: var(--smalt-blue);
-    }
-    div {
-      color: rgb(255, 255, 255);
-      flex-basis: 20%;
-      padding: 15px 0;
-      margin: 15px;
-      cursor: pointer;
-      border-radius: 22px;
-      font-family: Montserrat, "Helvetica Neue", sans-serif;
-      font-size: 15px;
-    &:hover{
-      opacity: 80%;
-    }
+    button{
+      width: 40%;
     }
    
   }
