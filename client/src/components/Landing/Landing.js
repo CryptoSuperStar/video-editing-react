@@ -15,7 +15,7 @@ import FooterNav from "../FooterNav/FooterNav";
 
 const Landing = (props) => {
   
-  const [checkedSwitch, setCheckedSwitch] = useState(false);
+  const [checkedSwitch, setCheckedSwitch] = useState(true);
   const [width, setWidth] = useState(window.innerWidth);
   const [marginLeft, setMarginLeft] = useState(0);
   const [touchStart, setTouchStart] = React.useState(0);
@@ -221,9 +221,6 @@ const Landing = (props) => {
       <section className="plans web__view">
         <div className="container__inner">
           <h3 className="screen__title">Pricing & Plans</h3>
-          <span className="plans__text">Lorem ipsum dolor sit amet, consectetur
-            adipiscing elit, sed do eiusmod tempor incididunt.
-          </span>
           <span className="plans__choose">
             Monthly
             <Switch
@@ -245,35 +242,31 @@ const Landing = (props) => {
             <span className="save">Save 25%</span>
           </span>
           <div className="plans__items">
-            <div className="plans__item">
-              <h5>Starter</h5>
-              <div className="price">$<span>49</span>/mo</div>
-              <div className="billed">Billed Annually</div>
-              <div className="plan__feature">
-                {renderTick("Lorem ipsum dolor sit amet")}
-                {renderTick("Consectetur adipiscing elit")}
-                {renderTick("Sed do eiusmod tempor incididunt")}
-                {renderTick("Ut labore et dolore magna aliqua")}
-                {renderTick("Lorem ipsum dolor sit amet")}
+            {checkedSwitch ? (
+              <div className="plans__item">
+                <h5>Recommended</h5>
+                <div className="price">$<span>16.99</span>/mo</div>
+                <div className="billed">Billed Annually</div>
+                <div className="plan__feature">
+                  {renderTick("Same price as Google Drive")}
+                  {renderTick("Double the features")}
+                </div>
+                <div className="plan__btn" onClick={() =>props.history.push('/sign_up')}>
+                  Start 7 Days Free Trial</div>
               </div>
-              <div className="plan__btn" onClick={() =>props.history.push('/sign_up')}>
-                Start 7 Days Free Trial</div>
-            </div>
-  
-            <div className="plans__item">
-              <h5>Recommended</h5>
-              <div className="price">$<span>75</span>/mo</div>
-              <div className="billed">Billed Monthly</div>
-              <div className="plan__feature">
-                {renderTick("Lorem ipsum dolor sit amet")}
-                {renderTick("Consectetur adipiscing elit")}
-                {renderTick("Sed do eiusmod tempor incididunt")}
-                {renderTick("Ut labore et dolore magna aliqua")}
-                {renderTick("Lorem ipsum dolor sit amet")}
+            ) : (
+              <div className="plans__item">
+                <h5>Starter</h5>
+                <div className="price">$<span>20</span>/mo</div>
+                <div className="billed">Billed Monthly</div>
+                <div className="plan__feature">
+                  {renderTick("Same price as Google Drive")}
+                  {renderTick("Double the features")}
+                </div>
+                <div className="plan__btn" onClick={() =>props.history.push('/sign_up')}>
+                  Start 7 Days Free Trial</div>
               </div>
-              <div className="plan__btn" onClick={() =>props.history.push('/sign_up')}>
-                Start 7 Days Free Trial</div>
-            </div>
+            )}
           </div>
         </div>
       </section>
@@ -282,31 +275,45 @@ const Landing = (props) => {
         <div className="container__inner questions__inner">
           <div className="question__item">
             {renderArrow("Is there a refund policy?")}
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>Money back guaranteed if not satisfied.</p>
           </div>
           <div className="question__item">
-            {renderArrow("How do I learn to use ProVid?")}
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            {renderArrow("How do I learn to use myvideospro.com?")}
+            <p>Upload your videos and tag your notes.</p>
           </div>
           <div className="question__item">
-            {renderArrow("Can I connect with others?")}
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            {renderArrow("How do I add more people to my team to view received footage?")}
+            <p>Contact us at contact@myvideospro.com.</p>
           </div>
           <div className="question__item">
-            {renderArrow("How to upload my content?")}
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            {renderArrow("How much does the service cost?")}
+            <p>Only "video receivers" of footage pay. 
+              Receivers can send their connection code to as many "senders" as they want.</p>
+          </div>
+          <div className="question__item">
+            {renderArrow("How do editors or \"video receivers\" get footage from their \"video senders\" or clients?")}
+            <p>"Video receivers" share your connection code to your "video senders". 
+              When "video senders" log in they will be prompted to enter a connection code. 
+              This connection code will match "video senders" with "video receivers"</p>
+          </div>
+          <div className="question__item">
+            {renderArrow("How do I send footage to my editor?")}
+            <p>Upload footage. Press "Generate Video" and the video will be sent to your editor.</p>
+          </div>
+          <div className="question__item">
+            {renderArrow("How do I receive a revision from my editor?")}
+            <p>Your editor's revisions will appear in the same place as your uploaded footage. 
+              The latest revision appears farthest to the right.</p>
+          </div>
+          <div className="question__item">
+            {renderArrow("How do I learn to use myvideospro.com?")}
+            <p>Upload your videos and tag your notes.</p>
           </div>
           <div className="questions__title">
             <h3 className="screen__title">Control. Build. Grow</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
             {localStorage.isAuthenticated === 'false' &&
             <Fragment>
               <Link to="/sign_in">Start 7 Days Free Trial</Link>
-              <span>No credit card required</span>
             </Fragment>}
           </div>
         </div>
