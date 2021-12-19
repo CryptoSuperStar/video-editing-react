@@ -358,7 +358,7 @@ const UploadMedia = props => {
                 onClick={(e) => { (props.project?.projectStatus === "Draft") && handleCutVideo(e) }}
                 style={{ backgroundColor: (showCutBox || !(props.project?.projectStatus === "Draft")) && "gray" }}>
                 <Cut />
-                <span>Cut</span>
+                <span>Trim</span>
               </button>
               <button className="generate-video"
                 onClick={() => { (editableStatus.includes(props.project?.projectStatus) && (editedProject ? editedProject._id === currentMedia._id : true)) && setShowStyleModal(true) }}
