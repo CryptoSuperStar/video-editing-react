@@ -352,7 +352,7 @@ const UploadMedia = props => {
                 onClick={(e) => { (editableStatus.includes(props.project?.projectStatus) && (editedProject ? editedProject._id === currentMedia._id : true)) && handleActiveScreenshot(e) }}
                 style={{ backgroundColor: (isShowComment || !(editableStatus.includes(props.project?.projectStatus)) || (editedProject ? editedProject._id !== currentMedia._id : false)) && "gray" }}>
                 <Chat />
-                <span>Add/Edit Notes</span>
+                <span>Add Edit Notes</span>
               </button>
               <button
                 onClick={(e) => { (props.project?.projectStatus === "Draft") && handleCutVideo(e) }}
