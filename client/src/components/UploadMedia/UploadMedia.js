@@ -360,7 +360,7 @@ const UploadMedia = props => {
                 <Cut />
                 <span>Cut</span>
               </button>
-              <button class="generate-video"
+              <button className="generate-video"
                 onClick={() => { (editableStatus.includes(props.project?.projectStatus) && (editedProject ? editedProject._id === currentMedia._id : true)) && setShowStyleModal(true) }}
                 style={{ backgroundColor: (!(editableStatus.includes(props.project?.projectStatus)) || (editedProject ? editedProject._id !== currentMedia._id : false)) && "gray" }}>
                 <img src={cam} alt="cam" />
