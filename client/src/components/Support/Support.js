@@ -69,7 +69,7 @@ const Support = () => {
           {questions.map((item, idx) => (
             <div className="support__question--item">
               <div className="support__question--title" onClick={() => handleQuestions(idx)}>
-                <h5>{item.title}< /h5>
+                <h5>{item.title}</h5>
                 <img src={arrowCircle} alt="arrow-circle" style={{transform: item.opened && 'rotate(180deg)'}}/>
               </div>
               {item.opened &&
