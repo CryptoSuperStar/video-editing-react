@@ -349,16 +349,16 @@ const UploadMedia = props => {
             }
             <div className="generate__btns">
               <button
-                onClick={(e) => { (props.project?.projectStatus === "Draft") && handleCutVideo(e) }}
-                style={{ backgroundColor: (showCutBox || !(props.project?.projectStatus === "Draft")) && "gray" }}>
-                <Cut />
-                <span>Cut</span>
-              </button>
-              <button
                 onClick={(e) => { (editableStatus.includes(props.project?.projectStatus) && (editedProject ? editedProject._id === currentMedia._id : true)) && handleActiveScreenshot(e) }}
                 style={{ backgroundColor: (isShowComment || !(editableStatus.includes(props.project?.projectStatus)) || (editedProject ? editedProject._id !== currentMedia._id : false)) && "gray" }}>
                 <Chat />
                 <span>Comment</span>
+              </button>
+              <button
+                onClick={(e) => { (props.project?.projectStatus === "Draft") && handleCutVideo(e) }}
+                style={{ backgroundColor: (showCutBox || !(props.project?.projectStatus === "Draft")) && "gray" }}>
+                <Cut />
+                <span>Cut</span>
               </button>
               <button onClick={() => { (editableStatus.includes(props.project?.projectStatus) && (editedProject ? editedProject._id === currentMedia._id : true)) && setShowStyleModal(true) }}
                 style={{ backgroundColor: (!(editableStatus.includes(props.project?.projectStatus)) || (editedProject ? editedProject._id !== currentMedia._id : false)) && "gray" }}>
