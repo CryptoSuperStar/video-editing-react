@@ -281,34 +281,6 @@ const Landing = (props) => {
             {renderArrow("How do I learn to use myvideospro.com?")}
             <p>Upload your videos and tag your notes.</p>
           </div>
-          <div className="question__item">
-            {renderArrow("How do I add more people to my team to view received footage?")}
-            <p>Contact us at contact@myvideospro.com.</p>
-          </div>
-          <div className="question__item">
-            {renderArrow("How much does the service cost?")}
-            <p>Only "video receivers" of footage pay. 
-              Receivers can send their connection code to as many "senders" as they want.</p>
-          </div>
-          <div className="question__item">
-            {renderArrow("How do editors or \"video receivers\" get footage from their \"video senders\" or clients?")}
-            <p>"Video receivers" share your connection code to your "video senders". 
-              When "video senders" log in they will be prompted to enter a connection code. 
-              This connection code will match "video senders" with "video receivers"</p>
-          </div>
-          <div className="question__item">
-            {renderArrow("How do I send footage to my editor?")}
-            <p>Upload footage. Press "Generate Video" and the video will be sent to your editor.</p>
-          </div>
-          <div className="question__item">
-            {renderArrow("How do I receive a revision from my editor?")}
-            <p>Your editor's revisions will appear in the same place as your uploaded footage. 
-              The latest revision appears farthest to the right.</p>
-          </div>
-          <div className="question__item">
-            {renderArrow("How do I learn to use myvideospro.com?")}
-            <p>Upload your videos and tag your notes.</p>
-          </div>
           <div className="questions__title">
             <h3 className="screen__title">Control. Build. Grow</h3>
             {localStorage.isAuthenticated === 'false' &&
