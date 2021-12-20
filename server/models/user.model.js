@@ -60,7 +60,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
-  organisation: String,
   password: {
     type: String,
     minlength: 8
