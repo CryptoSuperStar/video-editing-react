@@ -35,7 +35,7 @@ exports.registerController = (async (req, res) => {
   try {
     // See if userName exists
     let existUserName = await User.findOne({ userName });
-    if (existUserName) return res.status(400).send({ msg: 'Please provide unique userName' });
+    if (existUserName) return res.status(400).send({ msg: 'Username already exists. Please provide a different one' });
     // See if user exists
     let user = await User.findOne({ email });
     if (user) return res.status(400).send({ msg: 'User already exists' });
@@ -327,6 +327,12 @@ exports.appleController = async (req, res) => {
 exports.updateUserController = async (req, res) => {
   const { id, data } = req.body;
   try {
+    // See if userName exists
+    const oldUser = await User.findById(id);
+    if (oldUser?.userName !== data?.userName) {
+      let existUserName = await User.findOne({ userName: data.userName });
+      if (existUserName) return res.status(400).send({ msg: 'Username already exists. Please provide a different one' });
+    }
     User.findByIdAndUpdate(id, { $set: data }, { new: true })
       .select(['-password', '-twitterProvider', '-__v'])
       .exec((err, user) => {

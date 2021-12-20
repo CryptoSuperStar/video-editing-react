@@ -28,25 +28,71 @@ const LoginRegister = (props) => {
   const [userName, setUserName] = useState('');
   const [organization, setOrganization] = useState('');
   const [email, setEmail] = useState('');
+  const [confirmEmail, setConfirmEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [passwordsEquals, setPasswordsEquals] = useState(false);
   const [showConnectSocial, setShowConnectSocial] = useState(false);
   const [showStepTwo, setShowStepTwo] = useState(false);
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const isValidPassword = (password) => {
+    if (password.trim() === confirmPassword.trim()) {
+      // Regex to check valid password.
+      const regex = "^(?=.*[0-9])"
+        + "(?=.*[a-z])(?=.*[A-Z])"
+        + "(?=.*[!@#?$%^&+=])"
+        + "(?=\\S+$).{8,20}$";
 
-    // Regex to check valid password.
-    const regex = "^(?=.*[0-9])"
-      + "(?=.*[a-z])(?=.*[A-Z])"
-      + "(?=.*[!@#?$%^&+=])"
-      + "(?=\\S+$).{8,20}$";
+      if (password == null) {
+        toast.warning("Password required");
+        return false;
+      }
+      if (password.match(regex)) {
+        return true
+      } else {
+        toast.warning("Use 8 or more characters with a mix of lowercase and uppercase letters, numbers & symbols");
+        return false
+      };
+    } else {
+      toast.warning("Passwords did not match");
 
-    if (password == null) {
-      return false;
     }
-    return password.match(regex);
+  }
+  const isValidEmail = (email) => {
+    if (email.trim() === confirmEmail.trim()) {
+      // Regex to check valid email.
+      const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+      if (email == null) {
+        toast.warning("Email required");
+        return false;
+
+      }
+      if (email.match(regex)) {
+        return true
+      } else {
+        toast.warning("A valid email address is required to complete registration");
+        return false
+      };
+    } else {
+      toast.warning("Emails did not match");
+
+    }
+  }
+  const isValidUserName = (userName) => {
+    const regex = /^[a-zA-Z0-9\-]+$/;
+
+    if (userName == null) {
+      toast.warning("UserName required");
+      return false;
+
+    }
+    if (userName.match(regex)) {
+      return true
+    } else {
+      toast.warning("A valid userName is required, Spaces and spacial symbols are not allowed");
+      return false
+    };
   }
   useEffect(() => {
     if (props.location.pathname === "/sign_in") {
@@ -57,44 +103,43 @@ const LoginRegister = (props) => {
     setConfirmPassword('')
   }, [props.location.pathname])
 
-  useEffect(() => {
-    (password.trim() === confirmPassword.trim() && isValidPassword(password))
-      ? setPasswordsEquals(true)
-      : setPasswordsEquals(false);
-  }, [password, confirmPassword])
 
   const onFailedTwitter = (error) => {
     setShowConnectSocial(false);
     console.error(error);
   }
 
-  const responseFacebook = response => {
+  const responseFacebook = async response => {
     console.log(response);
-    props.dispatch(loginRegisterFacebook(response.userID, response.accessToken, setShowConnectSocial, isLogin));
-    props.dispatch(authUser());
+    await props.dispatch(loginRegisterFacebook(response.userID, response.accessToken, setShowConnectSocial, isLogin));
+    await props.dispatch(authUser());
   }
 
-  const responseGoogle = response => {
-    props.dispatch(loginRegisterGoogle(response.tokenId, setShowConnectSocial, isLogin));
-    props.dispatch(authUser());
+  const responseGoogle = async response => {
+    await props.dispatch(loginRegisterGoogle(response.tokenId, setShowConnectSocial, isLogin));
+    await props.dispatch(authUser());
   }
 
-  const responseApple = response => {
-    props.dispatch(loginRegisterApple(response, setShowConnectSocial, isLogin));
-    props.dispatch(authUser());
+  const responseApple = async response => {
+    await props.dispatch(loginRegisterApple(response, setShowConnectSocial, isLogin));
+    await props.dispatch(authUser());
   }
-
+  const validation = () => {
+    if (isValidUserName(userName) && isValidEmail(email) && isValidPassword(password)) {
+      return true
+    } else {
+      return false
+    }
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isLogin === "Sign In") {
       await props.dispatch(loginUserSSO({ email, password }, props.history));
       await props.dispatch(authUser());
     }
-    if (isLogin === "Sign Up" && passwordsEquals) {
-      props.dispatch(registerUserSSO({ firstName, lastName, userName, organization, email, password }, setShowConnectSocial));
-      props.dispatch(authUser());
-    } else if (isLogin === "Sign Up" && !passwordsEquals) {
-      toast.warning("Passwords aren't equals");
+    if (isLogin === "Sign Up" && validation()) {
+      await props.dispatch(registerUserSSO({ firstName, lastName, userName, organization, email, password }, setShowConnectSocial));
+      await props.dispatch(authUser());
     }
   }
 
@@ -112,6 +157,8 @@ const LoginRegister = (props) => {
       </div>}
       <input type="email" value={email} required minLength="5" placeholder="Email"
         onChange={(e) => setEmail(e.target.value)} />
+      {isLogin === 'Sign Up' && <input type="confirmEmail" value={confirmEmail} required minLength="5" placeholder="Confirm Email"
+        onChange={(e) => setConfirmEmail(e.target.value)} />}
       <div className='passwordContainer'>
         <input type={showPassword ? "text" : "password"} value={password} required placeholder="Password"
           onChange={e => setPassword(e.target.value)} />
@@ -134,10 +181,10 @@ const LoginRegister = (props) => {
       {isLogin === 'Sign In' && <Link to="">Forgot password?</Link>}
     </form>
   )
-  if (localStorage.isAuthenticated === 'true') return <Redirect to="/" />
+  if (localStorage.isAuthenticated === 'true') return <Redirect to="/dashboard/upload" />
   return (
     <Fragment>
-      {showConnectSocial && <ConnectSocialModal />}
+      {/* {showConnectSocial && <ConnectSocialModal />} */}
       <div className="LoginRegister container">
         <div className="LoginRegister__text">
           {isLogin === "Sign Up" && <span className="steps mobile__view">Step 1 of 2</span>}
