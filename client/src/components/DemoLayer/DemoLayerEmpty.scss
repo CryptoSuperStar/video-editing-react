@@ -6,6 +6,15 @@
   height: 100vh;
   background-color: rgba(0,0,0,.7);
   z-index: 101;
+  .intro-gif {
+    max-width: 700px;
+    width: 80%;
+    max-height: inherit!important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
   img {
     margin: 10px 0 0;
   }
