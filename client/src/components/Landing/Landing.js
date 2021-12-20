@@ -190,26 +190,6 @@ const Landing = (props) => {
           {renderMobileView("Supports both Editors and Clients.", "",3)}
         </div>
       </section>
-  
-      {/* <section className="screen" style={{backgroundColor: '#fff'}}>
-        <div className="container__inner screen__inner" style={{width: width <= 575 && width + "px"}}>
-          <div className="screen__image" style={{marginTop: 0}}>
-            <img src={screen4} alt="screen4"/>
-          </div>
-          {renderMobileView("Supports both Editors and Clients.", "",3)}
-          <div className="screen__text web__view">
-            <h3 className="screen__title">Supports both Editors and Clients.</h3>
-            <span>
-            </span>
-            <div className="screen__ticks">
-              {renderTick("Clients can upload their videos for free")}
-              {renderTick("Handle multiple client accounts for one editor")}
-              {renderTick("Track client revisions")}
-              {renderTick("Receive client notes tagged to specific times")}
-            </div>
-          </div>
-        </div>
-      </section> */}
       
       <section className="plans web__view">
         <div className="container__inner">
