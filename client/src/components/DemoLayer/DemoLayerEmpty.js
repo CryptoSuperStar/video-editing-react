@@ -12,11 +12,13 @@ const DemoLayerEmpty = ({setShowDemo}) => {
   return (
     <div className="DemoLayer EmptyLayer">
   
-      <div className="container" style={{overflow: 'hidden'}}><ToolTip title="Upload your media"
-                  text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-                  src={arrowSrc}
-                  name="DemoLayer__tooltip"
-      />
+      <div className="container" style={{overflow: 'hidden'}}>
+        <ToolTip
+          title="Upload your media"
+          text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+          src={arrowSrc}
+          name="DemoLayer__tooltip"
+          />
         <button className="skip__btn" onClick={() => {
           localStorage.showDemoLayer = false;
           setShowDemo(false);
