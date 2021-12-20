@@ -110,11 +110,8 @@ const Landing = (props) => {
     >
       <section className="Landing__control container__inner web__view">
         <div className="Landing__control--text">
-          <h3>Control your social media influence.</h3>
-          <span>
-            Lorem ipsum dolor sit amet, consectetur
-            adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </span>
+          <h3>Better than Dropbox and Google Drive for Video Creators</h3>
+          <span>Helping humans stay competitive with AI editors</span>
           {localStorage.isAuthenticated === 'false' &&
           <Fragment>
             <Link to="/sign_up">Get Started</Link>
@@ -130,21 +127,28 @@ const Landing = (props) => {
             <img src={logo2} alt="logo2"/>
             <span>Get the very best with ProVid</span>
           </div>
+          {renderMobileView("Better than Dropbox and Google Drive for Video Creators", "Helping humans stay competitive with AI editors",0)}
         </div>
       </section>
+
       <section className="screen"
                style={{backgroundColor: '#F7F7FBFF', width: width <= 575 && width + "px", marginLeft: width <= 575 && marginLeft + "px"}}>
         <div className="screen__inner container__inner"
              style={{width: width <= 575 && width + "px"}}>
           <div className="screen__text web__view">
-            <h3 className="screen__title">Better than Dropbox and Google Drive for Video Creators</h3>
-            <span>Helping humans stay competitive with AI editors
-            </span>
+            <h3 className="screen__title">Transfer video and edit notes. Store Projects.</h3>
+            <span>Built for videographers, video editors, and content producers</span>
+            <div className="screen__ticks">
+              {renderTick("Fastest Way to Transfer Video")}
+              {renderTick("Tag edit notes to specific times in the footage")}
+              {renderTick("Upload revisions and get feedback")}
+              {renderTick("Supports HD audio and video files")}
+            </div>
           </div>
           <div className="screen__image">
             <img src={screen1} alt="screen1"/>
           </div>
-          {renderMobileView("Better than Dropbox and Google Drive for Video Creators", "Helping humans stay competitive with AI editors",0)}
+          {renderMobileView("Transfer video and edit notes. Store Projects.", "Built for videographers, video editors, and content producers",1)}
         </div>
       </section>
       
@@ -153,16 +157,15 @@ const Landing = (props) => {
           <div className="screen__image">
             <img src={screen2} alt="screen2"/>
           </div>
-          {renderMobileView("Transfer video and edit notes. Store Projects.", "Built for videographers, video editors, and content producers",1)}
+          {renderMobileView("Built for Video Creators", "",2)}
           <div className="screen__text web__view">
-            <h3 className="screen__title">Transfer video and edit notes. Store Projects.</h3>
-            <span>Built for videographers, video editors, and content producers
-            </span>
+            <h3 className="screen__title">Built for Video Creators</h3>
+            <span></span>
             <div className="screen__ticks">
-              {renderTick("Fastest Way to Transfer Video")}
-              {renderTick("Tag edit notes to specific times in the footage")}
-              {renderTick("Upload revisions and get feedback")}
-              {renderTick("Supports HD audio and video files")}
+              {renderTick("2TB+ of media content storage")}
+              {renderTick("Less expensive than Google Drive and Dropbox")}
+              {renderTick("Fastest Upload time")}
+              {renderTick("Handle video format conversion")}
             </div>
           </div>
         </div>
@@ -171,24 +174,24 @@ const Landing = (props) => {
       <section className="screen" style={{backgroundColor: '#F7F7FBFF'}}>
         <div className="screen__inner container__inner" style={{width: width <= 575 && width + "px"}}>
           <div className="screen__text web__view">
-            <h3 className="screen__title">Built for Video Creators</h3>
+            <h3 className="screen__title">Supports both Editors and Clients.</h3>
             <span>
             </span>
             <div className="screen__ticks">
-              {renderTick("2TB+ of media content storage")}
-              {renderTick("Less expensive than Google Drive and Dropbox")}
-              {renderTick("Fastest Upload time")}
-              {renderTick("Handle video format conversion")}
+              {renderTick("Clients can upload their videos for free")}
+              {renderTick("Handle multiple client accounts for one editor")}
+              {renderTick("Track client revisions")}
+              {renderTick("Receive client notes tagged to specific times")}
             </div>
           </div>
           <div className="screen__image">
             <img src={screen3} alt="screen3"/>
           </div>
-          {renderMobileView("Built for Video Creators", "",2)}
+          {renderMobileView("Supports both Editors and Clients.", "",3)}
         </div>
       </section>
   
-      <section className="screen" style={{backgroundColor: '#fff'}}>
+      {/* <section className="screen" style={{backgroundColor: '#fff'}}>
         <div className="container__inner screen__inner" style={{width: width <= 575 && width + "px"}}>
           <div className="screen__image" style={{marginTop: 0}}>
             <img src={screen4} alt="screen4"/>
@@ -206,7 +209,7 @@ const Landing = (props) => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       
       <section className="plans web__view">
         <div className="container__inner">
