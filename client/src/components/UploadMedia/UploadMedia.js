@@ -10,7 +10,6 @@ import cam from "../../assets/img/icon-awesome-video-1@1x.png";
 import { ReactComponent as Delete } from "../../assets/img/delete.svg";
 import { ReactComponent as Chat } from "../../assets/img/chat.svg";
 import { ReactComponent as Share } from "../../assets/img/share.svg";
-import { ReactComponent as Info } from "../../assets/img/information.svg";
 import { clearTempProject, takeScreenshots, updateContent, getProject } from "../../store/actions/project.action";
 import CommentBlock from "../CommentBlock/CommentBlock";
 import ShareModal from "../Modals/ShareModal";
@@ -272,9 +271,6 @@ const UploadMedia = props => {
               </div>
               <div className="share_indicator" onClick={(e) => { (["Complete", "Done"].includes(props.project?.projectStatus) && editedProject._id === currentMedia?._id) && toggleShareBlock(e) }} style={{ opacity: showDemo && '20%' }}>
                 <Share />
-              </div>
-              <div className="question_indicator" style={{ opacity: showDemo && '20%' }}>
-                <Info />
               </div>
             </div>
             <VideoPlayer
