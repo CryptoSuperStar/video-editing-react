@@ -127,7 +127,6 @@ const Landing = (props) => {
             <img src={logo2} alt="logo2"/>
             <span>Get the very best with ProVid</span>
           </div>
-          {renderMobileView("Better than Dropbox and Google Drive for Video Creators", "Helping humans stay competitive with AI editors",0)}
         </div>
       </section>
 
@@ -148,7 +147,7 @@ const Landing = (props) => {
           <div className="screen__image">
             <img src={screen1} alt="screen1"/>
           </div>
-          {renderMobileView("Transfer video and edit notes. Store Projects.", "Built for videographers, video editors, and content producers",1)}
+          {renderMobileView("Transfer video and edit notes. Store Projects.", "Built for videographers, video editors, and content producers",0)}
         </div>
       </section>
       
@@ -157,7 +156,7 @@ const Landing = (props) => {
           <div className="screen__image">
             <img src={screen2} alt="screen2"/>
           </div>
-          {renderMobileView("Built for Video Creators", "",2)}
+          {renderMobileView("Built for Video Creators", "",1)}
           <div className="screen__text web__view">
             <h3 className="screen__title">Built for Video Creators</h3>
             <span></span>
@@ -187,7 +186,7 @@ const Landing = (props) => {
           <div className="screen__image">
             <img src={screen3} alt="screen3"/>
           </div>
-          {renderMobileView("Supports both Editors and Clients.", "",3)}
+          {renderMobileView("Supports both Editors and Clients.", "",2)}
         </div>
       </section>
       
