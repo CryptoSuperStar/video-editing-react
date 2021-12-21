@@ -75,7 +75,7 @@ const Landing = (props) => {
   const renderMobileView = (title, text, active) => (
     <div className="mobile__view">
       <div className="screen__mobile">
-        <div className="screen__mobile--dots">{[...Array(4)].map((dot, i) => (
+        <div className="screen__mobile--dots">{[...Array(3)].map((dot, i) => (
           <span
             key={i}
             className="screen__mobile--dot"
