@@ -49,15 +49,10 @@ const UploadMedia = props => {
   const [loadingSlider, setLoadingSlider] = useState(false);
   const [moveTo, setMoveTo] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [showDemo, setShowDemo] = useState(false);
   const editableStatus = ["Draft", "Complete"]
   const editedProject = props.project?.editedProjects?.length > 0 ? props.project?.editedProjects.find(item => item.revision === props.project.projectRevision) : false
   let commentFinal = [];
-  useEffect(() => {
-    if (localStorage.showDemoLayer === "true") {
-      setShowDemo(true);
-    }
-  }, []);
+
 
   useEffect(
     () => {
@@ -246,7 +241,6 @@ const UploadMedia = props => {
     );
   return (
     <div className="upload__media">
-      {showDemo && localStorage.currentProjectId && <DemoLayerUpload setShowDemo={setShowDemo} />}
       {showStyleModal && (
         <StyleInspirationModal
           isImage={currentMedia.isImage}
@@ -270,10 +264,10 @@ const UploadMedia = props => {
                   {comments && comments.length && comments.filter(comment => comment.text.length > 0).length}
                 </span>
               </div>
-              <div className="share_indicator" onClick={(e) => { (["Complete", "Done"].includes(props.project?.projectStatus) && editedProject._id === currentMedia?._id) && toggleShareBlock(e) }} style={{ opacity: showDemo && '20%' }}>
+              <div className="share_indicator" onClick={(e) => { (["Complete", "Done"].includes(props.project?.projectStatus) && editedProject._id === currentMedia?._id) && toggleShareBlock(e) }}>
                 <Share />
               </div>
-              <div className="question_indicator" style={{ opacity: showDemo && '20%' }}>
+              <div className="question_indicator">
                 <Info />
               </div>
             </div>
