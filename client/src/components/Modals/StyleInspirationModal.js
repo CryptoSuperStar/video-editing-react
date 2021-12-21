@@ -140,7 +140,7 @@ const StyleInspirationModal = (props) => {
               </div>
             ))}
           </div>
-          <h5>Any favourite relevant?</h5>
+          {/* <h5>Any favourite relevant?</h5>
           <div className="favourite__relevant">
             <div style={{
               border: `1px solid ${!favouriteRelevant ? "#3b8590" : '#36596a55'}`,
@@ -161,7 +161,7 @@ const StyleInspirationModal = (props) => {
               border: `1px solid ${suggestion ? "#3b8590" : '#36596a55'}`,
               backgroundColor: suggestion ? '#3b85911a' : 'white'
             }} onClick={() => setSuggestion(true)}>Yes</div>
-          </div>
+          </div> */}
           <button className="pay__modal--submit" type="button" onClick={handleDone}>Done</button>
         </> : <div className='warning-container'>
           <div className='massage'> You are about to submit your project for edits. You won't be able to update while it is being processed. Are you sure?</div>
