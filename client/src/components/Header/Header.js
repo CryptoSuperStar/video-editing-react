@@ -6,15 +6,12 @@ import './Header.scss';
 import logo from '../../assets/img/logo-v1.png'
 import { ReactComponent as HamburgerMenu } from "../../assets/img/icons8-menu.svg";
 import { ReactComponent as Cancel } from "../../assets/img/close-2.svg";
-import { ReactComponent as Plus } from "../../assets/img/add.svg";
 import { ReactComponent as Bell } from "../../assets/img/bell_icon.svg";
-import { ReactComponent as Search } from "../../assets/img/search_icon.svg";
 import avatar from "../../assets/img/bitmap-10@1x.png"
 
 const Header = (props) => {
 
   const [isDashboard, setIsDashboard] = useState(false);
-  const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
   const [fullName, setFullName] = useState(null);
 
@@ -39,25 +36,7 @@ const Header = (props) => {
   const dashboardMenu = (
     <div className="dashboard__menu--block">
       {loading ? <MoonLoader /> :
-        <Fragment>
-          <Link to="/dashboard/upload"
-            onClick={() => {
-              if (window.location.pathname === "/dashboard/upload") {
-                localStorage.removeItem('duration');
-                localStorage.removeItem('currentProjectId');
-                localStorage.removeItem('currentMedia');
-                localStorage.removeItem('comments');
-                window.location.reload()
-              }
-
-            }}
-            
-            className="menu__upload--button">
-            
-            <Plus />
-            <span  >Upload</span>
-          </Link>
-          
+        <Fragment>          
           <Bell />
           <div className="menu__user">
             <img src={props.user ? props.user.avatar : avatar} alt="avatar" />
@@ -80,11 +59,6 @@ const Header = (props) => {
       <Link className="logo__block" to="/">
         <img src={logo} alt="logo" />
       </Link>
-      {isDashboard &&
-        <div className="search__bar">
-          <input type="text" placeholder="Search..." value={search} onChange={e => setSearch(e.target.value)} />
-          <Search />
-        </div>}
       {props.showMenu
         ? <Cancel className="cancelMenu mobile__view" onClick={() => props.handleShowMenu(false)} />
         : <HamburgerMenu className="hamburgerMenu mobile__view" onClick={() => props.handleShowMenu(true)} />}
