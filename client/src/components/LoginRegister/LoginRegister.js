@@ -161,7 +161,7 @@ const LoginRegister = (props) => {
         onChange={(e) => { setEmailNotEquals(false); setEmail(e.target.value) }} />
       {isLogin === 'Sign Up' && <div className='formInputContainer'> <input type="confirmEmail" value={confirmEmail} required minLength="5" placeholder="Confirm Email"
         onChange={(e) => { setEmailNotEquals(false); setConfirmEmail(e.target.value) }} />
-        {emailNotEquals && <div className="inlineErrorMsg">Email did not match</div>}
+        {emailNotEquals && <div className="inlineErrorMsg">Emails did not match</div>}
       </div>}
       <div className='formInputContainer'>
         <input type={showPassword ? "text" : "password"} value={password} required placeholder="Password"
