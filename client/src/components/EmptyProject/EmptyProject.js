@@ -71,10 +71,7 @@ const EmptyProject = (props) => {
           onChange={handleChange}
           accept="audio/*,video/*,image/*"
         />
-        <label htmlFor="upload__media--button" style={{
-          boxShadow: showDemo && "0px 0px 25px 0px #306D76",
-          zIndex: showDemo && 102
-        }}>
+        <label htmlFor="upload__media--button">
           Upload Media
         </label>
       </div>
