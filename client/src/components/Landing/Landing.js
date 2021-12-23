@@ -75,7 +75,7 @@ const Landing = (props) => {
   const renderMobileView = (title, text, active) => (
     <div className="mobile__view">
       <div className="screen__mobile">
-        <div className="screen__mobile--dots">{[...Array(4)].map((dot, i) => (
+        <div className="screen__mobile--dots">{[...Array(3)].map((dot, i) => (
           <span
             key={i}
             className="screen__mobile--dot"
@@ -110,11 +110,8 @@ const Landing = (props) => {
     >
       <section className="Landing__control container__inner web__view">
         <div className="Landing__control--text">
-          <h3>Control your social media influence.</h3>
-          <span>
-            Lorem ipsum dolor sit amet, consectetur
-            adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </span>
+          <h3>Better than Dropbox and Google Drive for Video Creators</h3>
+          <span>Helping humans stay competitive with AI editors</span>
           {localStorage.isAuthenticated === 'false' &&
           <Fragment>
             <Link to="/sign_up">Get Started</Link>
@@ -132,26 +129,25 @@ const Landing = (props) => {
           </div>
         </div>
       </section>
+
       <section className="screen"
                style={{backgroundColor: '#F7F7FBFF', width: width <= 575 && width + "px", marginLeft: width <= 575 && marginLeft + "px"}}>
         <div className="screen__inner container__inner"
              style={{width: width <= 575 && width + "px"}}>
           <div className="screen__text web__view">
-            <h3 className="screen__title">Screen </h3>
-            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </span>
+            <h3 className="screen__title">Transfer video and edit notes. Store Projects.</h3>
+            <span>Built for videographers, video editors, and content producers</span>
             <div className="screen__ticks">
-              {renderTick("Lorem ipsum dolor")}
-              {renderTick("Sit amet lorem")}
-              {renderTick("Ipsum dolor sit")}
-              {renderTick("Lorem ipsum sit")}
+              {renderTick("Fastest Way to Transfer Video")}
+              {renderTick("Tag edit notes to specific times in the footage")}
+              {renderTick("Upload revisions and get feedback")}
+              {renderTick("Supports HD audio and video files")}
             </div>
           </div>
           <div className="screen__image">
             <img src={screen1} alt="screen1"/>
           </div>
-          {renderMobileView("Screen 1", "Lorem ipsum dolor sit amet, consectetur",0)}
+          {renderMobileView("Transfer video and edit notes. Store Projects.", "Built for videographers, video editors, and content producers",0)}
         </div>
       </section>
       
@@ -160,17 +156,15 @@ const Landing = (props) => {
           <div className="screen__image">
             <img src={screen2} alt="screen2"/>
           </div>
-          {renderMobileView("Screen 2", "Lorem ipsum dolor sit amet, consectetur",1)}
+          {renderMobileView("Built for Video Creators", "",1)}
           <div className="screen__text web__view">
-            <h3 className="screen__title">Another screen</h3>
-            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </span>
+            <h3 className="screen__title">Built for Video Creators</h3>
+            <span></span>
             <div className="screen__ticks">
-              {renderTick("Lorem ipsum dolor")}
-              {renderTick("Sit amet lorem")}
-              {renderTick("Ipsum dolor sit")}
-              {renderTick("Lorem ipsum sit")}
+              {renderTick("2TB+ of media content storage")}
+              {renderTick("Less expensive than Google Drive and Dropbox")}
+              {renderTick("Fastest Upload time")}
+              {renderTick("Handle video format conversion")}
             </div>
           </div>
         </div>
@@ -179,42 +173,20 @@ const Landing = (props) => {
       <section className="screen" style={{backgroundColor: '#F7F7FBFF'}}>
         <div className="screen__inner container__inner" style={{width: width <= 575 && width + "px"}}>
           <div className="screen__text web__view">
-            <h3 className="screen__title">For Us</h3>
-            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </span>
+            <h3 className="screen__title">Supports both Editors and Clients.</h3>
+            <span>
+            </span>
             <div className="screen__ticks">
-              {renderTick("Lorem ipsum dolor")}
-              {renderTick("Sit amet lorem")}
-              {renderTick("Ipsum dolor sit")}
-              {renderTick("Lorem ipsum sit")}
+              {renderTick("Clients can upload their videos for free")}
+              {renderTick("Handle multiple client accounts for one editor")}
+              {renderTick("Track client revisions")}
+              {renderTick("Receive client notes tagged to specific times")}
             </div>
           </div>
           <div className="screen__image">
             <img src={screen3} alt="screen3"/>
           </div>
-          {renderMobileView("Screen 3", "Lorem ipsum dolor sit amet, consectetur",2)}
-        </div>
-      </section>
-  
-      <section className="screen" style={{backgroundColor: '#fff'}}>
-        <div className="container__inner screen__inner" style={{width: width <= 575 && width + "px"}}>
-          <div className="screen__image" style={{marginTop: 0}}>
-            <img src={screen4} alt="screen4"/>
-          </div>
-          {renderMobileView("Screen 4", "Lorem ipsum dolor sit amet, consectetur",3)}
-          <div className="screen__text web__view">
-            <h3 className="screen__title">Good screens</h3>
-            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </span>
-            <div className="screen__ticks">
-              {renderTick("Lorem ipsum dolor")}
-              {renderTick("Sit amet lorem")}
-              {renderTick("Ipsum dolor sit")}
-              {renderTick("Lorem ipsum sit")}
-            </div>
-          </div>
+          {renderMobileView("Supports both Editors and Clients.", "",2)}
         </div>
       </section>
       
@@ -276,34 +248,6 @@ const Landing = (props) => {
           <div className="question__item">
             {renderArrow("Is there a refund policy?")}
             <p>Money back guaranteed if not satisfied.</p>
-          </div>
-          <div className="question__item">
-            {renderArrow("How do I learn to use myvideospro.com?")}
-            <p>Upload your videos and tag your notes.</p>
-          </div>
-          <div className="question__item">
-            {renderArrow("How do I add more people to my team to view received footage?")}
-            <p>Contact us at contact@myvideospro.com.</p>
-          </div>
-          <div className="question__item">
-            {renderArrow("How much does the service cost?")}
-            <p>Only "video receivers" of footage pay. 
-              Receivers can send their connection code to as many "senders" as they want.</p>
-          </div>
-          <div className="question__item">
-            {renderArrow("How do editors or \"video receivers\" get footage from their \"video senders\" or clients?")}
-            <p>"Video receivers" share your connection code to your "video senders". 
-              When "video senders" log in they will be prompted to enter a connection code. 
-              This connection code will match "video senders" with "video receivers"</p>
-          </div>
-          <div className="question__item">
-            {renderArrow("How do I send footage to my editor?")}
-            <p>Upload footage. Press "Generate Video" and the video will be sent to your editor.</p>
-          </div>
-          <div className="question__item">
-            {renderArrow("How do I receive a revision from my editor?")}
-            <p>Your editor's revisions will appear in the same place as your uploaded footage. 
-              The latest revision appears farthest to the right.</p>
           </div>
           <div className="question__item">
             {renderArrow("How do I learn to use myvideospro.com?")}
