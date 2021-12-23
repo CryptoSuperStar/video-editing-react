@@ -14,7 +14,7 @@
   "author": "",
   "license": "ISC",
   "engines": {
-    "node": "14.17.0"
+    "node": "^14.17.0"
   },
   "dependencies": {
     "apple-signin-auth": "^1.5.1",

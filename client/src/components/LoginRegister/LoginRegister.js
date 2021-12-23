@@ -35,6 +35,9 @@ const LoginRegister = (props) => {
   const [showStepTwo, setShowStepTwo] = useState(false);
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [passwordsNotEquals, setPasswordsNotEquals] = useState(false);
+  const [emailNotEquals, setEmailNotEquals] = useState(false);
+  const [passwordError, setPasswordError] = useState(false)
   const isValidPassword = (password) => {
     if (password.trim() === confirmPassword.trim()) {
       // Regex to check valid password.
@@ -50,11 +53,11 @@ const LoginRegister = (props) => {
       if (password.match(regex)) {
         return true
       } else {
-        toast.warning("Use 8 or more characters with a mix of lowercase and uppercase letters, numbers & symbols");
+        setPasswordError(true);
         return false
       };
     } else {
-      toast.warning("Passwords did not match");
+      setPasswordsNotEquals(true)
 
     }
   }
@@ -75,8 +78,7 @@ const LoginRegister = (props) => {
         return false
       };
     } else {
-      toast.warning("Emails did not match");
-
+      setEmailNotEquals(true)
     }
   }
   const isValidUserName = (userName) => {
@@ -150,32 +152,39 @@ const LoginRegister = (props) => {
           onChange={(e) => setFirstName(e.target.value)} />
         <input type="text" value={lastName} required minLength="2" placeholder="Last Name"
           onChange={(e) => setLastName(e.target.value)} />
-        <input type="text" value={userName} required minLength="5" placeholder="User Name"
+        <input type="text" value={userName} required minLength="5" placeholder="Username"
           onChange={(e) => setUserName(e.target.value)} />
-        <input type="text" value={organization} placeholder="Organization"
+        <input type="text" value={organization} placeholder="Organization (Optional)"
           onChange={(e) => setOrganization(e.target.value)} />
       </div>}
       <input type="email" value={email} required minLength="5" placeholder="Email"
-        onChange={(e) => setEmail(e.target.value)} />
-      {isLogin === 'Sign Up' && <input type="confirmEmail" value={confirmEmail} required minLength="5" placeholder="Confirm Email"
-        onChange={(e) => setConfirmEmail(e.target.value)} />}
-      <div className='passwordContainer'>
+        onChange={(e) => { setEmailNotEquals(false); setEmail(e.target.value) }} />
+      {isLogin === 'Sign Up' && <div className='formInputContainer'> <input type="confirmEmail" value={confirmEmail} required minLength="5" placeholder="Confirm Email"
+        onChange={(e) => { setEmailNotEquals(false); setConfirmEmail(e.target.value) }} />
+        {emailNotEquals && <div className="inlineErrorMsg">Emails did not match</div>}
+      </div>}
+      <div className='formInputContainer'>
         <input type={showPassword ? "text" : "password"} value={password} required placeholder="Password"
-          onChange={e => setPassword(e.target.value)} />
+          onChange={e => { setPasswordError(false); setPasswordsNotEquals(false); setPassword(e.target.value) }} />
         <div className='passwordIcon' onClick={() => setShowPassword(!showPassword)}>
           {showPassword ? <FaEyeSlash /> : <FaEye />}
         </div>
+        {passwordError && <div className="inlineErrorMsg">Use 8 or more characters with a mix of lowercase and uppercase letters, numbers & symbols</div>}
       </div>
 
+
       {
-        isLogin === 'Sign Up' &&
-        <div className='passwordContainer'>
-          <input type={showConfirmPassword ? "text" : "password"} value={confirmPassword} required placeholder="Confirm Password"
-            onChange={e => setConfirmPassword(e.target.value)} />
-          <div className='passwordIcon' onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
-            {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+        isLogin === 'Sign Up' && <>
+          <div className='formInputContainer'>
+            <input type={showConfirmPassword ? "text" : "password"} value={confirmPassword} required placeholder="Confirm Password"
+              onChange={e => { setPasswordError(false); setPasswordsNotEquals(false); setConfirmPassword(e.target.value) }} />
+            <div className='passwordIcon' onClick={() => { setShowConfirmPassword(!showConfirmPassword) }}>
+              {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+            </div>
+            {passwordsNotEquals && <div className="inlineErrorMsg">Passwords did not match</div>}
           </div>
-        </div>
+
+        </>
       }
       <button type="submit">{isLogin === 'Sign In' ? "Sign In" : "Sign Up"}</button>
       {isLogin === 'Sign In' && <Link to="">Forgot password?</Link>}
