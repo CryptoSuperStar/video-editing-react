@@ -1,8 +1,8 @@
-import React, {useState, useEffect, Fragment} from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import Switch from "react-switch";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import './Landing.scss';
-import {Link} from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import phone from '../../assets/img/phone.png';
 import logo2 from "../../assets/img/logo2.png";
 import tick from "../../assets/img/path-10@1x.png";
@@ -10,68 +10,67 @@ import screen1 from "../../assets/img/screen1.png";
 import screen2 from "../../assets/img/screen2.png";
 import screen3 from "../../assets/img/screen3.png";
 import screen4 from "../../assets/img/screen4.png";
-import {ReactComponent as ArrowRight} from "../../assets/img/right-arrow.svg";
+import { ReactComponent as ArrowRight } from "../../assets/img/right-arrow.svg";
 import FooterNav from "../FooterNav/FooterNav";
-
 const Landing = (props) => {
-  
+
   const [checkedSwitch, setCheckedSwitch] = useState(true);
   const [width, setWidth] = useState(window.innerWidth);
   const [marginLeft, setMarginLeft] = useState(0);
   const [touchStart, setTouchStart] = React.useState(0);
   const [touchEnd, setTouchEnd] = React.useState(0);
-  
+
   useEffect(() => {
     window.addEventListener("resize", () => setWidth(window.innerWidth));
     return () => {
       window.removeEventListener("resize", () => setWidth(window.innerWidth));
     }
-  },[])
-  
+  }, [])
+
   const renderTick = text => (
     <div className="tick__item">
       <div className="tick__item--image">
-        <img src={tick} alt="tick"/>
+        <img src={tick} alt="tick" />
       </div>
       <span>{text}</span>
     </div>
   )
-  
+
   const renderArrow = title => (
     <div className="question__title">
       <div className="question__title--image">
-        <ArrowRight fill="white"/>
+        <ArrowRight fill="white" />
       </div>
       <span>{title}</span>
     </div>
   )
-  
+
   const handleTouchStart = (e) => {
     if (width <= 575) {
       setTouchStart(e.targetTouches[0].clientX);
     }
   }
-  
+
   const handleTouchMove = (e) => {
     if (width <= 575) {
       setTouchEnd(e.targetTouches[0].clientX);
     }
   }
-  
+
   const handleTouchEnd = () => {
     if (width <= 575) {
       if (touchStart - touchEnd > 50 && marginLeft !== (-width * 3)) {
         // do your stuff here for left swipe
         setMarginLeft(marginLeft - width);
       }
-  
+
       if (touchStart - touchEnd < -50 && marginLeft !== 0) {
         // do your stuff here for right swipe
         setMarginLeft(marginLeft + width)
       }
     }
   }
-  
+
   const renderMobileView = (title, text, active) => (
     <div className="mobile__view">
       <div className="screen__mobile">
@@ -81,59 +80,61 @@ const Landing = (props) => {
             className="screen__mobile--dot"
             style={{
               backgroundColor: i === active ? '#3b8590' : '#d8e1f1',
-              transform: `scale(${i === active ? '1.5, 1.5': '1,1'})`}}
-            onClick={() => setMarginLeft(i * -width)}/>
+              transform: `scale(${i === active ? '1.5, 1.5' : '1,1'})`
+            }}
+            onClick={() => setMarginLeft(i * -width)} />
         ))}
         </div>
         <h3>{title}</h3>
         <p>{text}</p>
         {localStorage.isAuthenticated === 'false'
-        &&
-        <Fragment>
-          <button className="mobile__view--next" onClick={() => {
-            props.history.push('/sign_up')
-          }}>Get started</button>
-          <Link to="/sign_in" style={{marginBottom: active === 3 && "50px"}}>Login</Link>
-        </Fragment> }
-        
+          &&
+          <Fragment>
+            <button className="mobile__view--next" onClick={() => {
+              props.history.push('/sign_up')
+            }}>Get started</button>
+            <Link to="/sign_in" style={{ marginBottom: active === 3 && "50px" }}>Login</Link>
+          </Fragment>}
+
       </div>
     </div>
   )
-  
+
   const handleSwitch = checked => setCheckedSwitch(checked);
-  
+  if (localStorage.isAuthenticated === 'true') return <Redirect to="/dashboard/upload" />
+
   return (
     <div className="Landing__block container"
-         onTouchStart={handleTouchStart}
-         onTouchMove={handleTouchMove}
-         onTouchEnd={handleTouchEnd}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
     >
       <section className="Landing__control container__inner web__view">
         <div className="Landing__control--text">
           <h3>Better than Dropbox and Google Drive for Video Creators</h3>
           <span>Helping humans stay competitive with AI editors</span>
           {localStorage.isAuthenticated === 'false' &&
-          <Fragment>
-            <Link to="/sign_up">Get Started</Link>
-            <span>Start your 7-day free trial now</span>
-          </Fragment>}
-          
+            <Fragment>
+              <Link to="/sign_up">Get Started</Link>
+              <span>Start your 7-day free trial now</span>
+            </Fragment>}
+
         </div>
         <div className="Landing__control--image">
-          <img src={phone} alt="phone"/>
+          <img src={phone} alt="phone" />
           <div className="oval__green" />
           <div className="ring__black" />
           <div className="theBest">
-            <img src={logo2} alt="logo2"/>
+            <img src={logo2} alt="logo2" />
             <span>Get the very best with ProVid</span>
           </div>
         </div>
       </section>
 
       <section className="screen"
-               style={{backgroundColor: '#F7F7FBFF', width: width <= 575 && width + "px", marginLeft: width <= 575 && marginLeft + "px"}}>
+        style={{ backgroundColor: '#F7F7FBFF', width: width <= 575 && width + "px", marginLeft: width <= 575 && marginLeft + "px" }}>
         <div className="screen__inner container__inner"
-             style={{width: width <= 575 && width + "px"}}>
+          style={{ width: width <= 575 && width + "px" }}>
           <div className="screen__text web__view">
             <h3 className="screen__title">Transfer video and edit notes. Store Projects.</h3>
             <span>Built for videographers, video editors, and content producers</span>
@@ -145,18 +146,18 @@ const Landing = (props) => {
             </div>
           </div>
           <div className="screen__image">
-            <img src={screen1} alt="screen1"/>
+            <img src={screen1} alt="screen1" />
           </div>
-          {renderMobileView("Transfer video and edit notes. Store Projects.", "Built for videographers, video editors, and content producers",0)}
+          {renderMobileView("Transfer video and edit notes. Store Projects.", "Built for videographers, video editors, and content producers", 0)}
         </div>
       </section>
-      
-      <section className="screen" style={{backgroundColor: '#fff'}}>
-        <div className="container__inner screen__inner" style={{width: width <= 575 && width + "px"}}>
+
+      <section className="screen" style={{ backgroundColor: '#fff' }}>
+        <div className="container__inner screen__inner" style={{ width: width <= 575 && width + "px" }}>
           <div className="screen__image">
-            <img src={screen2} alt="screen2"/>
+            <img src={screen2} alt="screen2" />
           </div>
-          {renderMobileView("Built for Video Creators", "",1)}
+          {renderMobileView("Built for Video Creators", "", 1)}
           <div className="screen__text web__view">
             <h3 className="screen__title">Built for Video Creators</h3>
             <span></span>
@@ -169,9 +170,9 @@ const Landing = (props) => {
           </div>
         </div>
       </section>
-  
-      <section className="screen" style={{backgroundColor: '#F7F7FBFF'}}>
-        <div className="screen__inner container__inner" style={{width: width <= 575 && width + "px"}}>
+
+      <section className="screen" style={{ backgroundColor: '#F7F7FBFF' }}>
+        <div className="screen__inner container__inner" style={{ width: width <= 575 && width + "px" }}>
           <div className="screen__text web__view">
             <h3 className="screen__title">Supports both Editors and Clients.</h3>
             <span>
@@ -184,12 +185,12 @@ const Landing = (props) => {
             </div>
           </div>
           <div className="screen__image">
-            <img src={screen3} alt="screen3"/>
+            <img src={screen3} alt="screen3" />
           </div>
-          {renderMobileView("Supports both Editors and Clients.", "",2)}
+          {renderMobileView("Supports both Editors and Clients.", "", 2)}
         </div>
       </section>
-      
+
       <section className="plans web__view">
         <div className="container__inner">
           <h3 className="screen__title">Pricing & Plans</h3>
@@ -223,7 +224,7 @@ const Landing = (props) => {
                   {renderTick("Same price as Google Drive")}
                   {renderTick("Double the features")}
                 </div>
-                <div className="plan__btn" onClick={() =>props.history.push('/sign_up')}>
+                <div className="plan__btn" onClick={() => props.history.push('/sign_up')}>
                   Start 7 Days Free Trial</div>
               </div>
             ) : (
@@ -235,14 +236,14 @@ const Landing = (props) => {
                   {renderTick("Same price as Google Drive")}
                   {renderTick("Double the features")}
                 </div>
-                <div className="plan__btn" onClick={() =>props.history.push('/sign_up')}>
+                <div className="plan__btn" onClick={() => props.history.push('/sign_up')}>
                   Start 7 Days Free Trial</div>
               </div>
             )}
           </div>
         </div>
       </section>
-      
+
       <section className="questions web__view">
         <div className="container__inner questions__inner">
           <div className="question__item">
@@ -256,9 +257,9 @@ const Landing = (props) => {
           <div className="questions__title">
             <h3 className="screen__title">Control. Build. Grow</h3>
             {localStorage.isAuthenticated === 'false' &&
-            <Fragment>
-              <Link to="/sign_in">Start 7 Days Free Trial</Link>
-            </Fragment>}
+              <Fragment>
+                <Link to="/sign_in">Start 7 Days Free Trial</Link>
+              </Fragment>}
           </div>
         </div>
       </section>
@@ -268,9 +269,9 @@ const Landing = (props) => {
 };
 
 const mapStateToProps = state => ({
-    user: state.auth.user,
-    isAuthenticated: state.auth.isAuthenticated
-  }
+  user: state.auth.user,
+  isAuthenticated: state.auth.isAuthenticated
+}
 )
 
 export default connect(mapStateToProps)(Landing);
