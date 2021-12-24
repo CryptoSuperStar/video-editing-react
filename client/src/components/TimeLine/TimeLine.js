@@ -126,7 +126,7 @@ const TimeLine = props => {
   }
 
   return (
-    <div className="TimeLine" style={{ zIndex: localStorage.showCutBox === 'true' && '110' }}>
+    <div className="TimeLine" style={{ zIndex: localStorage.showTrimBox === 'true' && '110' }}>
       <div className="TimeLine__inner" ref={timeLineBox}>
         <div className="video-progress"
           style={{ left: shift + "%", zIndex: "11" }} />
@@ -160,7 +160,7 @@ const TimeLine = props => {
         </div>}
 
         <Fragment   >
-          {props.showCutBox && <div className="resizable__box" onClick={(e) => handleStepTime(e)} style={{
+          {props.showTrimBox && <div className="resizable__box" onClick={(e) => handleStepTime(e)} style={{
             left: leftArrowPad + "%",
             right: rightArrowPad + '%'
           }}>
