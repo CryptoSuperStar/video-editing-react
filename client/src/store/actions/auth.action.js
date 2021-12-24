@@ -125,7 +125,7 @@ export const updateUser = (id, data, func) => async dispatch => {
     func(false)
   } catch (e) {
     console.log(e);
-    toast.error("Something went wrong")
+    toast.error(e.response.data.msg)
     dispatch({
       type: "UPDATE_USER_ERROR"
     })
