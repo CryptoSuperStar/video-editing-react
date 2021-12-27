@@ -10,7 +10,6 @@ import screen1 from "../../assets/img/screen1.png";
 import screen2 from "../../assets/img/screen2.png";
 import screen3 from "../../assets/img/screen3.png";
 import screen4 from "../../assets/img/screen4.png";
-import {ReactComponent as ArrowRight} from "../../assets/img/right-arrow.svg";
 import FooterNav from "../FooterNav/FooterNav";
 
 const Landing = (props) => {
@@ -34,15 +33,6 @@ const Landing = (props) => {
         <img src={tick} alt="tick"/>
       </div>
       <span>{text}</span>
-    </div>
-  )
-  
-  const renderArrow = title => (
-    <div className="question__title">
-      <div className="question__title--image">
-        <ArrowRight fill="white"/>
-      </div>
-      <span>{title}</span>
     </div>
   )
   
@@ -245,14 +235,6 @@ const Landing = (props) => {
       
       <section className="questions web__view">
         <div className="container__inner questions__inner">
-          <div className="question__item">
-            {renderArrow("Is there a refund policy?")}
-            <p>Money back guaranteed if not satisfied.</p>
-          </div>
-          <div className="question__item">
-            {renderArrow("How do I learn to use myvideospro.com?")}
-            <p>Upload your videos and tag your notes.</p>
-          </div>
           <div className="questions__title">
             <h3 className="screen__title">Control. Build. Grow.</h3>
             {localStorage.isAuthenticated === 'false' &&
