@@ -115,7 +115,7 @@ const Landing = (props) => {
           <div className="ring__black" />
           <div className="theBest">
             <img src={logo2} alt="logo2"/>
-            <span>Get the very best with ProVid</span>
+            <span>Get the very best with MyVideosPro</span>
           </div>
         </div>
       </section>
