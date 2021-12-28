@@ -89,7 +89,7 @@ const Landing = (props) => {
               <p>{text}</p>
             </Fragment>}
 
-        {localStorage.isAuthenticated === 'false'
+        {localStorage.isAuthenticated !== 'true'
         &&
         <Fragment>
           <button className="mobile__view--next" onClick={() => {
