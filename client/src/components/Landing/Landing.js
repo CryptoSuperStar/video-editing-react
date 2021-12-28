@@ -83,7 +83,7 @@ const Landing = (props) => {
           <button className="mobile__view--next" onClick={() => {
             props.history.push('/sign_up')
           }}>Get started</button>
-          <Link to="/sign_in" style={{marginBottom: active === 3 && "50px"}}>Login</Link>
+          <Link to="/sign_in" style={{marginBottom: active === 2 && "50px"}}>Login</Link>
         </Fragment> }
         
       </div>
