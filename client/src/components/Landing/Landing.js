@@ -76,7 +76,19 @@ const Landing = (props) => {
         ))}
         </div>
         <h3>{title}</h3>
-        <p>{text}</p>
+        
+        {typeof text === 'object'
+            &&
+              text.map((item, i) => (
+                renderTick(item)
+              ))}
+  
+          {typeof text === 'string'
+            &&
+            <Fragment>
+              <p>{text}</p>
+            </Fragment>}
+
         {localStorage.isAuthenticated === 'false'
         &&
         <Fragment>
@@ -146,7 +158,12 @@ const Landing = (props) => {
           <div className="screen__image">
             <img src={screen2} alt="screen2"/>
           </div>
-          {renderMobileView("Built for Video Creators", "",1)}
+          {renderMobileView("Built for Video Creators", [
+                "2TB+ of media content storage",
+                "Less expensive than Google Drive and Dropbox",
+                "Fastest Upload time",
+                "Handle video format conversion"
+              ], 1)}
           <div className="screen__text web__view">
             <h3 className="screen__title">Built for Video Creators</h3>
             <span></span>
@@ -176,7 +193,12 @@ const Landing = (props) => {
           <div className="screen__image">
             <img src={screen3} alt="screen3"/>
           </div>
-          {renderMobileView("Supports both Editors and Clients.", "",2)}
+          {renderMobileView("Supports both Editors and Clients.", [
+                "Clients can upload their videos for free",
+                "Handle multiple client accounts for one editor",
+                "Track client revisions",
+                "Receive client notes tagged to specific times"
+              ], 2)}
         </div>
       </section>
       
