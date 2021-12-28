@@ -37,7 +37,9 @@ const LoginRegister = (props) => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [passwordsNotEquals, setPasswordsNotEquals] = useState(false);
   const [emailNotEquals, setEmailNotEquals] = useState(false);
+  const [notValidFEmail, setNotValidEmail] = useState(false)
   const [passwordError, setPasswordError] = useState(false)
+  const [notValidUserName, setNotValidUserName] = useState(false)
   const isValidPassword = (password) => {
     if (password.trim() === confirmPassword.trim()) {
       // Regex to check valid password.
@@ -61,8 +63,9 @@ const LoginRegister = (props) => {
 
     }
   }
+  
   const isValidEmail = (email) => {
-    if (email.trim() === confirmEmail.trim()) {
+    if ((email.trim()).toLocaleLowerCase() === (confirmEmail.trim()).toLocaleLowerCase()) {
       // Regex to check valid email.
       const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -74,7 +77,7 @@ const LoginRegister = (props) => {
       if (email.match(regex)) {
         return true
       } else {
-        toast.warning("A valid email address is required to complete registration");
+        setNotValidEmail(true)
         return false
       };
     } else {
@@ -82,7 +85,7 @@ const LoginRegister = (props) => {
     }
   }
   const isValidUserName = (userName) => {
-    const regex = /^[a-zA-Z0-9\-]+$/;
+    const regex = /^[A-Za-z][A-Za-z0-9_]*(?:_[A-Za-z0-9]+)*$/;
 
     if (userName == null) {
       toast.warning("UserName required");
@@ -92,7 +95,7 @@ const LoginRegister = (props) => {
     if (userName.match(regex)) {
       return true
     } else {
-      toast.warning("A valid userName is required, Spaces and spacial symbols are not allowed");
+      setNotValidUserName(true);
       return false
     };
   }
@@ -136,29 +139,37 @@ const LoginRegister = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isLogin === "Sign In") {
-      await props.dispatch(loginUserSSO({ email, password }, props.history));
+      await props.dispatch(loginUserSSO({ email:email.toLocaleLowerCase(), password }, props.history));
       await props.dispatch(authUser());
     }
     if (isLogin === "Sign Up" && validation()) {
-      await props.dispatch(registerUserSSO({ firstName, lastName, userName, organization, email, password }, setShowConnectSocial));
+      await props.dispatch(registerUserSSO({ firstName, lastName, userName, organization, email:email.toLocaleLowerCase(), password }, setShowConnectSocial));
       await props.dispatch(authUser());
     }
   }
 
   const loginRegisterForm = (
     <form className="LoginRegister__form" onSubmit={handleSubmit}>
-      {isLogin === 'Sign Up' && <div>
+      {isLogin === 'Sign Up' && <>
+      <div className='formInputContainer'>
         <input type="text" value={firstName} required minLength="2" placeholder="First Name"
-          onChange={(e) => setFirstName(e.target.value)} />
+          onChange={(e) =>{setFirstName(e.target.value)}} />      </div>
+      <div className='formInputContainer'>
         <input type="text" value={lastName} required minLength="2" placeholder="Last Name"
-          onChange={(e) => setLastName(e.target.value)} />
+          onChange={(e) =>{setLastName(e.target.value)}} />      </div>
+      <div className='formInputContainer'>
         <input type="text" value={userName} required minLength="5" placeholder="Username"
-          onChange={(e) => setUserName(e.target.value)} />
+          onChange={(e) =>{setNotValidUserName(false); setUserName(e.target.value)}} />
+          {notValidUserName && <div className="inlineErrorMsg">A valid username is required, spaces and special symbols are not allowed</div>}
+          </div>
         <input type="text" value={organization} placeholder="Organization (Optional)"
           onChange={(e) => setOrganization(e.target.value)} />
-      </div>}
+      </>}
+      <div className='formInputContainer'>
       <input type="email" value={email} required minLength="5" placeholder="Email"
-        onChange={(e) => { setEmailNotEquals(false); setEmail(e.target.value) }} />
+        onChange={(e) => { setNotValidEmail(false); setEmailNotEquals(false); setEmail(e.target.value) }} />
+        {notValidFEmail && <div className="inlineErrorMsg">A valid email address is required to complete registration</div>}
+        </div>
       {isLogin === 'Sign Up' && <div className='formInputContainer'> <input type="confirmEmail" value={confirmEmail} required minLength="5" placeholder="Confirm Email"
         onChange={(e) => { setEmailNotEquals(false); setConfirmEmail(e.target.value) }} />
         {emailNotEquals && <div className="inlineErrorMsg">Emails did not match</div>}
@@ -272,8 +283,7 @@ const LoginRegister = (props) => {
             do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
         </div>
       </div>
-      }
-    </Fragment >
+    </Fragment>
   );
 }
 
