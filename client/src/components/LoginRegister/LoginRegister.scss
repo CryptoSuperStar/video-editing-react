@@ -183,7 +183,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-top: 50px;
+  margin-top: 30px;
   align-items: center;
   div{
     width: 50%;
@@ -191,15 +191,22 @@
       width: 100%;
     }
   }
-  .passwordContainer{
-    display: flex;
+ 
+  .formInputContainer{
     position: relative;
     .passwordIcon{
       width: 20px;
       cursor: pointer;
       position: absolute;
       right: 15px;
-      top: 18%;
+      top: 30px;
+    }
+    .inlineErrorMsg{
+      box-sizing: border-box;
+      color: red;
+      font-size: 14px;
+      padding: 5px 20px;
+      width: 100%;
     }
   }
   input, button {
@@ -218,7 +225,7 @@
     border: 1px solid var(--dove-gray);
     background-color: var(--alabaster);
     outline: none;
-    margin-bottom: 20px;
+    margin-top: 20px;
     &::placeholder {
       color: var(--star-dust-2);
       font-weight: 400;

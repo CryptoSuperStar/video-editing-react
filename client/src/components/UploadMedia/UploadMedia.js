@@ -10,7 +10,6 @@ import cam from "../../assets/img/icon-awesome-video-1@1x.png";
 import { ReactComponent as Delete } from "../../assets/img/delete.svg";
 import { ReactComponent as Chat } from "../../assets/img/chat.svg";
 import { ReactComponent as Share } from "../../assets/img/share.svg";
-import { ReactComponent as Info } from "../../assets/img/information.svg";
 import { clearTempProject, takeScreenshots, updateContent, getProject } from "../../store/actions/project.action";
 import CommentBlock from "../CommentBlock/CommentBlock";
 import ShareModal from "../Modals/ShareModal";
@@ -18,7 +17,7 @@ import EmptyProject from "../EmptyProject/EmptyProject";
 import TimeLine from "../TimeLine/TimeLine";
 import VideoPlayer from "../VideoPlayer/VideoPlayer";
 import CarouselMedia from "../CarouselBlock/CarouselMedia";
-import { ReactComponent as Cut } from "../../assets/img/cut.svg";
+import { ReactComponent as Trim } from "../../assets/img/trim.svg";
 import DemoLayerUpload from "../DemoLayer/DemoLayerUpload";
 
 momentDurationFormatSetup(moment);
@@ -34,7 +33,7 @@ const UploadMedia = props => {
     revision: 0
   });
   const [showStyleModal, setShowStyleModal] = useState(false);
-  const [showCutBox, setShowCutBox] = useState(false);
+  const [showTrimBox, setShowTrimBox] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [comments, setComments] = useState([]);
   const [projectContent, setProjectContent] = useState([]);
@@ -49,15 +48,10 @@ const UploadMedia = props => {
   const [loadingSlider, setLoadingSlider] = useState(false);
   const [moveTo, setMoveTo] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [showDemo, setShowDemo] = useState(false);
   const editableStatus = ["Draft", "Complete"]
   const editedProject = props.project?.editedProjects?.length > 0 ? props.project?.editedProjects.find(item => item.revision === props.project.projectRevision) : false
   let commentFinal = [];
-  useEffect(() => {
-    if (localStorage.showDemoLayer === "true") {
-      setShowDemo(true);
-    }
-  }, []);
+
 
   useEffect(
     () => {
@@ -145,9 +139,9 @@ const UploadMedia = props => {
     props.dispatch(clearTempProject(props.project._id, props.project.bucket));
   }
 
-  const handleCutVideo = () => {
-    localStorage.showCutBox = !showCutBox;
-    setShowCutBox(!showCutBox);
+  const handleTrimVideo = () => {
+    localStorage.showTrimBox = !showTrimBox;
+    setShowTrimBox(!showTrimBox);
   }
 
   const handleActiveScreenshot = (idx) => {
@@ -246,7 +240,6 @@ const UploadMedia = props => {
     );
   return (
     <div className="upload__media">
-      {showDemo && localStorage.currentProjectId && <DemoLayerUpload setShowDemo={setShowDemo} />}
       {showStyleModal && (
         <StyleInspirationModal
           isImage={currentMedia.isImage}
@@ -270,11 +263,8 @@ const UploadMedia = props => {
                   {comments && comments.length && comments.filter(comment => comment.text.length > 0).length}
                 </span>
               </div>
-              <div className="share_indicator" onClick={(e) => { (["Complete", "Done"].includes(props.project?.projectStatus) && editedProject._id === currentMedia?._id) && toggleShareBlock(e) }} style={{ opacity: showDemo && '20%' }}>
+              <div className="share_indicator" onClick={(e) => { (["Complete", "Done"].includes(props.project?.projectStatus) && editedProject._id === currentMedia?._id) && toggleShareBlock(e) }}>
                 <Share />
-              </div>
-              <div className="question_indicator" style={{ opacity: showDemo && '20%' }}>
-                <Info />
               </div>
             </div>
             <VideoPlayer
@@ -311,7 +301,7 @@ const UploadMedia = props => {
                 <TimeLine
                   currentMedia={currentMedia}
                   setCurrentMedia={setCurrentMedia}
-                  showCutBox={showCutBox}
+                  showTrimBox={showTrimBox}
                   projectStatus={props.project?.projectStatus}
                   setMoveTo={setMoveTo}
                   currentTime={currentTime}
@@ -349,22 +339,22 @@ const UploadMedia = props => {
             }
             <div className="generate__btns">
               <button
-                onClick={(e) => { (props.project?.projectStatus === "Draft") && handleCutVideo(e) }}
-                style={{ backgroundColor: (showCutBox || !(props.project?.projectStatus === "Draft")) && "gray" }}>
-                <Cut />
-                <span>Cut</span>
-              </button>
-              <button onClick={() => { (editableStatus.includes(props.project?.projectStatus) && (editedProject ? editedProject._id === currentMedia._id : true)) && setShowStyleModal(true) }}
-                style={{ backgroundColor: (!(editableStatus.includes(props.project?.projectStatus)) || (editedProject ? editedProject._id !== currentMedia._id : false)) && "gray" }}>
-                <img src={cam} alt="cam" />
-                <span>Generate Video</span>
-              </button>
-
-              <button
                 onClick={(e) => { (editableStatus.includes(props.project?.projectStatus) && (editedProject ? editedProject._id === currentMedia._id : true)) && handleActiveScreenshot(e) }}
                 style={{ backgroundColor: (isShowComment || !(editableStatus.includes(props.project?.projectStatus)) || (editedProject ? editedProject._id !== currentMedia._id : false)) && "gray" }}>
                 <Chat />
-                <span>Comment</span>
+                <span>Add Edit Notes</span>
+              </button>
+              <button
+                onClick={(e) => { (props.project?.projectStatus === "Draft") && handleTrimVideo(e) }}
+                style={{ backgroundColor: (showTrimBox || !(props.project?.projectStatus === "Draft")) && "gray" }}>
+                <Trim />
+                <span>Trim</span>
+              </button>
+              <button className="generate-video"
+                onClick={() => { (editableStatus.includes(props.project?.projectStatus) && (editedProject ? editedProject._id === currentMedia._id : true)) && setShowStyleModal(true) }}
+                style={{ backgroundColor: (!(editableStatus.includes(props.project?.projectStatus)) || (editedProject ? editedProject._id !== currentMedia._id : false)) && "gray" }}>
+                <img src={cam} alt="cam" />
+                <span>Generate Video</span>
               </button>
             </div>
 

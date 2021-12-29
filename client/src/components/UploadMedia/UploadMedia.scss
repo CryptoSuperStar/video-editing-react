@@ -10,6 +10,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+    margin: 8px 10px;
     & > span {
       display: inline-block;
       margin: 150px 0 80px;
@@ -102,6 +103,7 @@
   box-sizing: border-box;
   overflow-y: auto;
   z-index: 17;
+  max-height: 80%;
   p {
     margin-top: 5px;
   }
@@ -226,7 +228,7 @@
     display: flex;
     background-color: transparent;
     position: relative;
-    height: 50vh;
+    height: 45vh;
     .video__inner {
       position: relative;
       margin-top: 65px;
@@ -291,7 +293,7 @@
   right: 165px;
   display: flex;
   z-index: 102;
-  .comments_indicator, .share_indicator, .question_indicator {
+  .comments_indicator, .share_indicator {
     position: relative;
     width: 65px;
     height: 65px;
@@ -415,6 +417,9 @@
     }
     &:last-of-type {
       margin-right: 0;
+    }
+    &.generate-video {
+      background: var(--dark-blue);
     }
     img, svg {
       margin: 0 15px 0 20px;
@@ -635,7 +640,7 @@
     top: 7vh !important;
     right: 0 !important;
     
-    .comments_indicator, .share_indicator, .question_indicator {
+    .comments_indicator, .share_indicator {
       width: 35px !important;
       height: 35px !important;
       border: none;
