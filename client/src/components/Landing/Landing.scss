@@ -18,7 +18,6 @@
     font-size: 80px;
     font-style: normal;
     font-weight: 700;
-    height: 254px;
     letter-spacing: -2.50px;
   }
   span {
@@ -30,7 +29,7 @@
       margin-top: 15px;
       color: #bcc7cd;
       font-family: "CircularStd-Medium", sans-serif;
-      font-size: var(--font-size-m);
+      font-size: var(--font-size-xxl);
       font-style: normal;
       font-weight: 500;
       letter-spacing: -0.50px;
@@ -308,17 +307,6 @@
   flex-wrap: wrap;
   justify-content: center;
   margin: 300px auto 100px;
-  .question__item {
-    flex-basis: 40%;
-    margin-bottom: 60px;
-    p {
-      margin: 20px 0 0 45px;
-      letter-spacing: -0.50px;
-      line-height: 28px;
-      color: var(--white-2);
-      font-size: var(--font-size-m);
-    }
-  }
   .question__title {
     display: flex;
     align-items: center;
@@ -523,7 +511,7 @@
     }
   }
   .screen span {
-    margin-top: 50px;
+    font-size: medium;
   }
   .screen__mobile {
     //height: 50px;

@@ -10,7 +10,6 @@ import screen1 from "../../assets/img/screen1.png";
 import screen2 from "../../assets/img/screen2.png";
 import screen3 from "../../assets/img/screen3.png";
 import screen4 from "../../assets/img/screen4.png";
-import { ReactComponent as ArrowRight } from "../../assets/img/right-arrow.svg";
 import FooterNav from "../FooterNav/FooterNav";
 const Landing = (props) => {
 
@@ -35,16 +34,7 @@ const Landing = (props) => {
       <span>{text}</span>
     </div>
   )
-
-  const renderArrow = title => (
-    <div className="question__title">
-      <div className="question__title--image">
-        <ArrowRight fill="white" />
-      </div>
-      <span>{title}</span>
-    </div>
-  )
-
+  
   const handleTouchStart = (e) => {
     if (width <= 575) {
       setTouchStart(e.targetTouches[0].clientX);
@@ -86,16 +76,28 @@ const Landing = (props) => {
         ))}
         </div>
         <h3>{title}</h3>
-        <p>{text}</p>
-        {localStorage.isAuthenticated === 'false'
-          &&
-          <Fragment>
-            <button className="mobile__view--next" onClick={() => {
-              props.history.push('/sign_up')
-            }}>Get started</button>
-            <Link to="/sign_in" style={{ marginBottom: active === 3 && "50px" }}>Login</Link>
-          </Fragment>}
+        
+        {typeof text === 'object'
+            &&
+              text.map((item, i) => (
+                renderTick(item)
+              ))}
+  
+          {typeof text === 'string'
+            &&
+            <Fragment>
+              <p>{text}</p>
+            </Fragment>}
 
+        {localStorage.isAuthenticated !== 'true'
+        &&
+        <Fragment>
+          <button className="mobile__view--next" onClick={() => {
+            props.history.push('/sign_up')
+          }}>Get started</button>
+          <Link to="/sign_in" style={{marginBottom: active === 3 && "50px"}}>Login</Link>
+        </Fragment> }
+        
       </div>
     </div>
   )
@@ -125,8 +127,8 @@ const Landing = (props) => {
           <div className="oval__green" />
           <div className="ring__black" />
           <div className="theBest">
-            <img src={logo2} alt="logo2" />
-            <span>Get the very best with ProVid</span>
+            <img src={logo2} alt="logo2"/>
+            <span>Get the very best with MyVideosPro</span>
           </div>
         </div>
       </section>
@@ -157,7 +159,12 @@ const Landing = (props) => {
           <div className="screen__image">
             <img src={screen2} alt="screen2" />
           </div>
-          {renderMobileView("Built for Video Creators", "", 1)}
+          {renderMobileView("Built for Video Creators", [
+                "2TB+ of media content storage",
+                "Less expensive than Google Drive and Dropbox",
+                "Fastest Upload time",
+                "Handle video format conversion"
+              ], 1)}
           <div className="screen__text web__view">
             <h3 className="screen__title">Built for Video Creators</h3>
             <span></span>
@@ -187,7 +194,12 @@ const Landing = (props) => {
           <div className="screen__image">
             <img src={screen3} alt="screen3" />
           </div>
-          {renderMobileView("Supports both Editors and Clients.", "", 2)}
+          {renderMobileView("Supports both Editors and Clients.", [
+                "Clients can upload their videos for free",
+                "Handle multiple client accounts for one editor",
+                "Track client revisions",
+                "Receive client notes tagged to specific times"
+              ], 2)}
         </div>
       </section>
 
@@ -246,16 +258,8 @@ const Landing = (props) => {
 
       <section className="questions web__view">
         <div className="container__inner questions__inner">
-          <div className="question__item">
-            {renderArrow("Is there a refund policy?")}
-            <p>Money back guaranteed if not satisfied.</p>
-          </div>
-          <div className="question__item">
-            {renderArrow("How do I learn to use myvideospro.com?")}
-            <p>Upload your videos and tag your notes.</p>
-          </div>
           <div className="questions__title">
-            <h3 className="screen__title">Control. Build. Grow</h3>
+            <h3 className="screen__title">Control. Build. Grow.</h3>
             {localStorage.isAuthenticated === 'false' &&
               <Fragment>
                 <Link to="/sign_in">Start 7 Days Free Trial</Link>
