@@ -238,32 +238,18 @@ const LoginRegister = (props) => {
                   clientId: 'com.example.web',
                   scope: 'email name',
                   redirectURI: 'http://localhost:3000/api/login_register_apple',
-                  /** State string that is returned with the apple response */
                   state: 'state',
-                  /** Nonce */
                   nonce: 'nonce',
-                  /** Uses popup auth instead of redirection */
                   usePopup: true
-                }} // REQUIRED
-                /** General props */
+                }}
                 uiType="dark"
-                /** className */
                 className="apple-auth-btn"
-                /** Removes default style tag */
                 noDefaultStyle={false}
-                /** Allows to change the button's children, eg: for changing the button text */
                 buttonExtraChildren={`${isLogin} with Apple`}
-                /** Extra controlling props */
-                /** Called upon signin success in case authOptions.usePopup = true -- which means auth is handled client side */
-                onSuccess={responseApple} // default = undefined
-                /** Called upon signin error */
-                onError={(error) => console.error(error)} // default = undefined
-                /** Skips loading the apple script if true */
-                skipScript={false} // default = undefined
-                /** Apple image props */
-                iconProp={{ style: { margin: '10px 0 0 15px' } }} // default = undefined
-              /** render function - called with all props - can be used to fully customize the UI by rendering your own component  */
-
+                onSuccess={responseApple}
+                onError={(error) => console.error(error)}
+                skipScript={false}
+                iconProp={{ style: { margin: '10px 0 0 15px' } }}
               />
               <button className="email__button" onClick={() => setShowLoginRegister(true)}>
                 <img src={emailImage} alt="email_image" />
