@@ -47,7 +47,7 @@ const ConnectSocialModal = (props) => {
           onSuccess={responseInstagramSuccess}
           onFailure={responseInstagramFailure}
           cssClass="instagram_button"
-          redirectUri="https://provids.herokuapp.com/sign_in"
+          redirectUri="https://myvideospro.com/sign_in"
         >
           <Instagram />
           <span>Connect Instagram</span>

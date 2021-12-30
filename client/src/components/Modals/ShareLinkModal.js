@@ -14,7 +14,7 @@ import penDot from "../../assets/img/penDot.png";
 
 const ShareLinkModal = (props) => {
   
-  const url = "provids.herokuapp.com/";
+  const url = "myvideospro.com/";
   const title = 'Provid - some text'
   const [link, setLink] = useState('')
   

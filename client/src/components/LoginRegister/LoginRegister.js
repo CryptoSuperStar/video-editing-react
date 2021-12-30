@@ -4,7 +4,7 @@ import './LoginRegister.scss';
 import { Link, Redirect } from "react-router-dom";
 import FacebookLogin from 'react-facebook-login';
 import { GoogleLogin } from 'react-google-login';
-import AppleSignin from 'react-apple-signin-auth';
+// import AppleSignin from 'react-apple-signin-auth';
 import { REACT_APP_FACEBOOK_API, REACT_APP_GOOGLE_API } from "../../utils/misc";
 import emailImage from '../../assets/img/icon-simple-email-1@1x.png'
 import screen10 from '../../assets/img/screen10.png';
@@ -233,38 +233,24 @@ const LoginRegister = (props) => {
                 className="google__button"
               >{`${isLogin} with Google`}
               </GoogleLogin>
-              <AppleSignin
+              {/* <AppleSignin
                 authOptions={{
                   clientId: 'com.example.web',
                   scope: 'email name',
                   redirectURI: 'http://localhost:3000/api/login_register_apple',
-                  /** State string that is returned with the apple response */
                   state: 'state',
-                  /** Nonce */
                   nonce: 'nonce',
-                  /** Uses popup auth instead of redirection */
                   usePopup: true
-                }} // REQUIRED
-                /** General props */
+                }}
                 uiType="dark"
-                /** className */
                 className="apple-auth-btn"
-                /** Removes default style tag */
                 noDefaultStyle={false}
-                /** Allows to change the button's children, eg: for changing the button text */
                 buttonExtraChildren={`${isLogin} with Apple`}
-                /** Extra controlling props */
-                /** Called upon signin success in case authOptions.usePopup = true -- which means auth is handled client side */
-                onSuccess={responseApple} // default = undefined
-                /** Called upon signin error */
-                onError={(error) => console.error(error)} // default = undefined
-                /** Skips loading the apple script if true */
-                skipScript={false} // default = undefined
-                /** Apple image props */
-                iconProp={{ style: { margin: '10px 0 0 15px' } }} // default = undefined
-              /** render function - called with all props - can be used to fully customize the UI by rendering your own component  */
-
-              />
+                onSuccess={responseApple}
+                onError={(error) => console.error(error)}
+                skipScript={false}
+                iconProp={{ style: { margin: '10px 0 0 15px' } }}
+              /> */}
               <button className="email__button" onClick={() => setShowLoginRegister(true)}>
                 <img src={emailImage} alt="email_image" />
                 <span>{isLogin} with Email</span>
