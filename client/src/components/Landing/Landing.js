@@ -90,7 +90,7 @@ const Landing = (props) => {
             </Fragment>}
 
         {localStorage.isAuthenticated !== 'true'
-        &&
+        && active === 0 &&
         <Fragment>
           <button className="mobile__view--next" onClick={() => {
             props.history.push('/sign_up')
