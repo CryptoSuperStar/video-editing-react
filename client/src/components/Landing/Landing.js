@@ -150,7 +150,12 @@ const Landing = (props) => {
           <div className="screen__image">
             <img src={screen1} alt="screen1" />
           </div>
-          {renderMobileView("Transfer video and edit notes. Store Projects.", "Built for videographers, video editors, and content producers", 0)}
+          {renderMobileView("Transfer video and edit notes. Store Projects.", [
+                "Fastest Way to Transfer Video",
+                "Tag edit notes to specific times in the footage",
+                "Upload revisions and get feedback",
+                "Supports HD audio and video files"
+              ], 0)}
         </div>
       </section>
 
