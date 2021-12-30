@@ -4,7 +4,7 @@ import './LoginRegister.scss';
 import { Link, Redirect } from "react-router-dom";
 import FacebookLogin from 'react-facebook-login';
 import { GoogleLogin } from 'react-google-login';
-import AppleSignin from 'react-apple-signin-auth';
+// import AppleSignin from 'react-apple-signin-auth';
 import { REACT_APP_FACEBOOK_API, REACT_APP_GOOGLE_API } from "../../utils/misc";
 import emailImage from '../../assets/img/icon-simple-email-1@1x.png'
 import screen10 from '../../assets/img/screen10.png';
@@ -233,7 +233,7 @@ const LoginRegister = (props) => {
                 className="google__button"
               >{`${isLogin} with Google`}
               </GoogleLogin>
-              <AppleSignin
+              {/* <AppleSignin
                 authOptions={{
                   clientId: 'com.example.web',
                   scope: 'email name',
@@ -250,7 +250,7 @@ const LoginRegister = (props) => {
                 onError={(error) => console.error(error)}
                 skipScript={false}
                 iconProp={{ style: { margin: '10px 0 0 15px' } }}
-              />
+              /> */}
               <button className="email__button" onClick={() => setShowLoginRegister(true)}>
                 <img src={emailImage} alt="email_image" />
                 <span>{isLogin} with Email</span>
