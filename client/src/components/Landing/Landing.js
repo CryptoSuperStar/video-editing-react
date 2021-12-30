@@ -140,18 +140,13 @@ const Landing = (props) => {
           </div>
           {renderMobileView("Better than Dropbox and Google Drive for Video Creators", "Helping humans stay competitive with AI editors", 0)}
 
-          <div className="screen__text web__view">
-            <h3 className="screen__title">Built for Video Creators</h3>
-            <span></span>
-
-          </div>
         </div>
       </section>
 
 
       <section className="screen"
         style={{ backgroundColor: '#F7F7FBFF', width: width <= 575 && width + "px", marginLeft: width <= 575 && marginLeft + "px" }}>
-        <div className="screen__inner container__inner"
+        <div className="container__inner screen__inner"
           style={{ width: width <= 575 && width + "px" }}>
           <div className="screen__text web__view">
             <h3 className="screen__title">Transfer video and edit notes. Store Projects.</h3>
