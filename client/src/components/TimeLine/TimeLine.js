@@ -126,7 +126,7 @@ const TimeLine = props => {
   }
 
   return (
-    <div className="TimeLine" style={{ zIndex: localStorage.showTrimBox === 'true' && '110' }}>
+    <div className="TimeLine" style={{ zIndex: localStorage.showTrimBox === 'true' && '' }}>
       <div className="TimeLine__inner" ref={timeLineBox}>
         <div className="video-progress"
           style={{ left: shift + "%", zIndex: "11" }} />
