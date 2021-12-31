@@ -372,7 +372,7 @@ const UploadMedia = props => {
                 <span>Generate Video</span>
                 <span class="tip_icon">
                   ?
-                  <span class="info">
+                  <span class="info" style={{ marginLeft: "-275px", marginBbottom: "70px" }}>
                     This will send your project for editing. 
                     You will not be able to perform further edits to your project 
                     once you submit and your project is being processed.

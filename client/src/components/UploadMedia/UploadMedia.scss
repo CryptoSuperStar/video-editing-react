@@ -360,24 +360,22 @@
   }
 
   span.info {
-    background: #3b8590;
+    background: inherit;
     padding: 6px 8px;
     z-index: 99;
     min-width: 222px;
     text-align: center;
     border-radius: 4px;
-    box-shadow: 0 0 3px 0px #3b8590;
     margin-top: -15px;
     display: none;
+    white-space: normal;
     &:after {
       content: '';
       position: absolute;
       right: 0;
       top: 7px;
       display: block;
-      border-left: 5px solid #3b8590;
-      border-top: 5px solid #3b8590;
-      background: #3b8590;
+      background: inherit;
       z-index: -1;
       width: 10px;
       height: 10px;
