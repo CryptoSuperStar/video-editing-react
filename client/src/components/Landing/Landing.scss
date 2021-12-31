@@ -119,7 +119,7 @@
   }
   span {
     display: inline-block;
-    margin-top: 120px;
+    margin-top: 90px;
     letter-spacing: -0.66px;
     color: var(--shuttle-gray);
     font-family: "CircularStd-Book", sans-serif;
@@ -568,6 +568,8 @@
     justify-content: center;
     //height: 15px;
     z-index: 10;
+    background: #fff;
+    padding-bottom: 5px;
   }
   .screen__mobile--dot {
     width: 10px;
