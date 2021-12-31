@@ -64,7 +64,7 @@ const Landing = (props) => {
   const renderMobileView = (title, text, active) => (
     <div className="mobile__view">
       <div className="screen__mobile">
-        <div className="screen__mobile--dots">{[...Array(3)].map((dot, i) => (
+        <div className="screen__mobile--dots">{[...Array(4)].map((dot, i) => (
           <span
             key={i}
             className="screen__mobile--dot"
@@ -90,12 +90,12 @@ const Landing = (props) => {
             </Fragment>}
 
         {localStorage.isAuthenticated !== 'true'
-        &&
+        && active === 0 &&
         <Fragment>
           <button className="mobile__view--next" onClick={() => {
             props.history.push('/sign_up')
           }}>Get started</button>
-          <Link to="/sign_in" style={{marginBottom: active === 3 && "50px"}}>Login</Link>
+          <span style={{margin: "0"}}>Start your 7-day free trial now</span>
         </Fragment> }
         
       </div>
@@ -133,9 +133,20 @@ const Landing = (props) => {
         </div>
       </section>
 
+      <section className="screen" style={{ backgroundColor: '#fff', display: width >= 575 && "none" }}>
+        <div className="container__inner screen__inner" style={{ width: width <= 575 && width + "px" }}>
+          <div className="screen__image" style={{textAlign: "center"}}>
+            <img src={screen4} alt="screen2" style={{marginTop: "30px", height: "275px", width: "auto" }} />
+          </div>
+          {renderMobileView("Better than Dropbox and Google Drive for Video Creators", "Helping humans stay competitive with AI editors", 0)}
+
+        </div>
+      </section>
+
+
       <section className="screen"
         style={{ backgroundColor: '#F7F7FBFF', width: width <= 575 && width + "px", marginLeft: width <= 575 && marginLeft + "px" }}>
-        <div className="screen__inner container__inner"
+        <div className="container__inner screen__inner"
           style={{ width: width <= 575 && width + "px" }}>
           <div className="screen__text web__view">
             <h3 className="screen__title">Transfer video and edit notes. Store Projects.</h3>
@@ -150,7 +161,12 @@ const Landing = (props) => {
           <div className="screen__image">
             <img src={screen1} alt="screen1" />
           </div>
-          {renderMobileView("Transfer video and edit notes. Store Projects.", "Built for videographers, video editors, and content producers", 0)}
+          {renderMobileView("Transfer video and edit notes. Store Projects.", [
+                "Fastest Way to Transfer Video",
+                "Tag edit notes to specific times in the footage",
+                "Upload revisions and get feedback",
+                "Supports HD audio and video files"
+              ], 1)}
         </div>
       </section>
 
@@ -164,7 +180,7 @@ const Landing = (props) => {
                 "Less expensive than Google Drive and Dropbox",
                 "Fastest Upload time",
                 "Handle video format conversion"
-              ], 1)}
+              ], 2)}
           <div className="screen__text web__view">
             <h3 className="screen__title">Built for Video Creators</h3>
             <span></span>
@@ -199,7 +215,7 @@ const Landing = (props) => {
                 "Handle multiple client accounts for one editor",
                 "Track client revisions",
                 "Receive client notes tagged to specific times"
-              ], 2)}
+              ], 3)}
         </div>
       </section>
 
