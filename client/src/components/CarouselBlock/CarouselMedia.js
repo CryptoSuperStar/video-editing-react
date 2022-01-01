@@ -160,7 +160,7 @@ const CarouselMedia = (props) => {
               }
               }
             >
-              {props.editedProject._id === media._id && <snap ></snap>}
+              {props.editedProject._id === media._id && <span ></span>}
               <p>{media.mediaName}</p>
               {props.project.projectStatus === "Draft" && <span className="delete__video--btn" onClick={(e) =>
                 deleteVideoHandle(e, media._id)}>X</span>}
