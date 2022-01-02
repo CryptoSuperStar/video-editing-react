@@ -262,6 +262,10 @@ const UploadMedia = props => {
                 <span className="comments__total">
                   {comments && comments.length && comments.filter(comment => comment.text.length > 0).length}
                 </span>
+                <span class="tip_icon">
+                  ?
+                  <span class="info">Click here to view your edit notes</span>
+                </span>
               </div>
               <div className="share_indicator" onClick={(e) => { (["Complete", "Done"].includes(props.project?.projectStatus) && editedProject._id === currentMedia?._id) && toggleShareBlock(e) }}>
                 <Share />
@@ -343,18 +347,37 @@ const UploadMedia = props => {
                 style={{ backgroundColor: (isShowComment || !(editableStatus.includes(props.project?.projectStatus)) || (editedProject ? editedProject._id !== currentMedia._id : false)) && "gray" }}>
                 <Chat />
                 <span>Add Edit Notes</span>
+                <span class="tip_icon">
+                  ?
+                  <span class="info">
+                    Add your edit notes on the Time Line Bar,
+                    where you wish the item to appear.
+                  </span>
+                </span>
               </button>
               <button
                 onClick={(e) => { (props.project?.projectStatus === "Draft") && handleTrimVideo(e) }}
                 style={{ backgroundColor: (showTrimBox || !(props.project?.projectStatus === "Draft")) && "gray" }}>
                 <Trim />
                 <span>Trim</span>
+                <span class="tip_icon">
+                  ?
+                  <span class="info">Trim your video clips for best performance</span>
+                </span>
               </button>
               <button className="generate-video"
                 onClick={() => { (editableStatus.includes(props.project?.projectStatus) && (editedProject ? editedProject._id === currentMedia._id : true)) && setShowStyleModal(true) }}
                 style={{ backgroundColor: (!(editableStatus.includes(props.project?.projectStatus)) || (editedProject ? editedProject._id !== currentMedia._id : false)) && "gray" }}>
                 <img src={cam} alt="cam" />
                 <span>Generate Video</span>
+                <span class="tip_icon">
+                  ?
+                  <span class="info" style={{ marginLeft: "-275px", marginBbottom: "70px" }}>
+                    This will send your project for editing. 
+                    You will not be able to perform further edits to your project 
+                    once you submit and your project is being processed.
+                  </span>
+                </span>
               </button>
             </div>
 
