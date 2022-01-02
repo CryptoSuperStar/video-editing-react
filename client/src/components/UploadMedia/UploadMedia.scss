@@ -316,7 +316,7 @@
   box-sizing: border-box;
   position: absolute;
   top: -10px;
-  right: 0;
+  left: 0;
   background-color: #ff6464;
   border: 2px solid #b4c7c7;
   border-radius: 50%;
@@ -332,6 +332,50 @@
   font-weight: 500;
   letter-spacing: -0.38px;
   line-height: 12px;
+}
+
+
+.tip_icon {
+  box-sizing: border-box;
+  position: absolute;
+  top: -10px;
+  right: 0;
+  background-color: #ff6464;
+  box-shadow: 0 0 5px -1px #222;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-family: "CircularStd-Medium", "Helvetica Neue", sans-serif;
+  font-size: var(--font-size-xs);
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: -0.38px;
+  line-height: 12px;
+  font-size: 12px !important;
+  &:hover span.info { 
+    display: block; 
+  }
+
+  span.info {
+    background: inherit;
+    padding: 6px 8px;
+    z-index: 99;
+    min-width: 222px;
+    text-align: center;
+    border-radius: 4px;
+    margin-top: -15px;
+    display: none;
+    white-space: normal;
+    font-size: small;
+    padding: 5px;
+    line-height: 1.3;
+    box-shadow: 0 0 10px 0 indianred;
+    text-shadow: -1px 1px 0 #00000047;
+  }
 }
 
 .video__block--slider {
@@ -403,6 +447,7 @@
     }
   }
   button {
+    position: relative;
     margin: 0 15px;
     flex-basis: 20%;
     border: none;
@@ -561,10 +606,6 @@
     }
   }
   .generate__btns {
-    //flex-wrap: wrap;
-    span {
-      font-size: 16px !important;
-    }
     button {
       flex-grow: 1;
       margin: 5px;
