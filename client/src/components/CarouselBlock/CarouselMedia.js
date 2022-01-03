@@ -17,6 +17,7 @@ import {
 import { toast } from "react-toastify";
 import DraggableContentList from "../DraggableContent/DraggableContentList";
 import { mediaTypeVideo } from '../../utils/constant';
+import { FaDownload } from 'react-icons/fa'
 
 const CarouselMedia = (props) => {
 
@@ -59,9 +60,14 @@ const CarouselMedia = (props) => {
         if (data.status === 204) {
           props.dispatch(addMediaToProject(data.location, localStorage.currentProjectId, props.project.bucket, props.setLoadingVideo))
             .then((res) => {
+              let currentMedia = res.currentMedia;
+              localStorage.currentMedia = res.currentMedia._id;
+              props.setIsShowComment(false)
+              props.setShowShareModal(false);
+              props.setComments([]);
+              props.setErrorMessage(null);
               if (res.mediaType === mediaTypeVideo) {
                 props.setLoadingSlider(true);
-                let currentMedia = res.project.content[res.project.content.length - 1];
                 props.dispatch(takeScreenshots(
                   res.project._id,
                   props.project.bucket,
@@ -162,12 +168,15 @@ const CarouselMedia = (props) => {
             >
               {props.editedProject._id === media._id && <span ></span>}
               <p>{media.mediaName}</p>
+              {props.isEditor && <a href={`${media.mediaSrc}`} target="_blank" rel="noreferrer" download={`${media.mediaSrc}`} title='Download'> <span className="download__video--btn">
+                <FaDownload size={"30px"} />
+              </span></a>}
               {props.project.projectStatus === "Draft" && <span className="delete__video--btn" onClick={(e) =>
                 deleteVideoHandle(e, media._id)}>X</span>}
             </div>
           </>
         ))}
-        {props.project.projectStatus === "Draft" && <div className="mediaFiles__slider--inner" ref={sliderItemWidth}
+        {(props.project.projectStatus === "Draft" || (props.isEditor && props.project.projectStatus !== "Done")) && <div className="mediaFiles__slider--inner" ref={sliderItemWidth}
           onClick={() => {
             if ((localStorage.updateComment && localStorage.updateComment === 'true')
               || (localStorage.editedVideoTime && localStorage.editedVideoTime === 'true')) {
@@ -201,7 +210,7 @@ const CarouselMedia = (props) => {
           setMedia={props.setMedia}
           itemWidth={sliderItemWidth.current && sliderItemWidth.current.clientWidth}
         />}
-    </div>
+    </div >
   );
 }
 

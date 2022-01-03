@@ -20,10 +20,6 @@ const PayAccessModal = (props) => {
   return (
     <div className="modal__wrapper">
       <div className="pay__access--modal">
-        <div className="connectSocial__cross" onClick={() => { props.setShowPayAccess(false); history.push("/dashboard/upload") }}>
-          <Cancel fill="black" className="connectSocial__cross--cancel" />
-          <ArrowLeft className="connectSocial__cross--arrowLeft" />
-        </div>
         <h3>Access All Premium Features</h3>
         <div className="access__modal--image_block">
           <img src={accessImage} alt="access_image" />
@@ -47,13 +43,6 @@ const PayAccessModal = (props) => {
           props.setShowPayWall(true);
         }
         }>Go Premium Now
-        </button>
-        <div>Or</div>
-        <button className="go__pro" onClick={() => {
-          props.setShowPayAccess(false);
-          props.setShowPromoCodeWall(true)
-        }
-        }>Enter a Promo Code
         </button>
       </div>
     </div>

@@ -53,7 +53,7 @@ const projectReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         project: {
-          ...state.project,
+          // ...state.project,
           ...payload.project
         }
       }
@@ -65,7 +65,7 @@ const projectReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         project: {
-          ...state.project,
+          // ...state.project,
           ...payload.project
         }
       }

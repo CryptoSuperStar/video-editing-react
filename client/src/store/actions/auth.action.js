@@ -12,6 +12,7 @@ export const authUser = () => async dispatch => {
         type: 'AUTH_USER',
         payload: res.data
       })
+      return res.data
     } catch (e) {
       toast.error('Auth error.')
       dispatch({
@@ -29,14 +30,15 @@ export const registerUserSSO = (data, func) => async dispatch => {
       payload: res.data
     })
     toast.success('User was created')
-    func(true);
+    return true
   } catch (e) {
+    func(false);
     console.error('Register', e.response.data.msg)
     toast.error(e.response.data.msg)
-    func(false);
-    dispatch({
-      type: "REGISTER_USER_ERROR"
-    })
+    // dispatch({
+    //   type: "REGISTER_USER_ERROR"
+    // })
+    return false
   }
 }
 
@@ -48,7 +50,7 @@ export const loginUserSSO = (data, history) => async dispatch => {
       payload: res.data
     })
     toast.success("You're logged in");
-    history.push('/dashboard/upload')
+    // history.push('/dashboard/upload')
   } catch (e) {
     console.error('auth_action', e)
     toast.error("Log in error");
@@ -67,7 +69,8 @@ export const loginRegisterGoogle = (idToken, func, action) => async dispatch => 
       payload: res.data
     });
     toast.success(`Google ${action} success`);
-    func(true)
+    console.log(res.data)
+    res.data.registering && func(true)
   } catch (error) {
     dispatch({
       type: 'LOGIN_REGISTER_GOOGLE_ERROR'
@@ -85,7 +88,7 @@ export const loginRegisterFacebook = (userId, accessToken, func, action) => asyn
       payload: res.data
     });
     toast.success(`Facebook ${action} success`);
-    func(true)
+    res.data.registering && func(true)
   } catch (error) {
     dispatch({
       type: 'LOGIN_REGISTER_FACEBOOK_ERROR'
@@ -104,7 +107,7 @@ export const loginRegisterApple = (response, func, action) => async dispatch => 
       payload: res.data
     });
     toast.success(`Apple ${action} success`);
-    func(true)
+    res.data.registering && func(true)
   } catch (error) {
     dispatch({
       type: 'LOGIN_REGISTER_APPLE_ERROR'
@@ -114,15 +117,17 @@ export const loginRegisterApple = (response, func, action) => async dispatch => 
   }
 }
 
-export const updateUser = (id, data, func) => async dispatch => {
+export const updateUser = (id, data, func, action) => async dispatch => {
   try {
-    const res = await axios.post(`${REACT_APP_API_URL}/update_user`, { id, data });
+    const res = await axios.post(`${REACT_APP_API_URL}/update_user`, { id, data, action });
     dispatch({
       type: 'UPDATE_USER',
       payload: res.data
     });
-    toast.success(`Your Profile details have been updated`);
-    func(false)
+    if (action !== "Sign Up") {
+      toast.success(`Your profile details have been updated`);
+      func(false)
+    }
   } catch (e) {
     console.log(e);
     toast.error(e.response.data.msg)
@@ -157,7 +162,7 @@ export const resetPassword = (oldPass, newPass, func) => async dispatch => {
     try {
       const res = await axios.post(`${REACT_APP_API_URL}/resetPassword`, { oldPass, newPass });
       localStorage.token = res.data;
-      toast.success('Your Profile details have been updated')
+      toast.success('Your profile details have been updated')
       func(false);
     } catch (e) {
       console.log(e)
@@ -168,7 +173,7 @@ export const resetPassword = (oldPass, newPass, func) => async dispatch => {
 export const confirmPromoCode = (promoCode, func) => async dispatch => {
   try {
     const res = await axios.post(`${REACT_APP_API_URL}/confirm-promo-code`, { promoCode });
-    if (res.data.success === true) {
+    if (res.data?.success === true) {
       dispatch({
         type: 'UPDATE_USER',
         payload: res.data

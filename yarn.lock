@@ -890,6 +890,11 @@ gcp-metadata@^4.2.0:
     gaxios "^4.0.0"
     json-bigint "^1.0.0"
 
+generate-unique-id@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/generate-unique-id/-/generate-unique-id-2.0.1.tgz#144af6c339b1b3226d44568cdd8732c39cbd520d"
+  integrity sha512-8b74nVk9KOj3Go2NofqNhC+3VDJ/121oBa72tXnYVwFN785rVR4v2ccj3Hwcy4ZErIz+TJ4Rn1NZHh/JW/12qQ==
+
 get-caller-file@^2.0.1, get-caller-file@^2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-2.0.5.tgz#4f94412a82db32f36e3b0b9741f8a97feb031f7e"

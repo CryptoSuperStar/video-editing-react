@@ -17,16 +17,35 @@ const Projects = (props) => {
 
   const [showPayAccess, setShowPayAccess] = useState(false);
   const [showPayWall, setShowPayWall] = useState(false);
-  const [showPromoCodeWall, setShowPromoCodeWall] = useState(false);
   const [myProjects, setMyProjects] = useState([]);
   const [loading, setLoading] = useState(true);
-  // useEffect(() => {
-  // localStorage.removeItem('duration');
-  // localStorage.removeItem('currentProjectId');
-  // localStorage.removeItem('currentMedia');
-  // localStorage.removeItem('comments');
-  // }, [])
+  const projectFun = (project) => {
+    return <div className="project__item" key={project._id}
+      onClick={() => {
+        localStorage.currentProjectId = project._id;
+        localStorage.removeItem('currentMedia');
+        localStorage.removeItem('comments');
+        if (project._id !== props.project._id) {
+          localStorage.removeItem("editedVideoComments");
+        }
+        localStorage.removeItem('currentPublishedMedia');
+        localStorage.removeItem('duration');
+        props.history.push(`/dashboard/upload`)
+      }}>
+      {props.user.userRole === "customer" && <span className="delete__video--btn" onClick={e => deleteProjectHandle(e, project._id, project.bucket)}>X</span>}
+      <div className="project__item--image"
+        style={{ background: project?.content[0]?.screens.length > 1 ? `url(${project?.content[0]?.screens[1]?.screenSrc}) no-repeat center center` : 'black' }}>
+        <div className="project__item--theme">Theme {project.themeName}</div>
+      </div>
+      <span className="project__item--name"> {project.projectName}</span>
+      {project.projectStatus
+        && <strong className="project__item--publish"
+          style={{ color: (props.user.userRole === "editor" && project.projectStatus === "In Revision") && "red" }}
+        >{project.projectStatus}</strong>
 
+      }
+    </div>
+  }
   useEffect(() => {
     if (props.user.userName) {
       (!props.user.payments.length && !props.user?.isPromoCodeVerified) &&
@@ -62,42 +81,31 @@ const Projects = (props) => {
   </div>
   return (
     <div className="projects">
-      {showPayAccess && <PayAccessModal setShowPayAccess={setShowPayAccess} setShowPayWall={setShowPayWall} setShowPromoCodeWall={setShowPromoCodeWall} />}
-      {showPayWall &&
-        <Elements stripe={stripePromise}>
-          <PayWallModal setShowPayWall={setShowPayWall} setShowPayAccess={setShowPayAccess} user={props.user} />
-        </Elements>}
-      {
-        showPromoCodeWall && <PromoCodeModal setShowPayAccess={setShowPayAccess} setShowPromoCodeWall={setShowPromoCodeWall} user={props.user} />
-      }
-      <h3>Your Projects</h3>
-      <div className="projects__block">
-        {myProjects.map((project, i) => (
-          <div className="project__item" key={project._id}
-            onClick={() => {
-              localStorage.currentProjectId = project._id;
-              localStorage.removeItem('currentMedia');
-              localStorage.removeItem('comments');
-              if (project._id !== props.project._id) {
-                localStorage.removeItem("editedVideoComments");
-              }
-              localStorage.removeItem('currentPublishedMedia');
-              localStorage.removeItem('duration');
-              props.history.push(`/dashboard/upload`)
-            }}>
-            <span className="delete__video--btn" onClick={e => deleteProjectHandle(e, project._id, project.bucket)}>X</span>
-            <div className="project__item--image"
-              style={{ background: project.content[0].screens.length > 1 ? `url(${project.content[0].screens[1].screenSrc}) no-repeat center center` : 'black' }}>
-              <div className="project__item--theme">Theme {project.themeName}</div>
-            </div>
-            <span className="project__item--name"> {project.projectName}</span>
-            {project.projectStatus
-              && <strong className="project__item--publish">{project.projectStatus}</strong>
 
-            }
+      {
+        props.user.userRole === "editor" ? myProjects.map((customer) =>
+          <>
+            <h3>{customer.userName}</h3>
+            <div className="projects__block">
+              {customer?.project.length ?
+                (customer?.project.map((project, i) => (
+                  projectFun(project)
+                ))) : <div className='no_project'> No Projects</div>
+              }
+            </div>
+          </>
+        ) : <>
+          <h3>Your Projects</h3>
+          <div className="projects__block">
+            {myProjects.map((project, i) => (
+              projectFun(project)
+            ))}
           </div>
-        ))}
-      </div>
+        </>
+
+      }
+
+
     </div>
   );
 };

@@ -56,6 +56,7 @@ const projectSchema = new mongoose.Schema({
     default: "Draft",
     trim: true
   },
+  tempEditedMedia: ContentSchema,
   editedProjects: [ContentSchema],
   projectRevision: {
     type: Number,
