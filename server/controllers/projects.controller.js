@@ -5,6 +5,7 @@ const { unlink } = require('fs/promises');
 const FFmpeg = require('fluent-ffmpeg');
 const { v4: uuidv4 } = require('uuid');
 const moment = require('moment');
+const { User } = require('../models/user.model');
 require("moment-duration-format");
 const MEDIA_SRC = 'client/build';
 // const MEDIA_SRC = 'client/public';
@@ -118,13 +119,17 @@ exports.takeScreenShotController = async (req, res) => {
               time: timeInFormat,
             })
           })
+          let user;
+          (async () => {
+            user = await User.findById(req.userId)
+          })();
 
           Promise.all(screens).then(() => {
             Project.findById({ _id: id }, (err, project) => {
 
               if (err) return res.status(400).send({ msg: `Database Error ${err.message}` });
               const editedProject = project.editedProjects.length > 0 ? project.editedProjects.find(item => item.revision === project.projectRevision) : false
-              if (project.projectStatus === "Complete" && editedProject && project.projectRevision === 0) {
+              if ((project.projectStatus === "Complete" && editedProject)) {
                 let currentEditedProjects = project.editedProjects.map(item => {
                   return item.revision === project.projectRevision ? {
                     _id: item._id,
@@ -140,6 +145,24 @@ exports.takeScreenShotController = async (req, res) => {
                   } : item
                 })
                 Project.findByIdAndUpdate({ _id: id }, { $set: { editedProjects: currentEditedProjects } }, { new: true },
+                  (err, data) => {
+                    if (err) return res.status(400).send({ msg: `Database Error ${err}` });
+                    clearTemp(`${MEDIA_SRC}/temp/${userId}/${bucket}`);
+                    return res.status(200).json({ project: data })
+                  })
+              } else if (user.userRole === "editor" && project.tempEditedMedia?.mediaSrc) {
+                let currentContent = {
+                  _id: project.tempEditedMedia._id,
+                  mediaName: project.tempEditedMedia.mediaName,
+                  mediaSrc: project.tempEditedMedia.mediaSrc,
+                  mediaType: project.tempEditedMedia.mediaType,
+                  duration: duration,
+                  endTime: duration,
+                  screens: newScreensArray,
+                  isSupported: project.tempEditedMedia.isSupported,
+                  isImage: project.tempEditedMedia.isImage
+                }
+                Project.findByIdAndUpdate({ _id: id }, { $set: { tempEditedMedia: currentContent } }, { new: true },
                   (err, data) => {
                     if (err) return res.status(400).send({ msg: `Database Error ${err}` });
                     clearTemp(`${MEDIA_SRC}/temp/${userId}/${bucket}`);
@@ -311,25 +334,49 @@ exports.cutTempProjectController = async (req, res) => {
 
 exports.createProjectController = async (req, res) => {
   const { project } = req.body;
+  const user = await User.findById(req.userId);
   try {
+    let currentEditedProjects = [];
     let status;
     let projectRevision;
+    const updateProject = () => {
+      let newerProject = {
+        ...project,
+        themeName: project.styleInspiration.platform,
+        isPublished: true,
+        projectStatus: status,
+        projectRevision: projectRevision
+      };
+      Project.findByIdAndUpdate(project._id, { $set: newerProject }, { new: true },
+        (err, prj) => {
+          if (err) return res.status(400).send({ msg: err });
+          return res.status(200).json({})
+        })
+    }
     await Project.findById(project._id, (err, oldProject) => {
-      status = oldProject?.projectStatus === "Draft" ? "In Progress" : "In Revision";
-      projectRevision = oldProject?.projectStatus === "Draft" ? 0 : oldProject?.projectRevision + 1;
+      if (user.userRole === 'editor') {
+        if (project.tempEditedMedia?.mediaSrc) {
+          status = "Complete";
+          projectRevision = oldProject?.projectRevision;
+          if (project?.editedProjects.length > 0) {
+            currentEditedProjects = project.editedProjects.map(item => {
+              return item.revision === project.projectRevision ? { ...project.tempEditedMedia, comments: item.comments, revision: item.revision } : item
+            })
+          } else { currentEditedProjects = [{ ...project.tempEditedMedia, revision: 0 }] };
+          project.editedProjects = currentEditedProjects;
+          project.tempEditedMedia = {}
+          updateProject();
+        }
+        else {
+          return res.status(400).send({ msg: "You haven't uploaded edited media yet" })
+        }
+      } else {
+        status = oldProject?.projectStatus === "Draft" ? "In Progress" : "In Revision";
+        projectRevision = oldProject?.projectStatus === "Draft" ? 0 : oldProject?.projectRevision + 1;
+        updateProject();
+      }
     })
-    let newerProject = {
-      ...project,
-      themeName: project.styleInspiration.platform,
-      isPublished: true,
-      projectStatus: status,
-      projectRevision: projectRevision
-    };
-    Project.findByIdAndUpdate(project._id, { $set: newerProject }, { new: true },
-      (err, prj) => {
-        if (err) return res.status(400).send({ msg: err });
-        return res.status(200).json({})
-      })
+
 
   } catch (e) {
     console.log(e);
@@ -347,14 +394,39 @@ exports.updateProject = async (req, res) => {
 }
 
 exports.getProjects = async (req, res) => {
-  try {
-    await Project.find({ author: req.userId }, (err, projects) => {
-      if (err) return res.status(400).send({ msg: err.status });
+  const user = await User.findById(req.userId);
+  if (user.userRole === "editor") {
+    const customer = await User.find({ promocode: user.promocode, userRole: 'customer' }, '_id userName');
+
+    try {
+      const projects = await Promise.all(customer.map(async item => {
+        const project = await Project.find({ author: item._id, projectStatus: { $in: ["In Progress", "In Revision", "Complete", "Done"] } });
+        return {
+          _id: item._id,
+          userName: item.userName,
+          project: project
+        }
+      }))
       return res.status(200).json({ projects });
-    })
-  } catch (e) {
-    console.log(e);
-    return res.status(500).send({ msg: e.message })
+      // await Project.find({ author: { $in: customerId } }, (err, projects) => {
+      //   if (err) return res.status(400).send({ msg: err.status });
+      //   return res.status(200).json({ projects });
+      // })
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send({ msg: e.message })
+    }
+  } else {
+
+    try {
+      await Project.find({ author: req.userId }, (err, projects) => {
+        if (err) return res.status(400).send({ msg: err.status });
+        return res.status(200).json({ projects });
+      })
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send({ msg: e.message })
+    }
   }
 }
 
@@ -362,6 +434,10 @@ exports.addMediaToProject = async (req, res) => {
   let { projectId, link } = req.body;
   const supported = req.supported;
   const isImage = req.isImage;
+  const user = await User.findById(req.userId);
+  const project = await Project.findById({ _id: projectId });
+  console.log(project);
+
   try {
     let name = link.split('/');
     name = name[name.length - 1];
@@ -374,13 +450,14 @@ exports.addMediaToProject = async (req, res) => {
       endTime: req.preDuration,
       isSupported: supported
     }
-    Project.findByIdAndUpdate(projectId, { $push: { content: newContent } }, { new: true },
+
+    Project.findByIdAndUpdate(projectId, user.userRole === "editor" ? { $set: { tempEditedMedia: newContent } } : { $push: { content: newContent } }, { new: true },
       (err, data) => {
         if (err) {
           console.log(err);
           return res.status(400).send({ msg: err });
         }
-        let currentMedia = data.content[data.content.length - 1]._id;
+        let currentMedia = user.userRole === "editor" ? data.tempEditedMedia : data.content[data.content.length - 1];
         return res.status(200).json({ project: data, currentMedia: currentMedia, isImage, mediaType: req.mediaType, })
       })
   } catch (e) {

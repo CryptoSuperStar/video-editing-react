@@ -108,7 +108,7 @@
   }
 }
 
-.delete__video--btn {
+.delete__video--btn ,.download__video--btn{
   position: absolute;
   right: 25px;
   top: 5px;
@@ -122,6 +122,11 @@
   align-items: center;
   justify-content: center;
   font-size: 17px;
+}
+.download__video--btn {
+  right: 5px;
+  top: 5px;
+  background-color: var(--smalt-blue);
 }
 
 @media all and (max-width: 860px){
@@ -161,13 +166,15 @@
       margin-top: auto;
       padding: 5px 0;
     }
-    .delete__video--btn {
+ 
+    .delete__video--btn ,.download__video--btn{
       width: 25px;
       height: 25px;
       right: 12px;
       top: 5px;
       margin: 0 !important;
     }
+  
   }
   .mediaFiles__slider--inner {
     margin: 0 8px !important;

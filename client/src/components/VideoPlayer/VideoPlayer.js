@@ -58,7 +58,7 @@ const VideoPlayer = (props) => {
     if (localStorage.comments) {
       let newComments = JSON.parse(localStorage.comments);
       newCurrentMedia = newCurrentMedia.screens.map((item, i) => {
-        return newComments[i].text.length > 0 ? { ...item, comment: newComments[i] } : item
+        return newComments[i]?.text.length > 0 ? { ...item, comment: newComments[i] } : item
       })
       newContent[index].screens = newCurrentMedia;
       props.setComments([]);

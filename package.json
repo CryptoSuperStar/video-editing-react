@@ -29,6 +29,7 @@
     "ffmpeg": "^0.0.4",
     "fluent-ffmpeg": "^2.1.2",
     "fs": "^0.0.1-security",
+    "generate-unique-id": "^2.0.1",
     "google-auth-library": "^7.4.1",
     "googleapis": "^82.0.0",
     "gravatar": "^1.8.1",

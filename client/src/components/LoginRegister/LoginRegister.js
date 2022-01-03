@@ -63,7 +63,7 @@ const LoginRegister = (props) => {
 
     }
   }
-  
+
   const isValidEmail = (email) => {
     if ((email.trim()).toLocaleLowerCase() === (confirmEmail.trim()).toLocaleLowerCase()) {
       // Regex to check valid email.
@@ -110,24 +110,24 @@ const LoginRegister = (props) => {
 
 
   const onFailedTwitter = (error) => {
-    setShowConnectSocial(false);
+    setShowStepTwo(false);
     console.error(error);
   }
 
   const responseFacebook = async response => {
     console.log(response);
-    await props.dispatch(loginRegisterFacebook(response.userID, response.accessToken, setShowConnectSocial, isLogin));
-    await props.dispatch(authUser());
+    await props.dispatch(loginRegisterFacebook(response.userID, response.accessToken, setShowStepTwo, isLogin));
+    !showStepTwo && await props.dispatch(authUser());
   }
 
   const responseGoogle = async response => {
-    await props.dispatch(loginRegisterGoogle(response.tokenId, setShowConnectSocial, isLogin));
-    await props.dispatch(authUser());
+    await props.dispatch(loginRegisterGoogle(response.tokenId, setShowStepTwo, isLogin));
+    !showStepTwo && await props.dispatch(authUser());
   }
 
   const responseApple = async response => {
-    await props.dispatch(loginRegisterApple(response, setShowConnectSocial, isLogin));
-    await props.dispatch(authUser());
+    await props.dispatch(loginRegisterApple(response, setShowStepTwo, isLogin));
+    !showStepTwo && await props.dispatch(authUser());
   }
   const validation = () => {
     if (isValidUserName(userName) && isValidEmail(email) && isValidPassword(password)) {
@@ -136,40 +136,50 @@ const LoginRegister = (props) => {
       return false
     }
   }
+  const signUp = async (userRole) => {
+    if (showLoginRegister) {
+      const userCreated = await props.dispatch(registerUserSSO({ firstName, lastName, userName, organization, userRole: userRole, email: email.toLocaleLowerCase(), password }, setShowStepTwo));
+      const data = userCreated && await props.dispatch(authUser());
+      data?.user?.userRole && props.history.push('/dashboard/projects');
+    } else if (!showLoginRegister) {
+      const data = await props.dispatch(authUser());
+      await props.dispatch(updateUser(data.user._id, { ...data.user, userRole: userRole }, setShowStepTwo, isLogin))
+      data?.user?.userRole && props.history.push('/dashboard/upload');
+    }
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isLogin === "Sign In") {
-      await props.dispatch(loginUserSSO({ email:email.toLocaleLowerCase(), password }, props.history));
+      await props.dispatch(loginUserSSO({ email: email.toLocaleLowerCase(), password }, props.history));
       await props.dispatch(authUser());
     }
     if (isLogin === "Sign Up" && validation()) {
-      await props.dispatch(registerUserSSO({ firstName, lastName, userName, organization, email:email.toLocaleLowerCase(), password }, setShowConnectSocial));
-      await props.dispatch(authUser());
+      setShowStepTwo(true)
     }
   }
 
   const loginRegisterForm = (
     <form className="LoginRegister__form" onSubmit={handleSubmit}>
       {isLogin === 'Sign Up' && <>
-      <div className='formInputContainer'>
-        <input type="text" value={firstName} required minLength="2" placeholder="First Name"
-          onChange={(e) =>{setFirstName(e.target.value)}} />      </div>
-      <div className='formInputContainer'>
-        <input type="text" value={lastName} required minLength="2" placeholder="Last Name"
-          onChange={(e) =>{setLastName(e.target.value)}} />      </div>
-      <div className='formInputContainer'>
-        <input type="text" value={userName} required minLength="5" placeholder="Username"
-          onChange={(e) =>{setNotValidUserName(false); setUserName(e.target.value)}} />
+        <div className='formInputContainer'>
+          <input type="text" value={firstName} required minLength="2" placeholder="First Name"
+            onChange={(e) => { setFirstName(e.target.value) }} />      </div>
+        <div className='formInputContainer'>
+          <input type="text" value={lastName} required minLength="2" placeholder="Last Name"
+            onChange={(e) => { setLastName(e.target.value) }} />      </div>
+        <div className='formInputContainer'>
+          <input type="text" value={userName} required minLength="5" placeholder="Username"
+            onChange={(e) => { setNotValidUserName(false); setUserName(e.target.value) }} />
           {notValidUserName && <div className="inlineErrorMsg">A valid username is required, spaces and special symbols are not allowed</div>}
-          </div>
+        </div>
         <input type="text" value={organization} placeholder="Organization (Optional)"
           onChange={(e) => setOrganization(e.target.value)} />
       </>}
       <div className='formInputContainer'>
-      <input type="email" value={email} required minLength="5" placeholder="Email"
-        onChange={(e) => { setNotValidEmail(false); setEmailNotEquals(false); setEmail(e.target.value) }} />
+        <input type="email" value={email} required minLength="5" placeholder="Email"
+          onChange={(e) => { setNotValidEmail(false); setEmailNotEquals(false); setEmail(e.target.value) }} />
         {notValidFEmail && <div className="inlineErrorMsg">A valid email address is required to complete registration</div>}
-        </div>
+      </div>
       {isLogin === 'Sign Up' && <div className='formInputContainer'> <input type="confirmEmail" value={confirmEmail} required minLength="5" placeholder="Confirm Email"
         onChange={(e) => { setEmailNotEquals(false); setConfirmEmail(e.target.value) }} />
         {emailNotEquals && <div className="inlineErrorMsg">Emails did not match</div>}
@@ -201,11 +211,25 @@ const LoginRegister = (props) => {
       {isLogin === 'Sign In' && <Link to="">Forgot password?</Link>}
     </form>
   )
-  if (localStorage.isAuthenticated === 'true') return <Redirect to="/dashboard/upload" />
+  if (localStorage.isAuthenticated === 'true' && !showStepTwo) return <Redirect to={props.user.userRole === "editor" ? "/dashboard/projects" : "/dashboard/upload"} />
   return (
     <Fragment>
       {/* {showConnectSocial && <ConnectSocialModal />} */}
-      <div className="LoginRegister container">
+      {showStepTwo ? <div className=" container">
+        <div className="registerStep2">
+          <div >CHOOSE AN OPTION :</div>
+          <button onClick={() => signUp("editor")}>
+            Are you a video editor?
+          </button>
+          <div>OR</div>
+          <button onClick={() => signUp('customer')}>
+            Are you Uploading video to your editor?
+          </button>
+        </div>
+        <button className='backButton' onClick={() => setShowStepTwo(false)}>
+          Go Back
+        </button>
+      </div> : <div className="LoginRegister container">
         <div className="LoginRegister__text">
           {isLogin === "Sign Up" && <span className="steps mobile__view">Step 1 of 2</span>}
           <h3 style={{ marginTop: isLogin === 'Sign up' && '0' }}>
@@ -268,7 +292,7 @@ const LoginRegister = (props) => {
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
             do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
         </div>
-      </div>
+      </div>}
     </Fragment>
   );
 }

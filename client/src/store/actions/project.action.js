@@ -98,7 +98,7 @@ export const cutTempProject = (data, setLoading, setLoadingSlider) => async disp
   }
 };
 
-export const createProjectMedia = (project, history, setLoading) => async dispatch => {
+export const createProjectMedia = (project, history, setLoading,userRole) => async dispatch => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
     let config = {
@@ -111,7 +111,7 @@ export const createProjectMedia = (project, history, setLoading) => async dispat
       dispatch({
         type: "CREATE_FULL_PROJECT"
       })
-      toast.success(project.projectStatus === "Complete" ? "Your project is submitted for revision" : "Project was created");
+      toast.success(userRole ==="editor"?"Your project has been submitted successfully": project.projectStatus === "Complete" ? "Your project has been submitted for revision" : "Project has been created successfully");
       setLoading(false)
       localStorage.removeItem('duration');
       localStorage.removeItem('comments');
@@ -126,6 +126,7 @@ export const createProjectMedia = (project, history, setLoading) => async dispat
         type: 'CREATE_FULL_PROJECT_ERROR'
       })
       setLoading(false);
+      toast.error(e.response.data.msg)
       console.log(e.message);
     }
   }

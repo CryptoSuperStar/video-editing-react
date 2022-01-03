@@ -8,7 +8,7 @@ const CommentBlock = ({ arrComments }) => {
     <div className="CommentBlock">
       <h5>Pinned Notes</h5>
       {arrComments.map((item, i) => {
-        if (item.text.length > 0)
+        if (item?.text.length > 0)
           return (
             <div className="comment__item" key={i}>
               <div className="comment_time">{item.time}</div>
