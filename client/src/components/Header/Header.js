@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { Link, withRouter } from "react-router-dom";
+import { Link, withRouter, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import MoonLoader from "react-spinners/MoonLoader";
 import './Header.scss';
@@ -8,13 +8,32 @@ import { ReactComponent as HamburgerMenu } from "../../assets/img/icons8-menu.sv
 import { ReactComponent as Cancel } from "../../assets/img/close-2.svg";
 import { ReactComponent as Bell } from "../../assets/img/bell_icon.svg";
 import avatar from "../../assets/img/bitmap-10@1x.png"
-
+import PayAccessModal from "../Modals/PayAccessModal";
+import PayWallModal from "../Modals/PayWallModal";
+import PromoCodeModal from '../Modals/PromoCodeModal';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import { REACT_APP_STRIPE_API } from "../../utils/misc";
+const stripePromise = loadStripe(REACT_APP_STRIPE_API);
 const Header = (props) => {
-
+  const history = useHistory();
   const [isDashboard, setIsDashboard] = useState(false);
   const [loading, setLoading] = useState(true);
   const [fullName, setFullName] = useState(null);
-
+  const [showPayAccess, setShowPayAccess] = useState(false);
+  const [showPayWall, setShowPayWall] = useState(false);
+  const [showPromoCodeWall, setShowPromoCodeWall] = useState(false);
+  useEffect(() => {
+    if (props.user.userName) {
+      (history.location.pathname.includes('dashboard')) &&
+        setTimeout(() => {
+          if (props.user?.userRole === "editor" && !props.user.payments.length) {
+            setShowPayAccess(true)
+          }
+          else if (props.user?.userRole === "customer" && !props.user?.isPromoCodeVerified) { setShowPromoCodeWall(true) }
+        }, 500)
+    }
+  }, [history?.location?.pathname, props.user?.isPromoCodeVerified, props.user?.payments?.length, props.user.userName, props.user?.userRole]);
   useEffect(() => {
     if (localStorage.isAuthenticated === 'true' && localStorage.token) {
       setIsDashboard(true);
@@ -36,7 +55,7 @@ const Header = (props) => {
   const dashboardMenu = (
     <div className="dashboard__menu--block">
       {loading ? <MoonLoader /> :
-        <Fragment>          
+        <Fragment>
           <Bell />
           <div className="menu__user">
             <img src={props.user ? props.user.avatar : avatar} alt="avatar" />
@@ -56,6 +75,16 @@ const Header = (props) => {
 
   return (
     <div className="Header__block container" style={{ zIndex: localStorage.showDemoLayer === 'true' && '100' }}>
+      {isDashboard && <>
+        {showPayAccess && <PayAccessModal setShowPayAccess={setShowPayAccess} setShowPayWall={setShowPayWall} setShowPromoCodeWall={setShowPromoCodeWall} />}
+        {showPayWall &&
+          <Elements stripe={stripePromise}>
+            <PayWallModal setShowPayWall={setShowPayWall} setShowPayAccess={setShowPayAccess} user={props.user} />
+          </Elements>}
+        {
+          showPromoCodeWall && <PromoCodeModal setShowPayAccess={setShowPayAccess} setShowPromoCodeWall={setShowPromoCodeWall} user={props.user} />
+        }
+      </>}
       <Link className="logo__block" to="/">
         <img src={logo} alt="logo" />
       </Link>

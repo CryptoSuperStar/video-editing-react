@@ -15,7 +15,6 @@ const TimeLine = props => {
   const [rightArrowPad, setRightArrowPad] = useState(0);
   const [shift, setShift] = useState(0);
   const [audioTimeStamp, setAudioTimeStamp] = useState([])
-
   useEffect(() => {
     if (props.currentMedia.mediaType === mediaTypeAudio) {
       let quantity = '';
@@ -189,7 +188,7 @@ const TimeLine = props => {
               placeholder="Add Your Comment"
               value={props.activeComment}
               defaultValue={props.editCommentValue && props.activeIndex ? props.comments?.[props.activeIndex].text : ""}
-              onChange={e => { (props.projectStatus === "Draft" || props.projectStatus === "Complete") && props.handleCommentChange(e) }}
+              onChange={e => { (props.projectStatus === "Draft" || props.projectStatus === "Complete") && !props.isEditor && props.handleCommentChange(e) }}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   props.handleCommentEnter()

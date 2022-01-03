@@ -12,9 +12,13 @@
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
+  margin-bottom:10%;
   //justify-content: space-between;
   .delete__video--btn {
     right: 10px;
+  }
+  .no_project{
+    padding: 50px;
   }
   .project__item {
     box-sizing: border-box;

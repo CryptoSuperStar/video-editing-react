@@ -6,12 +6,23 @@ const request = require('request');
 const { OAuth2Client } = require('google-auth-library');
 const fetch = require('node-fetch');
 const appleSignin = require("apple-signin-auth");
+const generateUniqueId = require('generate-unique-id');
 
 const { User } = require('../models/user.model.js');
 const { use } = require("express/lib/router");
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT);
-
+const generatePromoCode = async () => {
+  const promo = generateUniqueId({
+    length: 3,
+    useNumbers: false
+  }) + generateUniqueId({
+    length: 3,
+    useLetters: false
+  });;
+  let editor = await User.findOne({ promocode: promo, userRole: "editor" });
+  return editor ? generatePromoCode() : promo;
+}
 let createToken = function (auth) {
   return jwt.sign({ id: auth.id }, process.env.JWT_SECRET,
     {
@@ -30,7 +41,7 @@ let sendToken = function (req, res) {
 
 exports.registerController = (async (req, res) => {
 
-  const { firstName, lastName, userName, organization, email, password } = req.body;
+  const { firstName, lastName, userName, organization, userRole, email, password } = req.body;
 
   try {
     // See if userName exists
@@ -54,9 +65,15 @@ exports.registerController = (async (req, res) => {
       lastName,
       userName,
       organization,
+      userRole,
       avatar,
       registeredWith: "SSO"
     });
+    // generate promo code
+    if (userRole === "editor") {
+      const promo = await generatePromoCode();
+      user.promocode = promo;
+    }
     // Encrypt password
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt);
@@ -325,7 +342,13 @@ exports.appleController = async (req, res) => {
 }
 
 exports.updateUserController = async (req, res) => {
-  const { id, data } = req.body;
+  const { id, data, action } = req.body;
+  if (action === "Sign Up") {
+    if (data.userRole === "editor") {
+      const promo = await generatePromoCode();
+      data.promocode = promo;
+    }
+  }
   try {
     // See if userName exists
     const oldUser = await User.findById(id);

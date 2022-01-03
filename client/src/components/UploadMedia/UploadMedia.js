@@ -8,6 +8,7 @@ import "./UploadMedia.scss";
 import StyleInspirationModal from "../Modals/StyleInspirationModal";
 import cam from "../../assets/img/icon-awesome-video-1@1x.png";
 import { ReactComponent as Delete } from "../../assets/img/delete.svg";
+import { ReactComponent as Cancel } from "../../assets/img/close-2.svg";
 import { ReactComponent as Chat } from "../../assets/img/chat.svg";
 import { ReactComponent as Share } from "../../assets/img/share.svg";
 import { clearTempProject, takeScreenshots, updateContent, getProject } from "../../store/actions/project.action";
@@ -19,7 +20,9 @@ import VideoPlayer from "../VideoPlayer/VideoPlayer";
 import CarouselMedia from "../CarouselBlock/CarouselMedia";
 import { ReactComponent as Trim } from "../../assets/img/trim.svg";
 import DemoLayerUpload from "../DemoLayer/DemoLayerUpload";
-
+import { createProjectMedia } from '../../store/actions/project.action';
+import { useHistory } from "react-router-dom";
+import { mediaTypeVideo } from "../../utils/constant";
 momentDurationFormatSetup(moment);
 
 const UploadMedia = props => {
@@ -32,6 +35,7 @@ const UploadMedia = props => {
     screens: [],
     revision: 0
   });
+  const history = useHistory();
   const [showStyleModal, setShowStyleModal] = useState(false);
   const [showTrimBox, setShowTrimBox] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -45,14 +49,19 @@ const UploadMedia = props => {
   const [showCommentBlock, setShowCommentBlock] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
+  const [showWarningModal, setShowWarningModal] = useState(false);
   const [loadingSlider, setLoadingSlider] = useState(false);
   const [moveTo, setMoveTo] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const editableStatus = ["Draft", "Complete"]
   const editedProject = props.project?.editedProjects?.length > 0 ? props.project?.editedProjects.find(item => item.revision === props.project.projectRevision) : false
   let commentFinal = [];
-
-
+  const [isEditor, setIsEditor] = useState(false)
+  useEffect(() => {
+    if (props.user.userRole === "editor") {
+      setIsEditor(true)
+    }
+  }, [props.user.userRole])
   useEffect(
     () => {
       if (localStorage.currentProjectId) {
@@ -71,13 +80,20 @@ const UploadMedia = props => {
   useEffect(() => {
     if (props.project.projectName) {
       const editedProject = props.project.editedProjects.length > 0 ? props.project.editedProjects.find(item => item.revision === props.project.projectRevision) : false
-      if (editedProject) {
+      if (isEditor && props.project.tempEditedMedia?.mediaSrc) {
+        if (editedProject) {
+          setProjectContent([...props.project.content, editedProject, props.project.tempEditedMedia]);
+        }
+        else {
+          setProjectContent([...props.project.content, props.project.tempEditedMedia])
+        }
+      } else if (editedProject) {
         setProjectContent([...props.project.content, editedProject]);
       } else {
         setProjectContent(props.project.content);
       }
     }
-  }, [props.project.content, props.project.editedProjects, props.project.projectName, props.project.projectRevision])
+  }, [isEditor, props.project.content, props.project.editedProjects, props.project.projectName, props.project.projectRevision, props.project.tempEditedMedia])
   useEffect(
     () => {
       if (localStorage.currentMedia && props.project.projectName && props.project.content.length > 0) {
@@ -94,16 +110,16 @@ const UploadMedia = props => {
     }
   }, [currentMedia])
   useEffect(() => {
-    if (props.project.projectStatus === "Complete" && !editedProject?.screens?.length > 0) {
+    if (!isEditor && props.project.projectStatus === "Complete" && !editedProject?.screens?.length > 0 && editedProject.mediaType === mediaTypeVideo) {
       setLoadingSlider(true);
       props.dispatch(takeScreenshots(
         props.project._id,
         props.project.bucket,
         editedProject.mediaSrc,
-        editedProject.mediaName
+        editedProject?.mediaName
         , setLoadingSlider))
     }
-  }, [editedProject.mediaName, editedProject.mediaSrc, editedProject?.screens?.length])
+  }, [editedProject?.mediaName, editedProject?.mediaSrc, editedProject?.mediaType, editedProject?.screens?.length, isEditor])
   const setMedia = () => {
 
 
@@ -111,7 +127,7 @@ const UploadMedia = props => {
     let curMedia = projectContent.filter(item => item._id === localStorage.currentMedia)[0];
 
     if (!curMedia) {
-      curMedia = editedProject ? editedProject : props.project.content[0];
+      curMedia = editedProject ? editedProject : props.project?.content[0];
     }
     if (curMedia.screens.length > 0) {
       curMedia.screens.sort((a, b) => a.timeInSeconds - b.timeInSeconds);
@@ -253,6 +269,22 @@ const UploadMedia = props => {
           setComments={setComments}
         />
       )}
+      {showWarningModal &&
+        <div className="modal__wrapper" style={{ zIndex: localStorage.showDemoLayer === 'true' && '130' }}>
+          <div className="style__modal">
+            <div className="connectSocial__cross" onClick={() => setShowWarningModal(false)}>
+              <Cancel fill="black" />
+            </div>
+            <div className='warning-container'>
+              <div className='massage'> You are about to submit your project. Make sure all changes are done and you have uploaded media . Are you sure?</div>
+              <div className="option">
+                <button className='pay__modal--submit' onClick={() => setShowWarningModal(false)}> No</button>
+                <button className='pay__modal--submit' onClick={() => props.dispatch(createProjectMedia(props.project, history, setShowWarningModal, props.user.userRole))}>Yes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
       <div className="upload__media--inner">
         {currentMedia.mediaName && props.project.projectName ? (
           <div className="video__block" style={{ marginTop: window.innerWidth <= 575 && showCommentBlock && "0" }}>
@@ -267,7 +299,9 @@ const UploadMedia = props => {
                   <span class="info">Click here to view your edit notes</span>
                 </span>
               </div>
-              <div className="share_indicator" onClick={(e) => { (["Complete", "Done"].includes(props.project?.projectStatus) && editedProject._id === currentMedia?._id) && toggleShareBlock(e) }}>
+              <div className="share_indicator" onClick={(e) => {
+                if (["Complete", "Done"].includes(props.project?.projectStatus) && editedProject._id === currentMedia?._id) { setShowCommentBlock(false); toggleShareBlock(e) }
+              }}>
                 <Share />
               </div>
             </div>
@@ -303,6 +337,8 @@ const UploadMedia = props => {
             {
               !loadingSlider && !currentMedia.isImage && (
                 <TimeLine
+                  isEditor={isEditor}
+                  user={props.user}
                   currentMedia={currentMedia}
                   setCurrentMedia={setCurrentMedia}
                   showTrimBox={showTrimBox}
@@ -342,48 +378,64 @@ const UploadMedia = props => {
               )
             }
             <div className="generate__btns">
-              <button
-                onClick={(e) => { (editableStatus.includes(props.project?.projectStatus) && (editedProject ? editedProject._id === currentMedia._id : true)) && handleActiveScreenshot(e) }}
-                style={{ backgroundColor: (isShowComment || !(editableStatus.includes(props.project?.projectStatus)) || (editedProject ? editedProject._id !== currentMedia._id : false)) && "gray" }}>
-                <Chat />
-                <span>Add Edit Notes</span>
-                <span class="tip_icon">
-                  ?
-                  <span class="info">
-                    Add your edit notes on the Time Line Bar,
-                    where you wish the item to appear.
+              {isEditor ? <>
+                <button
+                  style={{ backgroundColor: "gray" }}
+                >
+                  <span>Revision {props.project?.projectRevision}</span>
+                </button>
+                <button
+                  style={{ backgroundColor: ((["Done", "Complete"]).includes(props.project?.projectStatus)) && "gray" }}
+                  onClick={(e) => { (!(["Done", "Complete"]).includes(props.project?.projectStatus)) && setShowWarningModal(true) }}
+                >
+                  <span>Submit</span>
+                </button>
+              </> : <>
+                <button
+                  onClick={(e) => { (editableStatus.includes(props.project?.projectStatus) && (editedProject ? editedProject._id === currentMedia._id : true)) && handleActiveScreenshot(e) }}
+                  style={{ backgroundColor: (isShowComment || !(editableStatus.includes(props.project?.projectStatus)) || (editedProject ? editedProject._id !== currentMedia._id : false)) && "gray" }}>
+                  <Chat />
+                  <span>Add Edit Notes</span>
+                  <span class="tip_icon">
+                    ?
+                    <span class="info">
+                      Add your edit notes on the Time Line Bar,
+                      where you wish the item to appear.
+                    </span>
                   </span>
-                </span>
-              </button>
-              <button
-                onClick={(e) => { (props.project?.projectStatus === "Draft") && handleTrimVideo(e) }}
-                style={{ backgroundColor: (showTrimBox || !(props.project?.projectStatus === "Draft")) && "gray" }}>
-                <Trim />
-                <span>Trim</span>
-                <span class="tip_icon">
-                  ?
-                  <span class="info">Trim your video clips for best performance</span>
-                </span>
-              </button>
-              <button className="generate-video"
-                onClick={() => { (editableStatus.includes(props.project?.projectStatus) && (editedProject ? editedProject._id === currentMedia._id : true)) && setShowStyleModal(true) }}
-                style={{ backgroundColor: (!(editableStatus.includes(props.project?.projectStatus)) || (editedProject ? editedProject._id !== currentMedia._id : false)) && "gray" }}>
-                <img src={cam} alt="cam" />
-                <span>Generate Video</span>
-                <span class="tip_icon">
-                  ?
-                  <span class="info" style={{ marginLeft: "-275px", marginBbottom: "70px" }}>
-                    This will send your project for editing. 
-                    You will not be able to perform further edits to your project 
-                    once you submit and your project is being processed.
+                </button>
+                <button
+                  onClick={(e) => { (props.project?.projectStatus === "Draft") && handleTrimVideo(e) }}
+                  style={{ backgroundColor: (showTrimBox || !(props.project?.projectStatus === "Draft")) && "gray" }}>
+                  <Trim />
+                  <span>Trim</span>
+                  <span class="tip_icon">
+                    ?
+                    <span class="info">Trim your video clips for best performance</span>
                   </span>
-                </span>
-              </button>
-            </div>
+                </button>
+                <button className="generate-video"
+                  onClick={() => { (editableStatus.includes(props.project?.projectStatus) && (editedProject ? editedProject._id === currentMedia._id : true)) && setShowStyleModal(true) }}
+                  style={{ backgroundColor: (!(editableStatus.includes(props.project?.projectStatus)) || (editedProject ? editedProject._id !== currentMedia._id : false)) && "gray" }}>
+                  <img src={cam} alt="cam" />
+                  <span>Generate Video</span>
+                  <span class="tip_icon">
+                    ?
+                    <span class="info" style={{ marginLeft: "-275px", marginBbottom: "70px" }}>
+                      This will send your project for editing.
+                      You will not be able to perform further edits to your project
+                      once you submit and your project is being processed.
+                    </span>
+                  </span>
+                </button>
+
+              </>}
+            </div >
 
             {
               props.project.content && projectContent.length > 0 && (
                 <CarouselMedia
+                  isEditor={isEditor}
                   setIsShowComment={setIsShowComment}
                   content={projectContent}
                   projectStatus={props.project?.projectStatus}

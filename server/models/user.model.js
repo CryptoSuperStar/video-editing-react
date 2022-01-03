@@ -36,7 +36,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
-
+  userRole: {
+    type: String,
+    trim: true,
+    default: "customer"
+  },
   email: {
     type: String,
     trim: true,

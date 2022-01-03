@@ -73,10 +73,13 @@ exports.confirmPromoCodeController = (async (req, res) => {
   const promoCode = String(req.body.promoCode);
   const id = req.userId;
   try {
+    let editor = await User.findOne({ promocode: promoCode, userRole: "editor" });
+    if (!editor) return res.json({ success: false });
     let user = await User.findById(id);
     if (!user) return res.status(400).json({ msg: 'Invalid Credentials1' });
-    if (user && promoCode === user.promocode && !user.isPromoCodeVerified) {
+    if (user && editor && !user.isPromoCodeVerified) {
       user.isPromoCodeVerified = true;
+      user.promocode = promoCode;
       /*YOUR CODE HERE*/
       User.findByIdAndUpdate(id, { $set: user }, { new: true }, (err, data) => {
         if (err) {
