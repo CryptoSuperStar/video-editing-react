@@ -294,10 +294,6 @@ const UploadMedia = props => {
                 <span className="comments__total">
                   {comments && comments.length && comments.filter(comment => comment.text.length > 0).length}
                 </span>
-                <span class="tip_icon">
-                  ?
-                  <span class="info">Click here to view your edit notes</span>
-                </span>
               </div>
               <div className="share_indicator" onClick={(e) => {
                 if (["Complete", "Done"].includes(props.project?.projectStatus) && editedProject._id === currentMedia?._id) { setShowCommentBlock(false); toggleShareBlock(e) }
@@ -409,10 +405,6 @@ const UploadMedia = props => {
                   style={{ backgroundColor: (showTrimBox || !(props.project?.projectStatus === "Draft")) && "gray" }}>
                   <Trim />
                   <span>Trim</span>
-                  <span class="tip_icon">
-                    ?
-                    <span class="info">Trim your video clips for best performance</span>
-                  </span>
                 </button>
                 <button className="generate-video"
                   onClick={() => { (editableStatus.includes(props.project?.projectStatus) && (editedProject ? editedProject._id === currentMedia._id : true)) && setShowStyleModal(true) }}
