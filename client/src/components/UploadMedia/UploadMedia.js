@@ -392,9 +392,9 @@ const UploadMedia = props => {
                   style={{ backgroundColor: (isShowComment || !(editableStatus.includes(props.project?.projectStatus)) || (editedProject ? editedProject._id !== currentMedia._id : false)) && "gray" }}>
                   <Chat />
                   <span>Add Edit Notes</span>
-                  <span class="tip_icon">
+                  <span className="tip_icon">
                     ?
-                    <span class="info">
+                    <span className="info">
                       Add your edit notes on the Time Line Bar,
                       where you wish the item to appear.
                     </span>
@@ -411,9 +411,9 @@ const UploadMedia = props => {
                   style={{ backgroundColor: (!(editableStatus.includes(props.project?.projectStatus)) || (editedProject ? editedProject._id !== currentMedia._id : false)) && "gray" }}>
                   <img src={cam} alt="cam" />
                   <span>Generate Video</span>
-                  <span class="tip_icon">
+                  <span className="tip_icon">
                     ?
-                    <span class="info" style={{ marginLeft: "-275px", marginBbottom: "70px" }}>
+                    <span className="info" style={{ marginLeft: "-275px", marginBbottom: "70px" }}>
                       This will send your project for editing.
                       You will not be able to perform further edits to your project
                       once you submit and your project is being processed.
