@@ -3,7 +3,9 @@ import './DemoLayerEmpty.scss';
 import ToolTip from "./ToolTip";
 import arrowEmpty from "../../assets/img/arrow_empty18930.png";
 import arrowEmptyMobile from "../../assets/img/arrowEmptyMobile.png";
-import introVid from "../../assets/img/intro.mp4";
+import introVidBigger from "../../assets/vid/intro_1080p.mp4";
+import introVidSmaller from "../../assets/vid/intro_480p.mp4";
+
 
 const DemoLayerEmpty = ({setShowDemo}) => {
   
@@ -15,7 +17,7 @@ const DemoLayerEmpty = ({setShowDemo}) => {
   
       <div className="container" style={{overflow: 'hidden'}}>
         <div className="introVid__container">
-          <video src={introVid} autoPlay={true} playsInline loop controls={false} />
+          <video src={window.innerWidth <= 575 ? introVidSmaller : introVidBigger} autoPlay={true} playsInline loop controls={false} />
           <label>
             Speed: 
             <input 
