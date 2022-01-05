@@ -17,7 +17,14 @@ const DemoLayerEmpty = ({setShowDemo}) => {
   
       <div className="container" style={{overflow: 'hidden'}}>
         <div className="introVid__container">
-          <video src={window.innerWidth <= 575 ? introVidSmaller : introVidBigger} autoPlay={true} playsInline loop controls={false} />
+          <video 
+              src={window.innerWidth <= 575 ? introVidSmaller : introVidBigger} 
+              autoPlay={true} 
+              playsInline 
+              loop 
+              muted
+              controls={false}>
+          </video>
           <label>
             Speed: 
             <input 
