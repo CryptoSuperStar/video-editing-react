@@ -14,7 +14,13 @@ const DemoLayerEmpty = ({setShowDemo}) => {
     <div className="DemoLayer EmptyLayer">
   
       <div className="container" style={{overflow: 'hidden'}}>
-        <img src={introGif} className="intro-gif" />
+        <div className="intro-gif-container">
+          <img src={introGif} className="intro-gif" />
+          <label>
+            Speed: 
+            <input type="range" min="0.25" max="1.5" step="0.25" defaultValue={1} />
+          </label>
+        </div>
         {/* <ToolTip
           title="Upload your media"
           text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
