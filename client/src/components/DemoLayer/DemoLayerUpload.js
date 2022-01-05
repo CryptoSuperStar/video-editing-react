@@ -1,12 +1,6 @@
 import React from 'react';
 import ToolTip from "./ToolTip";
-import arrowComm from "../../assets/img/arrowComm.svg";
-import arrowCut from "../../assets/img/arrowCut.png";
-import arrowClear from "../../assets/img/arrowClear.svg";
-import arrowVideo from "../../assets/img/arrowVideo.png";
-import arrowAddC from "../../assets/img/arrowAddC.png";
 
-import arrowAddVideo from "../../assets/img/arrowAddVideo.png";
 import './DemoLayerUpload.scss';
 
 const DemoLayerUpload = ({setShowDemo}) => {

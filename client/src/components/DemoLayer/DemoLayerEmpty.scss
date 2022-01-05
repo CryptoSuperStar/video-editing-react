@@ -55,23 +55,7 @@
     top: 325px;
     transform: translateX(-140%);
     width: 270px;
-    .arrow-demo {
-      position: absolute;
-      left: 90px;
-      margin-top: 20px;
-    }
   }
-}
-
-.DemoLayer__title {
-  font-weight: 700;
-  font-size: 20px;
-  margin: 5px 0;
-}
-
-.DemoLayer__text {
-  font-weight: 400;
-  font-size: 14px;
 }
 
 @media all and (max-width: 860px) {
@@ -80,11 +64,6 @@
       left: 50%;
       top: auto;
       transform: translateX(-130%);
-      .arrow-demo {
-        left: 90px;
-        margin-top: 20px;
-        width: 150px;
-      }
     }
   }
 }
@@ -106,12 +85,6 @@
       left: 0;
       transform: none;
       bottom: 67%;
-      .arrow-demo {
-        max-height: none !important;
-        //height: 175px;
-        width: 70px;
-        left: 75%;
-      }
     }
     
   }

@@ -19,7 +19,6 @@ import TimeLine from "../TimeLine/TimeLine";
 import VideoPlayer from "../VideoPlayer/VideoPlayer";
 import CarouselMedia from "../CarouselBlock/CarouselMedia";
 import { ReactComponent as Trim } from "../../assets/img/trim.svg";
-import DemoLayerUpload from "../DemoLayer/DemoLayerUpload";
 import { createProjectMedia } from '../../store/actions/project.action';
 import { useHistory } from "react-router-dom";
 import { mediaTypeVideo } from "../../utils/constant";
