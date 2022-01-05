@@ -15,10 +15,12 @@ const DemoLayerEmpty = ({setShowDemo}) => {
   
       <div className="container" style={{overflow: 'hidden'}}>
         <div className="introVid__container">
-          <video src={introVid} />
+          <video src={introVid} autoPlay playsInline loop controls={false} />
           <label>
             Speed: 
-            <input type="range" min="0.25" max="1.5" step="0.25" defaultValue={1} />
+            <input 
+              type="range" min="0.25" max="1.5" step="0.25" defaultValue={1}
+            />
           </label>
         </div>
         {/* <ToolTip
