@@ -14,7 +14,7 @@ const DemoLayerEmpty = ({setShowDemo}) => {
     <div className="DemoLayer EmptyLayer">
   
       <div className="container" style={{overflow: 'hidden'}}>
-        <div className="intro-gif-container">
+        <div className="introVid__container">
           <video src={introVid} />
           <label>
             Speed: 

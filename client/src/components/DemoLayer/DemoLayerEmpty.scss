@@ -6,7 +6,7 @@
   height: 100vh;
   background-color: rgba(0,0,0,.7);
 z-index: 50;
-  .intro-video-container {
+  .introVid__container {
     max-width: 700px;
     width: 85%;
     max-height: inherit!important;
@@ -15,7 +15,7 @@ z-index: 50;
     left: 50%;
     transform: translate(-50%, -50%);
   }
-  img {
+  video {
     width: 100%;
     margin: 10px 0 0;
   }
