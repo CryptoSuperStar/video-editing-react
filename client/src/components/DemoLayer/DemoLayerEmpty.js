@@ -3,7 +3,7 @@ import './DemoLayerEmpty.scss';
 import ToolTip from "./ToolTip";
 import arrowEmpty from "../../assets/img/arrow_empty18930.png";
 import arrowEmptyMobile from "../../assets/img/arrowEmptyMobile.png";
-import introGif from "../../assets/img/intro.gif";
+import introVid from "../../assets/img/intro.mp4";
 
 const DemoLayerEmpty = ({setShowDemo}) => {
   
@@ -15,7 +15,7 @@ const DemoLayerEmpty = ({setShowDemo}) => {
   
       <div className="container" style={{overflow: 'hidden'}}>
         <div className="intro-gif-container">
-          <img src={introGif} className="intro-gif" />
+          <video src={introVid} />
           <label>
             Speed: 
             <input type="range" min="0.25" max="1.5" step="0.25" defaultValue={1} />
