@@ -193,9 +193,9 @@ const CarouselMedia = (props) => {
           <label htmlFor="mediaFiles__button">
             <Plus2 />
           </label>
-          <span class="tip_icon" style={{ marginTop: "15px", marginRight: "5px" }}>
+          <span className="tip_icon" style={{ marginTop: "15px", marginRight: "5px" }}>
             ?
-            <span class="info">
+            <span className="info">
               Add more media files to your project.
             </span>
           </span>

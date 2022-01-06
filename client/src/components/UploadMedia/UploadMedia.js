@@ -19,7 +19,6 @@ import TimeLine from "../TimeLine/TimeLine";
 import VideoPlayer from "../VideoPlayer/VideoPlayer";
 import CarouselMedia from "../CarouselBlock/CarouselMedia";
 import { ReactComponent as Trim } from "../../assets/img/trim.svg";
-import DemoLayerUpload from "../DemoLayer/DemoLayerUpload";
 import { createProjectMedia } from '../../store/actions/project.action';
 import { useHistory } from "react-router-dom";
 import { mediaTypeVideo } from "../../utils/constant";
@@ -294,10 +293,6 @@ const UploadMedia = props => {
                 <span className="comments__total">
                   {comments && comments.length && comments.filter(comment => comment.text.length > 0).length}
                 </span>
-                <span class="tip_icon">
-                  ?
-                  <span class="info">Click here to view your edit notes</span>
-                </span>
               </div>
               <div className="share_indicator" onClick={(e) => {
                 if (["Complete", "Done"].includes(props.project?.projectStatus) && editedProject._id === currentMedia?._id) { setShowCommentBlock(false); toggleShareBlock(e) }
@@ -396,9 +391,9 @@ const UploadMedia = props => {
                   style={{ backgroundColor: (isShowComment || !(editableStatus.includes(props.project?.projectStatus)) || (editedProject ? editedProject._id !== currentMedia._id : false)) && "gray" }}>
                   <Chat />
                   <span>Add Edit Notes</span>
-                  <span class="tip_icon">
+                  <span className="tip_icon">
                     ?
-                    <span class="info">
+                    <span className="info">
                       Add your edit notes on the Time Line Bar,
                       where you wish the item to appear.
                     </span>
@@ -409,19 +404,15 @@ const UploadMedia = props => {
                   style={{ backgroundColor: (showTrimBox || !(props.project?.projectStatus === "Draft")) && "gray" }}>
                   <Trim />
                   <span>Trim</span>
-                  <span class="tip_icon">
-                    ?
-                    <span class="info">Trim your video clips for best performance</span>
-                  </span>
                 </button>
                 <button className="generate-video"
                   onClick={() => { (editableStatus.includes(props.project?.projectStatus) && (editedProject ? editedProject._id === currentMedia._id : true)) && setShowStyleModal(true) }}
                   style={{ backgroundColor: (!(editableStatus.includes(props.project?.projectStatus)) || (editedProject ? editedProject._id !== currentMedia._id : false)) && "gray" }}>
                   <img src={cam} alt="cam" />
                   <span>Generate Video</span>
-                  <span class="tip_icon">
+                  <span className="tip_icon">
                     ?
-                    <span class="info" style={{ marginLeft: "-275px", marginBbottom: "70px" }}>
+                    <span className="info" style={{ marginLeft: "-275px", marginBbottom: "70px" }}>
                       This will send your project for editing.
                       You will not be able to perform further edits to your project
                       once you submit and your project is being processed.
