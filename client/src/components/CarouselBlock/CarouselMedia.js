@@ -142,8 +142,7 @@ const CarouselMedia = (props) => {
         {contents.map(media => (
           <>
             <div className="mediaFiles__slider--inner" key={media._id}
-              style={{
-                border: localStorage.currentMedia === media._id ? `5px solid #20319B` : props.editedProject._id === media._id && `5px solid #4ea0d6`,
+              style={{border: localStorage.currentMedia === media._id ? `8px solid hsl(229deg 82% 11%)` : props.editedProject._id === media._id && `8px solid #4ea0d6`,
                 background: (media.isImage || (media.screens && media.screens.length > 0))
                   ? `url(${media.isImage ? media.mediaSrc : media.screens[1].screenSrc})` : 'black'
               }}
@@ -166,7 +165,7 @@ const CarouselMedia = (props) => {
               }
               }
             >
-              {props.editedProject._id === media._id && <span ></span>}
+              {props.editedProject._id === media._id && <span className='vertical_line' style={{backgroundColor:"hsl(229deg 82% 11%)"}}></span>}
               <p>{media.mediaName}</p>
               {props.isEditor && <a href={`${media.mediaSrc}`} target="_blank" rel="noreferrer" download={`${media.mediaSrc}`} title='Download'> <span className="download__video--btn">
                 <FaDownload size={"30px"} />
