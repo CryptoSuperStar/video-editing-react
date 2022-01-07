@@ -7,20 +7,13 @@ import { toast } from "react-toastify";
 import { connect } from "react-redux";
 
 const Support = (props) => {
-  const options = [
-    "Select a Category",
-    "Category 1",
-    "Category 2",
-    "Category 3",
-    "Category 4",
-  ];
-
   const categoryIds = {
-    "Category 1": "topics",
-    "Category 2": "group_title",
-    "Category 3": "new_group",
-    "Category 4": "new_group72639",
+    "Select a Category": "",
+    "Something is not working correctly": "topics",
+    "I have an idea for an improvement": "group_title",
+    "There is an issue with my account": "new_group",
   };
+  const options = Object.keys(categoryIds);
   const [isSavingTicket, setIsSavingTicket] = useState(false);
   const [request, setRequest] = useState("");
   const [category, setCategory] = useState(options[0]);
