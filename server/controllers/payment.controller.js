@@ -74,8 +74,9 @@ exports.confirmPromoCodeController = (async (req, res) => {
   const id = req.userId;
   try {
     let editor = await User.findOne({ promocode: promoCode, userRole: "editor" });
-    if (!editor) return res.json({ success: false });
+    // if (!editor) return res.json({ success: false });
     let user = await User.findById(id);
+    // let userPromo = await User.findOne({promocode: promoCode, })
     if (!user) return res.status(400).json({ msg: 'Invalid Credentials1' });
     if (user && editor && !user.isPromoCodeVerified) {
       user.isPromoCodeVerified = true;
@@ -89,10 +90,23 @@ exports.confirmPromoCodeController = (async (req, res) => {
           console.log("confirmed promo code: " + promoCode);
           return res.json({ user: data, success: true })
         }
-      })
-        ;
-    } else {
+      });
+    }
+    else if (user?.promocode == promoCode && user && !user.isPromoCodeVerified) {
+      user.isPromoCodeVerified = true;
+      User.findByIdAndUpdate(id, { $set: user }, { new: true }, (err, data) => {
+        if (err) {
+          console.log(err);
+          return res.status(400).send({ msg: err });
+        } else {
+          return res.json({ user: data, success: true })
+        }
+      });
+      // return res.json({ success: true })
+    }
+    else {
       return res.json({ success: false });
+
     }
   } catch (e) {
     console.log(e);

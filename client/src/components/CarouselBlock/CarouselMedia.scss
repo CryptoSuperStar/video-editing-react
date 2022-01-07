@@ -74,12 +74,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  snap{
+  // span{
+  // }
+  .vertical_line{
     position: absolute;
-    left: -20px;
-    background: #4ea0d6;
+    left: -25px;
+    // background: #4ea0d6;
     height: 100%;
     width: 5px
+
   }
   p {
     width: 80%;
