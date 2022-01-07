@@ -145,60 +145,7 @@ const Landing = (props) => {
             null,
             0
           )}
-        </div>
-      </section>
-      <section className="screen" style={{ backgroundColor: '#fff', display: width >= 575 && "none" }}>
-        <div className="container__inner screen__inner" style={{ width: width <= 575 && width + "px" }}>
-          <div className="screen__image" style={{textAlign: "center"}}>
-            <img src={screen4} alt="screen2" style={{marginTop: "30px", height: "250px", width: "auto" }} />
-          </div>
-          {renderMobileView(
-            "Transfer video and edit notes. Store Projects.", 
-            "Built for videographers, video editors, and content producers",
-            [
-              "Fastest Way to Transfer Video",
-              "Tag edit notes to specific times in the footage",
-              "Upload revisions and get feedback",
-              "Supports HD audio and video files"
-            ],
-            1
-          )}
-        </div>
-      </section>
-      <section className="screen" style={{ backgroundColor: '#fff', display: width >= 575 && "none" }}>
-        <div className="container__inner screen__inner" style={{ width: width <= 575 && width + "px" }}>
-          <div className="screen__image" style={{textAlign: "center"}}>
-            <img src={screen4} alt="screen2" style={{marginTop: "30px", height: "250px", width: "auto" }} />
-          </div>
-          {renderMobileView(
-            "Built for Video Creators", 
-            null,
-            [
-              "2TB+ of media content storage",
-              "Less expensive than Google Drive and Dropbox",
-              "Fastest Upload time",
-              "Handle video format conversion"
-            ],
-            2
-          )}
-        </div>
-      </section>
-      <section className="screen" style={{ backgroundColor: '#fff', display: width >= 575 && "none" }}>
-        <div className="container__inner screen__inner" style={{ width: width <= 575 && width + "px" }}>
-          <div className="screen__image" style={{textAlign: "center"}}>
-            <img src={screen4} alt="screen2" style={{marginTop: "30px", height: "250px", width: "auto" }} />
-          </div>
-          {renderMobileView(
-            "Supports both Editors and Clients.",
-            null,
-            [
-              "Clients can upload their videos for free",
-              "Handle multiple client accounts for one editor",
-              "Track client revisions",
-              "Receive client notes tagged to specific times"
-            ],
-            3
-          )}
+
         </div>
       </section>
 
@@ -220,6 +167,17 @@ const Landing = (props) => {
           <div className="screen__image">
             <img src={screen1} alt="screen1" />
           </div>
+          {renderMobileView(
+            "Transfer video and edit notes. Store Projects.", 
+            "Built for videographers, video editors, and content producers",
+            [
+              "Fastest Way to Transfer Video",
+              "Tag edit notes to specific times in the footage",
+              "Upload revisions and get feedback",
+              "Supports HD audio and video files"
+            ],
+            1
+          )}
         </div>
       </section>
 
@@ -228,6 +186,17 @@ const Landing = (props) => {
           <div className="screen__image">
             <img src={screen2} alt="screen2" />
           </div>
+          {renderMobileView(
+            "Built for Video Creators", 
+            null,
+            [
+              "2TB+ of media content storage",
+              "Less expensive than Google Drive and Dropbox",
+              "Fastest Upload time",
+              "Handle video format conversion"
+            ],
+            2
+          )}
           <div className="screen__text web__view">
             <h3 className="screen__title">Built for Video Creators</h3>
             <span></span>
@@ -257,6 +226,17 @@ const Landing = (props) => {
           <div className="screen__image">
             <img src={screen3} alt="screen3" />
           </div>
+          {renderMobileView(
+            "Supports both Editors and Clients.",
+            null,
+            [
+              "Clients can upload their videos for free",
+              "Handle multiple client accounts for one editor",
+              "Track client revisions",
+              "Receive client notes tagged to specific times"
+            ],
+            3
+          )}
         </div>
       </section>
 
