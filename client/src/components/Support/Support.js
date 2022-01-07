@@ -106,7 +106,6 @@ const Support = (props) => {
             <label>
               <span>Category</span>
               <select
-                defaultValue={"Select a Category"}
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
               >
