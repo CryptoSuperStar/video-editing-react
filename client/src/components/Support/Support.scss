@@ -1,28 +1,28 @@
 .support__form {
   width: 100%;
   margin-top: 15px;
-  textarea, {
+  textarea {
     outline: none;
     box-sizing: border-box;
     width: 100%;
     margin-top: 15px;
-    border: 1px solid #D2D5E1;
+    border: 1px solid #d2d5e1;
     border-radius: 5px;
     padding: 15px;
-    background-color: #FAFCFE;
+    background-color: #fafcfe;
     font-family: Montserrat, sans-serif;
     color: black;
     &::placeholder {
-      color: #97A0C3;
+      color: #97a0c3;
     }
   }
-  label  {
+  label {
     &:first-child {
       span {
         font-size: 15px;
         font-weight: bold;
         line-height: 19px;
-        color: #97A0C3;
+        color: #97a0c3;
       }
     }
     &:last-child {
@@ -31,7 +31,7 @@
         margin: 15px 0;
         font-size: 14px;
         font-weight: 400;
-        color: #97A0C3;
+        color: #97a0c3;
       }
     }
   }
@@ -49,26 +49,67 @@
         outline: none;
         box-sizing: border-box;
         margin-top: 15px;
-        border: 1px solid #D2D5E1;
+        border: 1px solid #d2d5e1;
         border-radius: 5px;
         padding: 5px;
-        background-color: #FAFCFE;
-        color: #97A0C3;
+        background-color: #fafcfe;
+        color: #97a0c3;
         option {
           font-size: 16px;
           line-height: 22px;
-          background-color: #FAFCFE;
+          background-color: #fafcfe;
         }
       }
     }
     button {
       flex-basis: 25%;
-      background-color: #3B8590;
+      background-color: #3b8590;
       border: none;
       border-radius: 5px;
       text-align: center;
       color: white;
       padding: 15px 0;
+      display: flex;
+      cursor: pointer;
+      justify-content: center;
+      align-items: center;
+      max-height: 46px;
+      .loader {
+        width: 20px;
+        height: 20px;
+        border: 4px solid #fff;
+        border-top: 5px solid transparent;
+        border-radius: 100%;
+        animation: load-animate infinite linear 0.5s;
+      }
+    }
+    @keyframes load-animate {
+      0% {
+        transform: rotate(0deg);
+      }
+      50% {
+        transform: rotate(180deg);
+        opacity: 0.35;
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+    @-webkit-keyframes load-animate {
+      0% {
+        transform: rotate(0deg);
+      }
+      50% {
+        transform: rotate(180deg);
+        opacity: 0.35;
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+    button:disabled {
+      background-color: #bcc4c5;
+      cursor: not-allowed;
     }
   }
 }
@@ -108,16 +149,16 @@
         padding: 0 5px;
         font-size: 12px !important;
         background-color: white;
-        color: #9B9B9B !important;
+        color: #9b9b9b !important;
         font-weight: normal !important;
       }
     }
     textarea {
       background-color: white;
-      border: 1px solid rgba(112, 112, 112, .2);
+      border: 1px solid rgba(112, 112, 112, 0.2);
       font-size: 20px;
       &::placeholder {
-        color: #9B9B9B !important;
+        color: #9b9b9b !important;
       }
     }
     .form__bottom {
@@ -131,7 +172,7 @@
           line-height: 25px;
           background-color: white;
           color: black;
-          border: 1px solid rgba(112, 112, 112, .2);
+          border: 1px solid rgba(112, 112, 112, 0.2);
           option {
             background-color: white;
           }
@@ -145,7 +186,7 @@
     }
   }
   .support__questions .support__question--item {
-    border-bottom: 1px solid #D8E1F1;
+    border-bottom: 1px solid #d8e1f1;
     .support__question--title {
       font-size: 14px;
     }
