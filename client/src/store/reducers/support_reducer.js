@@ -13,8 +13,6 @@ const initialState = {
 const supportReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case "CREATE_TICKET":
-      console.log({ type, payload, localStorage });
-
       return {
         ...state,
         ticket: payload,
