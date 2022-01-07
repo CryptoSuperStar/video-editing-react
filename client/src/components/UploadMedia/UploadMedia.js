@@ -109,7 +109,7 @@ const UploadMedia = props => {
     }
   }, [currentMedia])
   useEffect(() => {
-    if (!isEditor && props.project.projectStatus === "Complete" && !editedProject?.screens?.length > 0 && editedProject.mediaType === mediaTypeVideo) {
+    if (!isEditor && !editedProject?.screens?.length > 0 && editedProject.mediaType === mediaTypeVideo) {
       setLoadingSlider(true);
       props.dispatch(takeScreenshots(
         props.project._id,
@@ -132,10 +132,15 @@ const UploadMedia = props => {
       curMedia.screens.sort((a, b) => a.timeInSeconds - b.timeInSeconds);
     }
     setCurrentMedia(curMedia);
-    if (curMedia.comments && !(["Complete", "Done"].includes(props.project?.projectStatus)) && curMedia.revision === props.project.projectRevision) {
+    if (curMedia.comments && ((!(["Complete", "Done"].includes(props.project?.projectStatus)) && props.user.userRole === "customer" && curMedia.revision === props.project.projectRevision) || props.user.userRole === "editor")) {
       localStorage.comments = JSON.stringify(curMedia?.comments);
       setComments(curMedia?.comments);
     }
+    // if (curMedia.comments && props.user.userRole === "editor") {
+    //   localStorage.comments = JSON.stringify(curMedia?.comments);
+    //   setComments(curMedia?.comments);
+    // }
+
     if (localStorage.editedVideoComments && curMedia._id === editedProject._id) {
       let editedVideoComments = JSON.parse(localStorage?.editedVideoComments);
       setComments(editedVideoComments);
@@ -375,7 +380,7 @@ const UploadMedia = props => {
             <div className="generate__btns">
               {isEditor ? <>
                 <button
-                  style={{ backgroundColor: "gray" }}
+                  style={{ backgroundColor: "hsl(229deg 82% 11%)" }}
                 >
                   <span>Revision {props.project?.projectRevision}</span>
                 </button>

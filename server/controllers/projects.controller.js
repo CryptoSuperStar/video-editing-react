@@ -129,7 +129,28 @@ exports.takeScreenShotController = async (req, res) => {
 
               if (err) return res.status(400).send({ msg: `Database Error ${err.message}` });
               const editedProject = project.editedProjects.length > 0 ? project.editedProjects.find(item => item.revision === project.projectRevision) : false
-              if ((project.projectStatus === "Complete" && editedProject)) {
+              
+              if (user.userRole === "editor" && project.tempEditedMedia?.mediaSrc) {
+                let currentContent = {
+                  _id: project.tempEditedMedia._id,
+                  mediaName: project.tempEditedMedia.mediaName,
+                  mediaSrc: project.tempEditedMedia.mediaSrc,
+                  mediaType: project.tempEditedMedia.mediaType,
+                  duration: duration,
+                  endTime: duration,
+                  screens: newScreensArray,
+                  isSupported: project.tempEditedMedia.isSupported,
+                  isImage: project.tempEditedMedia.isImage
+                }
+                Project.findByIdAndUpdate({ _id: id }, { $set: { tempEditedMedia: currentContent } }, { new: true },
+                  (err, data) => {
+                    if (err) return res.status(400).send({ msg: `Database Error ${err}` });
+                    clearTemp(`${MEDIA_SRC}/temp/${userId}/${bucket}`);
+                    return res.status(200).json({ project: data })
+                  })
+              }
+
+              else if (( editedProject)) {
                 let currentEditedProjects = project.editedProjects.map(item => {
                   return item.revision === project.projectRevision ? {
                     _id: item._id,
@@ -150,25 +171,7 @@ exports.takeScreenShotController = async (req, res) => {
                     clearTemp(`${MEDIA_SRC}/temp/${userId}/${bucket}`);
                     return res.status(200).json({ project: data })
                   })
-              } else if (user.userRole === "editor" && project.tempEditedMedia?.mediaSrc) {
-                let currentContent = {
-                  _id: project.tempEditedMedia._id,
-                  mediaName: project.tempEditedMedia.mediaName,
-                  mediaSrc: project.tempEditedMedia.mediaSrc,
-                  mediaType: project.tempEditedMedia.mediaType,
-                  duration: duration,
-                  endTime: duration,
-                  screens: newScreensArray,
-                  isSupported: project.tempEditedMedia.isSupported,
-                  isImage: project.tempEditedMedia.isImage
-                }
-                Project.findByIdAndUpdate({ _id: id }, { $set: { tempEditedMedia: currentContent } }, { new: true },
-                  (err, data) => {
-                    if (err) return res.status(400).send({ msg: `Database Error ${err}` });
-                    clearTemp(`${MEDIA_SRC}/temp/${userId}/${bucket}`);
-                    return res.status(200).json({ project: data })
-                  })
-              } else {
+              }  else {
                 let currentContent = project.content.map(item => {
                   return item.mediaName === newName ? {
                     _id: item._id,
