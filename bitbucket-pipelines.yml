@@ -10,4 +10,4 @@ pipelines:
       - step:
           name: 'Build and Test'
           script:
-            - git push --legacy-peer-deps https://heroku:$HEROKU_API_KEY@git.heroku.com/provids.git HEAD
+            - git push --force https://heroku:$HEROKU_API_KEY@git.heroku.com/provids.git HEAD
