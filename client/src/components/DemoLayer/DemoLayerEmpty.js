@@ -14,6 +14,7 @@ const DemoLayerEmpty = ({setShowDemo}) => {
       <div className="container" style={{overflow: 'hidden'}}>
         <div className="introVid__container">
           <video 
+              id='introVideo'
               src={window.innerWidth <= 575 ? introVidSmaller : introVidBigger} 
               autoPlay={true} 
               playsInline 
@@ -25,6 +26,9 @@ const DemoLayerEmpty = ({setShowDemo}) => {
             Speed: 
             <input 
               type="range" min="0.25" max="1.5" step="0.25" defaultValue={1}
+              onChange={(e)=>{
+                document.querySelector('#introVideo').playbackRate = e.target.value;
+              }}
             />
           </label>
         </div>
