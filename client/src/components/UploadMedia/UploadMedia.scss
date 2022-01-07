@@ -341,13 +341,13 @@
 .tip_icon {
   box-sizing: border-box;
   position: absolute;
-  top: -10px;
-  right: 0;
+  top: -5px;
+  right: -3px;
   background-color: var(--cloud-burst-2);
   box-shadow: 0 0 3px -0 rgba(255, 255, 255, 0.5);
   border-radius: 50%;
-  width: 22px;
-  height: 22px;
+  width: 15px;
+  height: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -899,5 +899,10 @@
     width: 95%;
     line-height: 20px;
     font-size: 16px;
+  }
+
+  
+  .tip_icon {
+    display: none;
   }
 }

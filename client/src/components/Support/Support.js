@@ -2,7 +2,6 @@ import { useState } from "react";
 import "./Support.scss";
 import arrowCircle from "../../assets/img/Circle.png";
 import { createSupportTicket } from "../../store/actions/support.action";
-import { REACT_MONDAY_API_KEY, REACT_MONDAY_BOARD_ID } from "../../utils/misc";
 import { toast } from "react-toastify";
 import { connect } from "react-redux";
 
@@ -55,6 +54,7 @@ const Support = (props) => {
   const submitTicket = async (e) => {
     try {
       const { user } = props;
+      console.log(user);
       const categoryId = categoryIds[category];
       e.preventDefault();
       if (!request) return toast.error("Your request must have a description");
@@ -73,6 +73,7 @@ const Support = (props) => {
       setIsSavingTicket(false);
     } catch (error) {
       console.log(error);
+      setIsSavingTicket(false);
       toast.error("Something went wrong, please try again");
     }
   };

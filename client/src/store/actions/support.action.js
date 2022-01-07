@@ -44,7 +44,7 @@ export const createSupportTicket = (data) => async (dispatch) => {
           columnValues: JSON.stringify({
             text: request,
             text1: category,
-            text13: user.email,
+            email5: { email: user.email, text: user.email, changed_at: now },
             status: "Open",
             text0: user.userName,
             date: {
@@ -67,6 +67,7 @@ export const createSupportTicket = (data) => async (dispatch) => {
       });
 
       response = await response.json();
+      console.log(response);
 
       dispatch({
         type: "CREATE_TICKET",
@@ -74,10 +75,10 @@ export const createSupportTicket = (data) => async (dispatch) => {
       });
       return response.data;
     } catch (error) {
+      console.log(error);
       dispatch({
         type: "CREATE_TICKET_ERROR",
       });
-      console.log(error);
     }
   }
 };
