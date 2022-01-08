@@ -33,6 +33,7 @@ const StyleInspirationModal = (props) => {
   const [favouriteRelevant, setFavouriteRelevant] = useState(false);
   const [suggestion, setSuggestion] = useState(false);
   const [link, setLink] = useState('')
+  const [category, setCategory] = useState(null);
 
 
   const changePlatform = (i) => {
@@ -98,6 +99,7 @@ const StyleInspirationModal = (props) => {
         link,
         platform: platforms.filter(item => item.active)[0].title
       },
+      category: category,
       editedProjects: editedProjects
     } : {
       ...props.project,
@@ -105,6 +107,7 @@ const StyleInspirationModal = (props) => {
         link,
         platform: platforms.filter(item => item.active)[0].title
       },
+      category: category,
       content: newContent
     }
     props.setShowStyleModal(false);
@@ -143,7 +146,7 @@ const StyleInspirationModal = (props) => {
 
           <h5>Select your project category:</h5>
           <div className="pick__category">
-            <select name="projectCategory">
+            <select name="projectCategory" onChange={e => setCategory(e.target.value)}>
               <option value="Products with person">Products with person</option>
               <option value="Products Alone">Products Alone</option>
               <option value="Real Estate">Real Estate</option>
