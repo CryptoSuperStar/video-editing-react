@@ -822,13 +822,9 @@
   }
   .style__modal {
     max-height: 90vh;
-    left: 0;
-    top: 75px;
-    transform: none;
-    border-radius: 0;
+    width: 75%;
     
     .connectSocial__cross {
-      top: 90px;
       position: absolute;
       right: 15px !important;
     }
@@ -837,6 +833,7 @@
       margin-top: 0 !important;
       &:first-of-type {
         margin-top: 15px !important;
+        font-size: var(--font-size-xl);
       }
     }
     
