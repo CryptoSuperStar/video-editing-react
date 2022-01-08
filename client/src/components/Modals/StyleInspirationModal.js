@@ -140,6 +140,19 @@ const StyleInspirationModal = (props) => {
               </div>
             ))}
           </div>
+
+          <h5>Select your project category:</h5>
+          <div className="pick__category">
+            <select name="projectCategory">
+              <option value="Products with person">Products with person</option>
+              <option value="Products Alone">Products Alone</option>
+              <option value="Real Estate">Real Estate</option>
+              <option value="Events">Events</option>
+              <option value="Education">Education</option>
+              <option value="Sports">Sports</option>
+            </select>
+          </div>
+          
           {/* <h5>Any favourite relevant?</h5>
           <div className="favourite__relevant">
             <div style={{

@@ -139,7 +139,7 @@
   .connectSocial__links {
     display: flex;
     justify-content: center;
-    margin-top: 15px;
+    margin: 15px 0;
     .modal__payments--item {
       display: flex;
       position: relative;
@@ -171,6 +171,24 @@
         width: 60px;
         height: 60px;
       }
+    }
+  }
+
+  .pick__category {
+    display: flex;
+    justify-content: center;
+    
+    select {
+      width: 70%;
+      margin-top: 15px;
+      border-radius: 22px;
+      padding: 15px 25px;
+      border: 1px solid var(--dove-gray);
+      outline: none;
+      letter-spacing: 0px;
+      line-height: 22px;
+      color: black;
+      font-size: 15px;
     }
   }
 }
