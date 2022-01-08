@@ -62,7 +62,7 @@ const CarouselMedia = (props) => {
             .then((res) => {
               let currentMedia = res.currentMedia;
               localStorage.currentMedia = res.currentMedia._id;
-              props.setIsShowComment(false)
+              props.setIsShowComment(false);
               props.setShowShareModal(false);
               props.setComments([]);
               props.setErrorMessage(null);
@@ -165,7 +165,7 @@ const CarouselMedia = (props) => {
               }
               }
             >
-              {props.editedProject._id === media._id && <span className='vertical_line' style={{backgroundColor:"hsl(229deg 82% 11%)"}}></span>}
+              {props.editedProject._id === media._id && <span className='vertical_line'></span>}
               <p>{media.mediaName}</p>
               {props.isEditor && <a href={`${media.mediaSrc}`} target="_blank" rel="noreferrer" download={`${media.mediaSrc}`} title='Download'> <span className="download__video--btn">
                 <FaDownload size={"30px"} />
