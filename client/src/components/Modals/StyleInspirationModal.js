@@ -74,6 +74,12 @@ const StyleInspirationModal = (props) => {
   }
 
   const handleDone = () => {
+    if (category === null || category === '' || category === 'Other')
+    {
+      alert('Please choose category');
+      return;
+    }
+    
     let newContent
     if (!props.isImage) {
       if ((localStorage.updateComment && localStorage.updateComment === 'true')
@@ -154,7 +160,8 @@ const StyleInspirationModal = (props) => {
                 setCustomCategory(false);
               }
               setCategory(e.target.value);
-            }}>
+            }} required>
+              <option>Please pick one</option>
               <option value="Products with person">Products with person</option>
               <option value="Products Alone">Products Alone</option>
               <option value="Real Estate">Real Estate</option>
@@ -166,6 +173,7 @@ const StyleInspirationModal = (props) => {
             {customCategory === true
               &&
               <input 
+                required
                 type="text"
                 placeholder="Type here"
                 onChange={e => setCategory(e.target.value)} />
