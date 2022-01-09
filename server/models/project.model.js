@@ -73,6 +73,9 @@ const projectSchema = new mongoose.Schema({
       linkToExternalPost: String
     }
   },
+  category: {
+    type: String,
+  },
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
