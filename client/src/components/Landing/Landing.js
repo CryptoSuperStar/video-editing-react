@@ -91,7 +91,7 @@ const Landing = (props) => {
 
 
         {localStorage.isAuthenticated !== 'true'
-        && active === 0 &&
+        &&
         <Fragment>
           <button className="mobile__view--next" onClick={() => {
             props.history.push('/sign_up')
