@@ -8,9 +8,10 @@ export const createSupportTicket = (data) => async (dispatch) => {
     try {
       const { request, category, user, categoryId } = data;
       const now = new Date();
-      now.setHours(now.getHours() - 1);
+      now.setHours(now.getHours() + 5);
 
-      const chicagoTime = now.toLocaleDateString("en-CA", {
+      const newYorkTime = now.toLocaleDateString("en-CA", {
+        timeZone: "America/New_york",
         year: "numeric",
         month: "2-digit",
         day: "2-digit",
@@ -20,8 +21,8 @@ export const createSupportTicket = (data) => async (dispatch) => {
         second: "2-digit",
       });
 
-      const date = chicagoTime.split(", ")[0];
-      const time = chicagoTime.split(", ")[1];
+      const date = newYorkTime.split(", ")[0];
+      const time = newYorkTime.split(", ")[1];
 
       const body = {
         query: `
