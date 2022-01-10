@@ -54,7 +54,6 @@ const Support = (props) => {
   const submitTicket = async (e) => {
     try {
       const { user } = props;
-      console.log(user);
       const categoryId = categoryIds[category];
       e.preventDefault();
       if (!request) return toast.error("Your request must have a description");
@@ -64,13 +63,13 @@ const Support = (props) => {
       setIsSavingTicket(true);
       const data = { request, category, user, categoryId };
       const didSubmit = await props.dispatch(createSupportTicket(data));
+      setIsSavingTicket(false);
       if (!didSubmit)
         return toast.error("Something went wrong, please try again");
 
       toast.success("Your request has been successfully submitted");
       setRequest("");
       setCategory(options[0]);
-      setIsSavingTicket(false);
     } catch (error) {
       console.log(error);
       setIsSavingTicket(false);

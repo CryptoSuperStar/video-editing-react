@@ -8,10 +8,9 @@ export const createSupportTicket = (data) => async (dispatch) => {
     try {
       const { request, category, user, categoryId } = data;
       const now = new Date();
+      now.setHours(now.getHours() - 1);
 
-      // Monday.com adds an extra hour to the time, making it New york time.
       const chicagoTime = now.toLocaleDateString("en-CA", {
-        timeZone: "America/Chicago",
         year: "numeric",
         month: "2-digit",
         day: "2-digit",
@@ -44,7 +43,11 @@ export const createSupportTicket = (data) => async (dispatch) => {
           columnValues: JSON.stringify({
             text: request,
             text1: category,
-            email5: { email: user.email, text: user.email, changed_at: now },
+            email5: {
+              email: user.email,
+              text: user.email,
+              changed_at: now,
+            },
             status: "Open",
             text0: user.userName,
             date: {
