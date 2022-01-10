@@ -33,6 +33,9 @@ const StyleInspirationModal = (props) => {
   const [favouriteRelevant, setFavouriteRelevant] = useState(false);
   const [suggestion, setSuggestion] = useState(false);
   const [link, setLink] = useState('')
+  const [category, setCategory] = useState(null);
+  const [customCategory, setCustomCategory] = useState(false);
+  const [errorCategory, setErrorCategory] = useState(null);
 
 
   const changePlatform = (i) => {
@@ -72,6 +75,16 @@ const StyleInspirationModal = (props) => {
   }
 
   const handleDone = () => {
+    if (category === null || category === '' || category === 'Other')
+    {
+      if (category === null) {
+        setErrorCategory('select');
+      } else {
+        setErrorCategory('input');
+      }
+      return;
+    }
+
     let newContent
     if (!props.isImage) {
       if ((localStorage.updateComment && localStorage.updateComment === 'true')
@@ -98,6 +111,7 @@ const StyleInspirationModal = (props) => {
         link,
         platform: platforms.filter(item => item.active)[0].title
       },
+      category: category,
       editedProjects: editedProjects
     } : {
       ...props.project,
@@ -105,6 +119,7 @@ const StyleInspirationModal = (props) => {
         link,
         platform: platforms.filter(item => item.active)[0].title
       },
+      category: category,
       content: newContent
     }
     props.setShowStyleModal(false);
@@ -140,6 +155,40 @@ const StyleInspirationModal = (props) => {
               </div>
             ))}
           </div>
+
+          <h5>Select your project category:</h5>
+          <div className="pick__category">
+            <select name="projectCategory"
+              style={{border: errorCategory === 'select' ? "1px solid red":''}}
+              onChange={e => {
+                if (e.target.value === "Other") {
+                  setCustomCategory(true);
+                } else {
+                  setCustomCategory(false);
+                }
+                setCategory(e.target.value);
+                setErrorCategory(false);
+              }} 
+              required>
+              <option>Please type a category of your project</option>
+              <option value="Products with person">Products with person</option>
+              <option value="Products Alone">Products Alone</option>
+              <option value="Real Estate">Real Estate</option>
+              <option value="Events">Events</option>
+              <option value="Education">Education</option>
+              <option value="Sports">Sports</option>
+              <option value="Other">Other</option>
+            </select>
+            {customCategory === true
+              &&
+              <input style={{border: errorCategory === 'input' ? "1px solid red":''}}
+                required
+                type="text"
+                placeholder="Type here"
+                onChange={e => setCategory(e.target.value.trim())} />
+            }
+          </div>
+          
           {/* <h5>Any favourite relevant?</h5>
           <div className="favourite__relevant">
             <div style={{

@@ -397,7 +397,7 @@ const UploadMedia = props => {
                   <Chat />
                   <span>Add Edit Notes</span>
                   <span className="tip_icon">
-                    ?
+                    i
                     <span className="info">
                       Add your edit notes on the Time Line Bar,
                       where you wish the item to appear.
@@ -416,7 +416,7 @@ const UploadMedia = props => {
                   <img src={cam} alt="cam" />
                   <span>Generate Video</span>
                   <span className="tip_icon">
-                    ?
+                    i
                     <span className="info" style={{ marginLeft: "-275px", marginBbottom: "70px" }}>
                       This will send your project for editing.
                       You will not be able to perform further edits to your project
