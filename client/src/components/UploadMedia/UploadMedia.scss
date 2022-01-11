@@ -177,6 +177,7 @@
   .pick__category {
     display: flex;
     justify-content: center;
+    flex-direction: column;
     
     select {
       width: 70%;
@@ -189,6 +190,20 @@
       line-height: 22px;
       color: black;
       font-size: 15px;
+      color: #97a0c3;
+      margin-left: 15%;
+    }
+
+    label {
+      margin-top: 25px;
+      font-size: smaller;
+      color: red;
+  }
+
+    input {
+      color: #97a0c3;
+      margin-left: 15%;
+      width: 60%;
     }
   }
 }

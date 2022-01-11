@@ -170,7 +170,7 @@ const StyleInspirationModal = (props) => {
                 setErrorCategory(false);
               }} 
               required>
-              <option>Please type a category of your project</option>
+              <option>Select your category</option>
               <option value="Products with person">Products with person</option>
               <option value="Products Alone">Products Alone</option>
               <option value="Real Estate">Real Estate</option>
@@ -181,11 +181,14 @@ const StyleInspirationModal = (props) => {
             </select>
             {customCategory === true
               &&
-              <input style={{border: errorCategory === 'input' ? "1px solid red":''}}
-                required
-                type="text"
-                placeholder="Type here"
-                onChange={e => setCategory(e.target.value.trim())} />
+              <>
+                <label>Please type a category of your project</label>
+                <input style={{border: errorCategory === 'input' ? "1px solid red":''}}
+                  required
+                  type="text"
+                  placeholder="Type here"
+                  onChange={e => setCategory(e.target.value.trim())} />
+              </>
             }
           </div>
           
