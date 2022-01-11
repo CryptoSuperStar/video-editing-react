@@ -492,11 +492,14 @@
     flex-direction: row;
     overflow: hidden;
     position: relative;
+    height: 95vh;
+    overflow-y: auto;
   }
   .screen  {
     width: 100%;
     background-color: white !important;
     transition: all linear .2s;
+    z-index: 9;
     .screen__inner {
       flex-direction: column;
       
@@ -512,6 +515,7 @@
   }
   .screen span {
     font-size: medium;
+    margin-top: 10px;
   }
   .screen__mobile {
     //height: 50px;
@@ -519,7 +523,7 @@
     flex-direction: column;
     text-align: center;
     h3 {
-      margin-top: 50px;
+      margin-top: 25px;
       letter-spacing: 0.00px;
       line-height: 32px;
       color: var(--black);
@@ -534,7 +538,7 @@
       color: var(--granite-gray);
       font-family: "Montserrat", "Helvetica Neue", sans-serif;
       font-size: var(--font-size-m);
-      margin-top: 40px;
+      margin-top: 30px;
     }
     .mobile__view--next {
       width: 90%;

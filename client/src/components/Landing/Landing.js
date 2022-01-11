@@ -137,7 +137,7 @@ const Landing = (props) => {
       <section className="screen" style={{ backgroundColor: '#fff', display: width >= 575 && "none" }}>
         <div className="container__inner screen__inner" style={{ width: width <= 575 && width + "px" }}>
           <div className="screen__image" style={{textAlign: "center"}}>
-            <img src={screen4} alt="screen2" style={{marginTop: "30px", height: "250px", width: "auto" }} />
+            <img src={phone} alt="phone" style={{marginTop: "30px", marginBottom: "20px", height: "460px", width: "auto" }} />
           </div>
           {renderMobileView(
             "Better than Dropbox and Google Drive for Video Creators",
