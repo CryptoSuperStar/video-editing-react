@@ -170,7 +170,7 @@ const StyleInspirationModal = (props) => {
                 setErrorCategory(false);
               }} 
               required>
-              <option>Select your category</option>
+              <option disabled selected>Select your category</option>
               <option value="Products with person">Products with person</option>
               <option value="Products Alone">Products Alone</option>
               <option value="Real Estate">Real Estate</option>
