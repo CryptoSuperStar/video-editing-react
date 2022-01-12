@@ -49,7 +49,7 @@ const Landing = (props) => {
 
   const handleTouchEnd = () => {
     if (width <= 575) {
-      if (touchStart - touchEnd > 50 && marginLeft !== (-width * 3)) {
+      if (touchStart - touchEnd > 50 && marginLeft !== (-width * 4)) {
         // do your stuff here for left swipe
         setMarginLeft(marginLeft - width);
       }
@@ -63,8 +63,10 @@ const Landing = (props) => {
 
   const renderMobileView = (title, text, bullets, active) => (
     <div className="mobile__view">
+      {active < 4
+      &&
       <div className="screen__mobile">
-        <div className="screen__mobile--dots">{[...Array(4)].map((dot, i) => (
+        <div className="screen__mobile--dots">{[...Array(5)].map((dot, i) => (
           <span
             key={i}
             className="screen__mobile--dot"
@@ -99,7 +101,62 @@ const Landing = (props) => {
           <span style={{margin: "0"}}>Start your 7-day free trial now</span>
         </Fragment> }
         
-      </div>
+      </div>}
+
+      {active === 4
+      &&
+      <section className="plans">
+        <div className="container__inner">
+          <h3 className="screen__title">Pricing & Plans</h3>
+          <span className="plans__choose">
+            <div className="duration">Monthly</div>
+            <Switch
+              onChange={handleSwitch}
+              checked={checkedSwitch}
+              onColor="#86d3ff"
+              onHandleColor="#2693e6"
+              handleDiameter={30}
+              uncheckedIcon={false}
+              checkedIcon={false}
+              boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+              activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+              height={30}
+              width={100}
+              className="react-switch"
+              id="material-switch"
+            />
+            <div className="duration">Yearly</div>
+            <span className="save">Save 25%</span>
+          </span>
+          <div className="plans__items">
+            {checkedSwitch ? (
+              <div className="plans__item">
+                <h5>Recommended</h5>
+                <div className="price">$<span>16.99</span>/mo</div>
+                <div className="billed">Billed Annually</div>
+                <div className="plan__feature">
+                  {renderTick("Same price as Google Drive")}
+                  {renderTick("Double the features")}
+                </div>
+                <div className="plan__btn" onClick={() => props.history.push('/sign_up')}>
+                  Start 7 Days Free Trial</div>
+              </div>
+            ) : (
+              <div className="plans__item">
+                <h5>Starter</h5>
+                <div className="price">$<span>20</span>/mo</div>
+                <div className="billed">Billed Monthly</div>
+                <div className="plan__feature">
+                  {renderTick("Same price as Google Drive")}
+                  {renderTick("Double the features")}
+                </div>
+                <div className="plan__btn" onClick={() => props.history.push('/sign_up')}>
+                  Start 7 Days Free Trial</div>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>}
     </div>
   )
 
@@ -137,7 +194,7 @@ const Landing = (props) => {
       <section className="screen" style={{ backgroundColor: '#fff', display: width >= 575 && "none" }}>
         <div className="container__inner screen__inner" style={{ width: width <= 575 && width + "px" }}>
           <div className="screen__image" style={{textAlign: "center"}}>
-            <img src={screen4} alt="screen2" style={{marginTop: "30px", height: "250px", width: "auto" }} />
+            <img src={phone} alt="phone" style={{marginTop: "30px", marginBottom: "20px", height: "460px", width: "auto" }} />
           </div>
           {renderMobileView(
             "Better than Dropbox and Google Drive for Video Creators",
@@ -237,6 +294,20 @@ const Landing = (props) => {
             ],
             3
           )}
+        </div>
+      </section>
+
+      <section className="screen" style={{ backgroundColor: '#fff', display: width >= 575 && "none" }}>
+        <div className="container__inner screen__inner" style={{ width: width <= 575 && width + "px" }}>
+          <div className="screen__image" style={{textAlign: "center"}}>
+          </div>
+          {renderMobileView(
+            null,
+            null,
+            null,
+            4
+          )}
+
         </div>
       </section>
 
