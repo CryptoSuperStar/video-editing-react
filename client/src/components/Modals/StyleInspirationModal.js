@@ -156,7 +156,7 @@ const StyleInspirationModal = (props) => {
             ))}
           </div>
 
-          <h5>Select your project category:</h5>
+          <h5>Project Category:</h5>
           <div className="pick__category">
             <select name="projectCategory"
               style={{border: errorCategory === 'select' ? "1px solid red":''}}
@@ -182,7 +182,9 @@ const StyleInspirationModal = (props) => {
             {customCategory === true
               &&
               <>
-                <label>Please type a category of your project</label>
+                <label style={{display: errorCategory === 'input' ? "initial":'none'}}>
+                  Please type a category of your project
+                </label>
                 <input style={{border: errorCategory === 'input' ? "1px solid red":''}}
                   required
                   type="text"
