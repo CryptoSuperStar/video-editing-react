@@ -128,6 +128,19 @@ const Landing = (props) => {
             <div className="duration">Yearly</div>
             <span className="save">Save 25%</span>
           </span>
+
+          <div className="screen__mobile--dots">{[...Array(5)].map((dot, i) => (
+            <span
+              key={i}
+              className="screen__mobile--dot"
+              style={{
+                backgroundColor: i === active ? '#3b8590' : '#d8e1f1',
+                transform: `scale(${i === active ? '1.5, 1.5' : '1,1'})`
+              }}
+              onClick={() => setMarginLeft(i * -width)} />
+          ))}
+          </div>
+          
           <div className="plans__items">
             {checkedSwitch ? (
               <div className="plans__item">
