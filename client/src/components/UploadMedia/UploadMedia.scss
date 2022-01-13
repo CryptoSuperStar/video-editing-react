@@ -491,7 +491,6 @@
     border-radius: 5px;
     display: flex;
     align-items: center;
-    justify-content: center;
     cursor: pointer;
     &:first-of-type {
       margin-left: 0;
@@ -644,7 +643,7 @@
   .generate__btns {
     button {
       flex-grow: 1;
-      margin: 5px;
+      margin: 0 5px;
       flex-basis: 30%;
     }
   }
