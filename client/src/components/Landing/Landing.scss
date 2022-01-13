@@ -502,7 +502,8 @@
     z-index: 9;
     .screen__inner {
       flex-direction: column;
-      
+      max-height: 100%;
+      overflow-y: auto;
     }
   }
   .screen__image {
@@ -584,13 +585,22 @@
   }
 
   .plans {
+    .container__inner {
+      min-height: 95vh;
+      .plans__items {
+        margin-bottom: 0;
+      }
+    }
+
     .screen__title {
-      margin-top: 85px;
+      margin-top: 0;
       font-size: 50px;
+      padding-top: 84px;
     }
 
     .plans__choose {
       margin-top: 50px;
+      margin-left: -80px;
       .duration {
         display: block;
         float: left;
