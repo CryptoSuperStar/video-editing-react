@@ -204,173 +204,204 @@ const Landing = (props) => {
         </div>
       </section>
 
-      <section className="screen" style={{ backgroundColor: '#fff', display: width >= 575 && "none" }}>
-        <div className="container__inner screen__inner" style={{ width: width <= 575 && width + "px" }}>
-          <div className="screen__image" style={{textAlign: "center"}}>
-            <img src={phone} alt="phone" style={{marginTop: "30px", marginBottom: "20px", height: "460px", width: "auto" }} />
-          </div>
-          {renderMobileView(
-            "Better than Dropbox and Google Drive for Video Creators",
-            null,
-            null,
-            0
-          )}
-
-        </div>
-      </section>
-
-
-      <section className="screen"
-        style={{ backgroundColor: '#F7F7FBFF', width: width <= 575 && width + "px", marginLeft: width <= 575 && marginLeft + "px" }}>
-        <div className="container__inner screen__inner"
-          style={{ width: width <= 575 && width + "px" }}>
-          <div className="screen__text web__view">
-            <h3 className="screen__title">Transfer video and edit notes. Store Projects.</h3>
-            <span>Built for videographers, video editors, and content producers</span>
-            <div className="screen__ticks">
-              {renderTick("Fastest Way to Transfer Video")}
-              {renderTick("Tag edit notes to specific times in the footage")}
-              {renderTick("Upload revisions and get feedback")}
-              {renderTick("Supports HD audio and video files")}
+      {width <= 575 &&
+      <Fragment>
+        <section className="screen" style={{ backgroundColor: '#fff' }}>
+          <div className="container__inner screen__inner" style={{ width: width + "px" }}>
+            <div className="screen__image" style={{textAlign: "center"}}>
+              <img src={phone} alt="phone" style={{marginTop: "30px", marginBottom: "20px", height: "460px", width: "auto" }} />
             </div>
-          </div>
-          <div className="screen__image">
-            <img src={screen1} alt="screen1" />
-          </div>
-          {renderMobileView(
-            "Transfer video and edit notes. Store Projects.", 
-            "Built for videographers, video editors, and content producers",
-            [
-              "Fastest Way to Transfer Video",
-              "Supports HD audio and video files"
-            ],
-            1
-          )}
-        </div>
-      </section>
+            {renderMobileView(
+              "Better than Dropbox and Google Drive for Video Creators",
+              null,
+              null,
+              0
+            )}
 
-      <section className="screen" style={{ backgroundColor: '#fff' }}>
-        <div className="container__inner screen__inner" style={{ width: width <= 575 && width + "px" }}>
-          <div className="screen__image">
-            <img src={screen2} alt="screen2" />
           </div>
-          {renderMobileView(
-            "Built for Video Creators", 
-            null,
-            [
-              "2TB+ of media content storage",
-              "Less expensive than Google Drive and Dropbox",
-            ],
-            2
-          )}
-          <div className="screen__text web__view">
-            <h3 className="screen__title">Built for Video Creators</h3>
-            <span></span>
-            <div className="screen__ticks">
-              {renderTick("2TB+ of media content storage")}
-              {renderTick("Less expensive than Google Drive and Dropbox")}
-              {renderTick("Fastest Upload time")}
-              {renderTick("Handle video format conversion")}
+        </section>
+
+        <section className="screen"
+          style={{ backgroundColor: '#F7F7FBFF', width: width + "px", marginLeft: marginLeft + "px" }}>
+          <div className="container__inner screen__inner"
+            style={{ width: width <= 575 && width + "px" }}>
+            <div className="screen__image">
+              <img src={screen1} alt="screen1" />
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="screen" style={{ backgroundColor: '#F7F7FBFF' }}>
-        <div className="screen__inner container__inner" style={{ width: width <= 575 && width + "px" }}>
-          <div className="screen__text web__view">
-            <h3 className="screen__title">Supports both Editors and Clients.</h3>
-            <span>
-            </span>
-            <div className="screen__ticks">
-              {renderTick("Clients can upload their videos for free")}
-              {renderTick("Handle multiple client accounts for one editor")}
-              {renderTick("Track client revisions")}
-              {renderTick("Receive client notes tagged to specific times")}
-            </div>
-          </div>
-          <div className="screen__image">
-            <img src={screen3} alt="screen3" />
-          </div>
-          {renderMobileView(
-            "Supports both Editors and Clients.",
-            null,
-            [
-              "Clients can upload their videos for free",
-              "Track client revisions",
-              "Receive client notes tagged to specific times"
-            ],
-            3
-          )}
-        </div>
-      </section>
-
-      <section className="screen" style={{ backgroundColor: '#fff', display: width >= 575 && "none" }}>
-        <div className="container__inner screen__inner" style={{ width: width <= 575 && width + "px" }}>
-          <div className="screen__image" style={{textAlign: "center"}}>
-          </div>
-          {renderMobileView(
-            null,
-            null,
-            null,
-            4
-          )}
-
-        </div>
-      </section>
-
-      <section className="plans web__view">
-        <div className="container__inner">
-          <h3 className="screen__title">Pricing & Plans</h3>
-          <span className="plans__choose">
-            Monthly
-            <Switch
-              onChange={handleSwitch}
-              checked={checkedSwitch}
-              onColor="#86d3ff"
-              onHandleColor="#2693e6"
-              handleDiameter={30}
-              uncheckedIcon={false}
-              checkedIcon={false}
-              boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-              activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
-              height={30}
-              width={100}
-              className="react-switch"
-              id="material-switch"
-            />
-            Yearly
-            <span className="save">Save 25%</span>
-          </span>
-          <div className="plans__items">
-            {checkedSwitch ? (
-              <div className="plans__item">
-                <h5>Recommended</h5>
-                <div className="price">$<span>16.99</span>/mo</div>
-                <div className="billed">Billed Annually</div>
-                <div className="plan__feature">
-                  {renderTick("Same price as Google Drive")}
-                  {renderTick("Double the features")}
-                </div>
-                <div className="plan__btn" onClick={() => props.history.push('/sign_up')}>
-                  Start 7 Days Free Trial</div>
-              </div>
-            ) : (
-              <div className="plans__item">
-                <h5>Starter</h5>
-                <div className="price">$<span>20</span>/mo</div>
-                <div className="billed">Billed Monthly</div>
-                <div className="plan__feature">
-                  {renderTick("Same price as Google Drive")}
-                  {renderTick("Double the features")}
-                </div>
-                <div className="plan__btn" onClick={() => props.history.push('/sign_up')}>
-                  Start 7 Days Free Trial</div>
-              </div>
+            {renderMobileView(
+              "Transfer video and edit notes. Store Projects.", 
+              "Built for videographers, video editors, and content producers",
+              [
+                "Fastest Way to Transfer Video",
+                "Supports HD audio and video files"
+              ],
+              1
             )}
           </div>
-        </div>
-      </section>
+        </section>
+
+        <section className="screen" style={{ backgroundColor: '#fff' }}>
+          <div className="container__inner screen__inner" style={{ width: width + "px" }}>
+            <div className="screen__image">
+              <img src={screen2} alt="screen2" />
+            </div>
+            {renderMobileView(
+              "Built for Video Creators", 
+              null,
+              [
+                "2TB+ of media content storage",
+                "Less expensive than Google Drive and Dropbox",
+              ],
+              2
+            )}
+          </div>
+        </section>
+
+        <section className="screen" style={{ backgroundColor: '#F7F7FBFF' }}>
+          <div className="screen__inner container__inner" style={{ width: width + "px" }}>
+            <div className="screen__image">
+              <img src={screen3} alt="screen3" />
+            </div>
+            {renderMobileView(
+              "Supports both Editors and Clients.",
+              null,
+              [
+                "Clients can upload their videos for free",
+                "Track client revisions",
+                "Receive client notes tagged to specific times"
+              ],
+              3
+            )}
+          </div>
+        </section>
+
+        <section className="screen" style={{ backgroundColor: '#fff' }}>
+          <div className="container__inner screen__inner" style={{ width: width + "px" }}>
+            <div className="screen__image" style={{textAlign: "center"}}>
+            </div>
+            {renderMobileView(
+              null,
+              null,
+              null,
+              4
+            )}
+
+          </div>
+        </section>
+      </Fragment>}
+
+      {width > 575 &&
+      <Fragment>
+        <section className="screen"
+          style={{ backgroundColor: '#F7F7FBFF' }}>
+          <div className="container__inner screen__inner"
+            style={{ width: width <= 575 && width + "px" }}>
+            <div className="screen__text web__view">
+              <h3 className="screen__title">Transfer video and edit notes. Store Projects.</h3>
+              <span>Built for videographers, video editors, and content producers</span>
+              <div className="screen__ticks">
+                {renderTick("Fastest Way to Transfer Video")}
+                {renderTick("Tag edit notes to specific times in the footage")}
+                {renderTick("Upload revisions and get feedback")}
+                {renderTick("Supports HD audio and video files")}
+              </div>
+            </div>
+            <div className="screen__image">
+              <img src={screen1} alt="screen1" />
+            </div>
+          </div>
+        </section>
+
+        <section className="screen" style={{ backgroundColor: '#fff' }}>
+          <div className="container__inner screen__inner">
+            <div className="screen__image">
+              <img src={screen2} alt="screen2" />
+            </div>
+            <div className="screen__text web__view">
+              <h3 className="screen__title">Built for Video Creators</h3>
+              <span></span>
+              <div className="screen__ticks">
+                {renderTick("2TB+ of media content storage")}
+                {renderTick("Less expensive than Google Drive and Dropbox")}
+                {renderTick("Fastest Upload time")}
+                {renderTick("Handle video format conversion")}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="screen" style={{ backgroundColor: '#F7F7FBFF' }}>
+          <div className="screen__inner container__inner">
+            <div className="screen__text web__view">
+              <h3 className="screen__title">Supports both Editors and Clients.</h3>
+              <span>
+              </span>
+              <div className="screen__ticks">
+                {renderTick("Clients can upload their videos for free")}
+                {renderTick("Handle multiple client accounts for one editor")}
+                {renderTick("Track client revisions")}
+                {renderTick("Receive client notes tagged to specific times")}
+              </div>
+            </div>
+            <div className="screen__image">
+              <img src={screen3} alt="screen3" />
+            </div>
+          </div>
+        </section>
+
+        <section className="plans web__view">
+          <div className="container__inner">
+            <h3 className="screen__title">Pricing & Plans</h3>
+            <span className="plans__choose">
+              Monthly
+              <Switch
+                onChange={handleSwitch}
+                checked={checkedSwitch}
+                onColor="#86d3ff"
+                onHandleColor="#2693e6"
+                handleDiameter={30}
+                uncheckedIcon={false}
+                checkedIcon={false}
+                boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+                activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+                height={30}
+                width={100}
+                className="react-switch"
+                id="material-switch"
+              />
+              Yearly
+              <span className="save">Save 25%</span>
+            </span>
+            <div className="plans__items">
+              {checkedSwitch ? (
+                <div className="plans__item">
+                  <h5>Recommended</h5>
+                  <div className="price">$<span>16.99</span>/mo</div>
+                  <div className="billed">Billed Annually</div>
+                  <div className="plan__feature">
+                    {renderTick("Same price as Google Drive")}
+                    {renderTick("Double the features")}
+                  </div>
+                  <div className="plan__btn" onClick={() => props.history.push('/sign_up')}>
+                    Start 7 Days Free Trial</div>
+                </div>
+              ) : (
+                <div className="plans__item">
+                  <h5>Starter</h5>
+                  <div className="price">$<span>20</span>/mo</div>
+                  <div className="billed">Billed Monthly</div>
+                  <div className="plan__feature">
+                    {renderTick("Same price as Google Drive")}
+                    {renderTick("Double the features")}
+                  </div>
+                  <div className="plan__btn" onClick={() => props.history.push('/sign_up')}>
+                    Start 7 Days Free Trial</div>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+      </Fragment>}
 
       <section className="questions web__view">
         <div className="container__inner questions__inner">
