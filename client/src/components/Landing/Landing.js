@@ -229,6 +229,8 @@ const Landing = (props) => {
             <span>Built for videographers, video editors, and content producers</span>
             <div className="screen__ticks">
               {renderTick("Fastest Way to Transfer Video")}
+              {renderTick("Tag edit notes to specific times in the footage")}
+              {renderTick("Upload revisions and get feedback")}
               {renderTick("Supports HD audio and video files")}
             </div>
           </div>
