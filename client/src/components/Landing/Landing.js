@@ -297,7 +297,6 @@ const Landing = (props) => {
             null,
             [
               "Clients can upload their videos for free",
-              "Handle multiple client accounts for one editor",
               "Track client revisions",
               "Receive client notes tagged to specific times"
             ],
