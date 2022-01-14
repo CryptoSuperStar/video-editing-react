@@ -208,8 +208,8 @@ const Landing = (props) => {
       <Fragment>
         <section className="screen" style={{ backgroundColor: '#fff' }}>
           <div className="container__inner screen__inner" style={{ width: width + "px" }}>
-            <div className="screen__image" style={{textAlign: "center"}}>
-              <img src={phone} alt="phone" style={{marginTop: "30px", marginBottom: "20px", height: "460px", width: "auto" }} />
+            <div className="screen__image">
+              <img src={screen1} alt="screen1" />
             </div>
             {renderMobileView(
               "Better than Dropbox and Google Drive for Video Creators",
@@ -226,7 +226,7 @@ const Landing = (props) => {
           <div className="container__inner screen__inner"
             style={{ width: width <= 575 && width + "px" }}>
             <div className="screen__image">
-              <img src={screen1} alt="screen1" />
+              <img src={screen2} alt="screen2" />
             </div>
             {renderMobileView(
               "Transfer video and edit notes. Store Projects.", 
@@ -243,7 +243,7 @@ const Landing = (props) => {
         <section className="screen" style={{ backgroundColor: '#fff' }}>
           <div className="container__inner screen__inner" style={{ width: width + "px" }}>
             <div className="screen__image">
-              <img src={screen2} alt="screen2" />
+              <img src={screen3} alt="screen3" />
             </div>
             {renderMobileView(
               "Built for Video Creators", 
@@ -260,7 +260,7 @@ const Landing = (props) => {
         <section className="screen" style={{ backgroundColor: '#F7F7FBFF' }}>
           <div className="screen__inner container__inner" style={{ width: width + "px" }}>
             <div className="screen__image">
-              <img src={screen3} alt="screen3" />
+              <img src={screen4} alt="screen4" />
             </div>
             {renderMobileView(
               "Supports both Editors and Clients.",
