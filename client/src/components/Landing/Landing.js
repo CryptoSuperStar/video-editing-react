@@ -211,7 +211,7 @@ const Landing = (props) => {
           </div>
           {renderMobileView(
             "Better than Dropbox and Google Drive for Video Creators",
-            "Helping humans stay competitive with AI editors",
+            null,
             null,
             0
           )}
@@ -242,8 +242,6 @@ const Landing = (props) => {
             "Built for videographers, video editors, and content producers",
             [
               "Fastest Way to Transfer Video",
-              "Tag edit notes to specific times in the footage",
-              "Upload revisions and get feedback",
               "Supports HD audio and video files"
             ],
             1
@@ -262,8 +260,6 @@ const Landing = (props) => {
             [
               "2TB+ of media content storage",
               "Less expensive than Google Drive and Dropbox",
-              "Fastest Upload time",
-              "Handle video format conversion"
             ],
             2
           )}
@@ -301,7 +297,6 @@ const Landing = (props) => {
             null,
             [
               "Clients can upload their videos for free",
-              "Handle multiple client accounts for one editor",
               "Track client revisions",
               "Receive client notes tagged to specific times"
             ],
