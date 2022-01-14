@@ -242,8 +242,6 @@ const Landing = (props) => {
             "Built for videographers, video editors, and content producers",
             [
               "Fastest Way to Transfer Video",
-              "Tag edit notes to specific times in the footage",
-              "Upload revisions and get feedback",
               "Supports HD audio and video files"
             ],
             1
