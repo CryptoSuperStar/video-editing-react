@@ -260,8 +260,6 @@ const Landing = (props) => {
             [
               "2TB+ of media content storage",
               "Less expensive than Google Drive and Dropbox",
-              "Fastest Upload time",
-              "Handle video format conversion"
             ],
             2
           )}
