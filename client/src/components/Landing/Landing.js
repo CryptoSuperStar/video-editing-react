@@ -109,7 +109,7 @@ const Landing = (props) => {
       &&
       <section className="plans">
         <div className="container__inner">
-          <div style={{ height: "321px" }}>
+          <div style={{ height: "290px" }}>
             <h3 className="screen__title">Pricing & Plans</h3>
             <span className="plans__choose">
               <div className="duration">Monthly</div>
