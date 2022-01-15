@@ -66,7 +66,7 @@ const Landing = (props) => {
       {active < 4
       &&
       <div className="screen__mobile">
-        <div style={{ height: "300px" }}>
+        <div style={{ height: "250px" }}>
           <div className="screen__mobile--dots">{[...Array(5)].map((dot, i) => (
             <span
               key={i}
