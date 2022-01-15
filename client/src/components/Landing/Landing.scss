@@ -589,6 +589,15 @@
     .container__inner {
       min-height: 95vh;
       .plans__items {
+        h5 {
+          margin: 25px;
+        }
+        .billed {
+          margin-top: 25px;
+        }
+        .plan__feature {
+          margin-bottom: 22px;
+        }
         margin-bottom: 0;
       }
     }

@@ -66,30 +66,32 @@ const Landing = (props) => {
       {active < 4
       &&
       <div className="screen__mobile">
-        <div className="screen__mobile--dots">{[...Array(5)].map((dot, i) => (
-          <span
-            key={i}
-            className="screen__mobile--dot"
-            style={{
-              backgroundColor: i === active ? '#3b8590' : '#d8e1f1',
-              transform: `scale(${i === active ? '1.5, 1.5' : '1,1'})`
-            }}
-            onClick={() => setMarginLeft(i * -width)} />
-        ))}
-        </div>
-        <h3>{title}</h3>
+        <div style={{ height: "300px" }}>
+          <div className="screen__mobile--dots">{[...Array(5)].map((dot, i) => (
+            <span
+              key={i}
+              className="screen__mobile--dot"
+              style={{
+                backgroundColor: i === active ? '#3b8590' : '#d8e1f1',
+                transform: `scale(${i === active ? '1.5, 1.5' : '1,1'})`
+              }}
+              onClick={() => setMarginLeft(i * -width)} />
+          ))}
+          </div>
+          <h3>{title}</h3>
 
-        {text !== null
-            &&
-            <Fragment>
-              <p>{text}</p>
-            </Fragment>}
-        
-        {bullets !== null
-            &&
-              bullets.map((item, i) => (
-                renderTick(item)
-              ))}
+          {text !== null
+              &&
+              <Fragment>
+                <p>{text}</p>
+              </Fragment>}
+          
+          {bullets !== null
+              &&
+                bullets.map((item, i) => (
+                  renderTick(item)
+                ))}
+        </div>
 
 
         {localStorage.isAuthenticated !== 'true'
@@ -107,27 +109,29 @@ const Landing = (props) => {
       &&
       <section className="plans">
         <div className="container__inner">
-          <h3 className="screen__title">Pricing & Plans</h3>
-          <span className="plans__choose">
-            <div className="duration">Monthly</div>
-            <Switch
-              onChange={handleSwitch}
-              checked={checkedSwitch}
-              onColor="#86d3ff"
-              onHandleColor="#2693e6"
-              handleDiameter={30}
-              uncheckedIcon={false}
-              checkedIcon={false}
-              boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-              activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
-              height={30}
-              width={100}
-              className="react-switch"
-              id="material-switch"
-            />
-            <div className="duration">Yearly</div>
-            <span className="save">Save 25%</span>
-          </span>
+          <div style={{ height: "321px" }}>
+            <h3 className="screen__title">Pricing & Plans</h3>
+            <span className="plans__choose">
+              <div className="duration">Monthly</div>
+              <Switch
+                onChange={handleSwitch}
+                checked={checkedSwitch}
+                onColor="#86d3ff"
+                onHandleColor="#2693e6"
+                handleDiameter={30}
+                uncheckedIcon={false}
+                checkedIcon={false}
+                boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+                activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+                height={30}
+                width={100}
+                className="react-switch"
+                id="material-switch"
+              />
+              <div className="duration">Yearly</div>
+              <span className="save">Save 25%</span>
+            </span>
+          </div>
 
           <div className="screen__mobile--dots">{[...Array(5)].map((dot, i) => (
             <span
