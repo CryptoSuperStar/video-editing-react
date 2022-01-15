@@ -217,7 +217,7 @@ const Landing = (props) => {
             </div>
             {renderMobileView(
               "Better than Dropbox and Google Drive for Video Creators",
-              null,
+              "Helping humans stay competitive with AI editors",
               null,
               0
             )}
