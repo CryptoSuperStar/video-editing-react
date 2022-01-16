@@ -66,7 +66,7 @@ const Landing = (props) => {
       {active < 4
       &&
       <div className="screen__mobile">
-        <div style={{ height: "300px" }}>
+        <div style={{ height: "250px" }}>
           <div className="screen__mobile--dots">{[...Array(5)].map((dot, i) => (
             <span
               key={i}
@@ -109,7 +109,7 @@ const Landing = (props) => {
       &&
       <section className="plans">
         <div className="container__inner">
-          <div style={{ height: "321px" }}>
+          <div style={{ height: "325px" }}>
             <h3 className="screen__title">Pricing & Plans</h3>
             <span className="plans__choose">
               <div className="duration">Monthly</div>
@@ -186,27 +186,6 @@ const Landing = (props) => {
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      <section className="Landing__control container__inner web__view">
-        <div className="Landing__control--text">
-          <h3>Better than Dropbox and Google Drive for Video Creators</h3>
-          <span>Helping humans stay competitive with AI editors</span>
-          {localStorage.isAuthenticated !== 'true' &&
-            <Fragment>
-              <Link to="/sign_up">Get Started</Link>
-              <span>Start your 7-day free trial now</span>
-            </Fragment>}
-
-        </div>
-        <div className="Landing__control--image">
-          <img src={phone} alt="phone" />
-          <div className="oval__green" />
-          <div className="ring__black" />
-          <div className="theBest">
-            <img src={logo2} alt="logo2"/>
-            <span>Get the very best with MyVideosPro</span>
-          </div>
-        </div>
-      </section>
 
       {width <= 575 &&
       <Fragment>
@@ -217,7 +196,7 @@ const Landing = (props) => {
             </div>
             {renderMobileView(
               "Better than Dropbox and Google Drive for Video Creators",
-              null,
+              "Helping humans stay competitive with AI editors",
               null,
               0
             )}
@@ -296,6 +275,28 @@ const Landing = (props) => {
 
       {width > 575 &&
       <Fragment>
+        <section className="Landing__control container__inner web__view">
+          <div className="Landing__control--text">
+            <h3>Better than Dropbox and Google Drive for Video Creators</h3>
+            <span>Helping humans stay competitive with AI editors</span>
+            {localStorage.isAuthenticated !== 'true' &&
+              <Fragment>
+                <Link to="/sign_up">Get Started</Link>
+                <span>Start your 7-day free trial now</span>
+              </Fragment>}
+
+          </div>
+          <div className="Landing__control--image">
+            <img src={phone} alt="phone" />
+            <div className="oval__green" />
+            <div className="ring__black" />
+            <div className="theBest">
+              <img src={logo2} alt="logo2"/>
+              <span>Get the very best with MyVideosPro</span>
+            </div>
+          </div>
+        </section>
+
         <section className="screen"
           style={{ backgroundColor: '#F7F7FBFF' }}>
           <div className="container__inner screen__inner"
@@ -405,19 +406,20 @@ const Landing = (props) => {
             </div>
           </div>
         </section>
+
+        <section className="questions web__view">
+          <div className="container__inner questions__inner">
+            <div className="questions__title">
+              <h3 className="screen__title">Control. Build. Grow.</h3>
+              {localStorage.isAuthenticated === 'false' &&
+                <Fragment>
+                  <Link to="/sign_in">Start 7 Days Free Trial</Link>
+                </Fragment>}
+            </div>
+          </div>
+        </section>
       </Fragment>}
 
-      <section className="questions web__view">
-        <div className="container__inner questions__inner">
-          <div className="questions__title">
-            <h3 className="screen__title">Control. Build. Grow.</h3>
-            {localStorage.isAuthenticated === 'false' &&
-              <Fragment>
-                <Link to="/sign_in">Start 7 Days Free Trial</Link>
-              </Fragment>}
-          </div>
-        </div>
-      </section>
       <FooterNav />
     </div>
   );
