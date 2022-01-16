@@ -1,6 +1,10 @@
-import { REACT_MONDAY_BOARD_ID, REACT_MONDAY_API_KEY } from "../../utils/misc";
+import {
+  REACT_APP_MONDAY_BOARD_ID,
+  REACT_APP_MONDAY_API_KEY,
+} from "../../utils/misc";
 import setAuthToken from "../../utils/authToken";
 import crypto from "crypto";
+import { toast } from "react-toastify";
 
 export const createSupportTicket = (data) => async (dispatch) => {
   if (localStorage.token) {
@@ -38,7 +42,7 @@ export const createSupportTicket = (data) => async (dispatch) => {
         }
         `,
         variables: {
-          boardId: REACT_MONDAY_BOARD_ID,
+          boardId: REACT_APP_MONDAY_BOARD_ID,
           groupId: categoryId,
           itemName: crypto.randomBytes(4).toString("hex"),
           columnValues: JSON.stringify({
@@ -65,13 +69,12 @@ export const createSupportTicket = (data) => async (dispatch) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: REACT_MONDAY_API_KEY,
+          Authorization: REACT_APP_MONDAY_API_KEY,
         },
         body: JSON.stringify(body),
       });
 
       response = await response.json();
-      console.log(response);
 
       dispatch({
         type: "CREATE_TICKET",
@@ -79,6 +82,7 @@ export const createSupportTicket = (data) => async (dispatch) => {
       });
       return response.data;
     } catch (error) {
+      toast.error("Something went wrong, please try again.");
       console.log(error);
       dispatch({
         type: "CREATE_TICKET_ERROR",
