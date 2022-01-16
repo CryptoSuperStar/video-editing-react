@@ -8,13 +8,13 @@
     "server": "nodemon server/server.js",
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "YARN_PRODUCTION=false yarn --cwd client && yarn --cwd client build"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "engines": {
-    "node": "^16.13.1"
+    "node": "^14.17.0"
   },
   "dependencies": {
     "apple-signin-auth": "^1.5.1",
