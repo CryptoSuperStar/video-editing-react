@@ -14,11 +14,11 @@
   margin: 225px 0 100px;
   h3 {
     color: var(--eerie-black);
-    font-family: var(--primary-font);
+    font-family: "CircularStd-Bold", sans-serif;
     font-size: 80px;
     font-style: normal;
     font-weight: 700;
-    letter-spacing: -2.5px;
+    letter-spacing: -2.50px;
   }
   span {
     display: block;
@@ -28,11 +28,11 @@
     &:last-child {
       margin-top: 15px;
       color: #bcc7cd;
-      font-family: var(--primary-font);
+      font-family: "CircularStd-Medium", sans-serif;
       font-size: var(--font-size-xxl);
       font-style: normal;
       font-weight: 500;
-      letter-spacing: -0.5px;
+      letter-spacing: -0.50px;
       line-height: 16px;
     }
   }
@@ -44,7 +44,7 @@
     letter-spacing: -0.66px;
     line-height: 21px;
     color: var(--white);
-    font-family: var(--primary-font);
+    font-family: "CircularStd-Medium", sans-serif;
     font-size: var(--font-size-xxl);
     font-style: normal;
     font-weight: 500;
@@ -99,9 +99,9 @@
     }
     span {
       white-space: nowrap;
-      letter-spacing: 0px;
+      letter-spacing: 0.00px;
       color: var(--white);
-      font-family: sans-serif;
+      font-family: "SFPro Display-Bold", sans-serif;
       font-size: var(--font-size-m);
       font-style: normal;
       font-weight: 400;
@@ -111,19 +111,21 @@
 }
 
 .screen {
+  
   .screen__inner {
     display: flex;
     justify-content: space-between;
+    
   }
   span {
     display: inline-block;
     margin-top: 90px;
-    letter-spacing: -0.4px;
+    letter-spacing: -0.66px;
     color: var(--shuttle-gray);
-    font-family: sans-serif;
+    font-family: "CircularStd-Book", sans-serif;
     font-size: var(--font-size-xxl);
     font-style: normal;
-    font-weight: 300;
+    font-weight: 400;
     line-height: 39px;
   }
 }
@@ -131,7 +133,7 @@
 .screen__title {
   letter-spacing: -1.88px;
   color: var(--eerie-black);
-  font-family: var(--primary-font);
+  font-family: "CircularStd-Bold", sans-serif;
   font-size: 60px;
   font-style: normal;
   font-weight: 700;
@@ -158,7 +160,7 @@
     letter-spacing: -0.66px;
     line-height: 21px;
     color: var(--eerie-black);
-    font-family: var(--primary-font);
+    font-family: "CircularStd-Medium", sans-serif;
     font-size: var(--font-size-xxl);
     font-style: normal;
     font-weight: 500;
@@ -166,7 +168,7 @@
     margin-left: 15px;
     white-space: nowrap;
   }
-
+  
   .tick__item--image {
     width: 30px;
     height: 30px;
@@ -175,7 +177,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
+    
     img {
       width: 13px;
       height: 9px;
@@ -219,7 +221,7 @@
     background-color: #f04037;
     border-radius: 5px;
     color: var(--white);
-    font-family: var(--primary-font);
+    font-family: "CircularStd-Bold", sans-serif;
     font-size: 13px;
     font-style: normal;
     font-weight: 700;
@@ -249,7 +251,7 @@
   margin: 0 15px;
   h5 {
     margin-top: 50px;
-    letter-spacing: -0.5px;
+    letter-spacing: -0.50px;
     line-height: 28px;
     color: var(--smalt-blue);
     font-size: var(--font-size-m);
@@ -283,7 +285,7 @@
     letter-spacing: -0.66px;
     line-height: 21px;
     color: var(--white);
-    font-family: var(--primary-font);
+    font-family: "CircularStd-Medium", sans-serif;
     font-size: var(--font-size-xxl);
     font-style: normal;
     font-weight: 500;
@@ -326,7 +328,7 @@
       letter-spacing: -0.75px;
       line-height: 24px;
       color: var(--white);
-      font-family: var(--primary-font);
+      font-family: "CircularStd-Bold", sans-serif;
       font-size: var(--font-size-xxxl);
       font-style: normal;
       font-weight: 700;
@@ -356,7 +358,7 @@
     line-height: 21px;
     text-decoration: none;
     color: var(--white);
-    font-family: var(--primary-font);
+    font-family: "CircularStd-Medium", sans-serif;
     font-size: var(--font-size-xxl);
     font-style: normal;
     font-weight: 500;
@@ -372,7 +374,7 @@
   }
 }
 
-@media all and (max-width: 1280px) {
+@media all and (max-width: 1280px){
   .Landing__control--text {
     span {
       width: 80%;
@@ -423,7 +425,7 @@
   }
 }
 
-@media all and (max-width: 980px) {
+@media all and (max-width: 980px){
   .Landing__control--text h3 {
     font-size: 60px;
   }
@@ -457,8 +459,7 @@
   }
   .Landing__control--image {
     margin-top: 150px;
-    .oval__green,
-    .ring__black {
+    .oval__green, .ring__black {
       display: none;
     }
     .theBest {
@@ -468,8 +469,7 @@
   .screen__text {
     margin: 50px 0;
   }
-  .screen__text > span,
-  .screen__ticks {
+  .screen__text > span, .screen__ticks {
     margin-top: 20px;
   }
   .plans .plans__text {
@@ -495,10 +495,10 @@
     height: 95vh;
     overflow-y: auto;
   }
-  .screen {
+  .screen  {
     width: 100%;
     background-color: white !important;
-    transition: all linear 0.2s;
+    transition: all linear .2s;
     z-index: 9;
     .screen__inner {
       flex-direction: column;
@@ -527,7 +527,7 @@
     text-align: center;
     h3 {
       margin-top: 25px;
-      letter-spacing: 0px;
+      letter-spacing: 0.00px;
       line-height: 32px;
       color: var(--black);
       font-family: "Montserrat", "Helvetica Neue", sans-serif;
@@ -536,7 +536,7 @@
       font-weight: 700;
     }
     p {
-      letter-spacing: 0px;
+      letter-spacing: 0.00px;
       line-height: 22px;
       color: var(--granite-gray);
       font-family: "Montserrat", "Helvetica Neue", sans-serif;
@@ -550,7 +550,7 @@
       padding: 10px 0;
       border: none;
       border-radius: 22px;
-      letter-spacing: 0px;
+      letter-spacing: 0.00px;
       line-height: 22px;
       color: var(--white);
       font-family: "Montserrat", "Helvetica Neue", sans-serif;
@@ -582,7 +582,7 @@
     height: 10px;
     background-color: var(--link-water);
     border-radius: 50%;
-    margin: 0 5px;
+    margin:0 5px;
   }
 
   .plans {
@@ -623,7 +623,7 @@
         margin-top: -5px;
       }
       .react-switch {
-        zoom: 0.75;
+        zoom: .75;
         float: left;
       }
     }

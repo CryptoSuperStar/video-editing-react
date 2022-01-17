@@ -52,22 +52,29 @@ const Support = (props) => {
   };
 
   const submitTicket = async (e) => {
-    const { user } = props;
-    const categoryId = categoryIds[category];
-    e.preventDefault();
-    if (!request) return toast.error("Your request must have a description");
-    if (!categoryIds[category]) return toast.error("Please select a category");
+    try {
+      const { user } = props;
+      const categoryId = categoryIds[category];
+      e.preventDefault();
+      if (!request) return toast.error("Your request must have a description");
+      if (!categoryIds[category])
+        return toast.error("Please select a category");
 
-    setIsSavingTicket(true);
-    const data = { request, category, user, categoryId };
-    const didSubmit = await props.dispatch(createSupportTicket(data));
-    setIsSavingTicket(false);
-    if (!didSubmit)
-      return toast.error("Something went wrong, please try again");
+      setIsSavingTicket(true);
+      const data = { request, category, user, categoryId };
+      const didSubmit = await props.dispatch(createSupportTicket(data));
+      setIsSavingTicket(false);
+      if (!didSubmit)
+        return toast.error("Something went wrong, please try again");
 
-    toast.success("Your request has been successfully submitted");
-    setRequest("");
-    setCategory(options[0]);
+      toast.success("Your request has been successfully submitted");
+      setRequest("");
+      setCategory(options[0]);
+    } catch (error) {
+      console.log(error);
+      setIsSavingTicket(false);
+      toast.error("Something went wrong, please try again");
+    }
   };
 
   return (
