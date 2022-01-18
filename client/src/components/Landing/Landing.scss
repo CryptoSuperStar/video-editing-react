@@ -519,6 +519,8 @@
   .screen span {
     font-size: medium;
     margin-top: 10px;
+    white-space: normal;
+    text-align: left;
   }
   .screen__mobile {
     //height: 50px;

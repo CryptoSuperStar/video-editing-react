@@ -167,7 +167,7 @@ const Landing = (props) => {
                   {renderTick("Double the features")}
                 </div>
                 <div className="plan__btn" onClick={() => props.history.push('/sign_up')}>
-                  Start 7 Days Free Trial</div>
+                  Get Started</div>
               </div>
             )}
           </div>
