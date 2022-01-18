@@ -4,6 +4,7 @@ import arrowCircle from "../../assets/img/Circle.png";
 import { createSupportTicket } from "../../store/actions/support.action";
 import { toast } from "react-toastify";
 import { connect } from "react-redux";
+import crypto from "crypto";
 
 const Support = (props) => {
   const categoryIds = {
@@ -122,7 +123,10 @@ const Support = (props) => {
         <div className="account_line" />
         <div className="support__questions">
           {questions.map((item, idx) => (
-            <div className="support__question--item">
+            <div
+              key={crypto.randomBytes(4).toString("hex")}
+              className="support__question--item"
+            >
               <div
                 className="support__question--title"
                 onClick={() => handleQuestions(idx)}
