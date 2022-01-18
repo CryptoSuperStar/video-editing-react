@@ -99,7 +99,7 @@ const Landing = (props) => {
         <Fragment>
           <button className="mobile__view--next" onClick={() => {
             props.history.push('/sign_up')
-          }}>Get started</button>
+          }}>Get Started</button>
         </Fragment> }
         
       </div>}
