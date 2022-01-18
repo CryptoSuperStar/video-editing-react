@@ -589,6 +589,13 @@
     .container__inner {
       min-height: 95vh;
       .plans__items {
+        margin-bottom: 0;
+        .plans__item {
+          .plan__btn {
+            line-height: 12px;
+            font-family: "Montserrat", "Helvetica Neue", sans-serif;
+          }
+        }
         h5 {
           margin: 14px;
           margin-bottom: 1px;
