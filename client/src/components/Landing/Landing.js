@@ -99,7 +99,7 @@ const Landing = (props) => {
         <Fragment>
           <button className="mobile__view--next" onClick={() => {
             props.history.push('/sign_up')
-          }}>Get started</button>
+          }}>Get Started</button>
         </Fragment> }
         
       </div>}
@@ -167,7 +167,7 @@ const Landing = (props) => {
                   {renderTick("Double the features")}
                 </div>
                 <div className="plan__btn" onClick={() => props.history.push('/sign_up')}>
-                  Start 7 Days Free Trial</div>
+                  Get Started</div>
               </div>
             )}
           </div>

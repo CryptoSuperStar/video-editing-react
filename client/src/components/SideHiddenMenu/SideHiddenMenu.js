@@ -42,12 +42,13 @@ const SideHiddenMenu = (props) => {
           </>
           }
           
-          {unregisteredLinks.map((link, i) => (
-            <li key={i}>
-              <button onClick={() => handleButton( 'dashboard/' + link.toLowerCase())}>
-                {link}<RightArrow />
-              </button>
-            </li>
+          {localStorage.isAuthenticated === "true" &&
+            unregisteredLinks.map((link, i) => (
+              <li key={i}>
+                <button onClick={() => handleButton( 'dashboard/' + link.toLowerCase())}>
+                  {link}<RightArrow />
+                </button>
+              </li>
           ))}
           {/*<li>
             <button onClick={() => handleButton( 'term_conds_policy')}>
