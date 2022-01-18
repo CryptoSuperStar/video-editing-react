@@ -217,9 +217,11 @@
     background-color: var(--concrete);
     height: 5vh;
     position: relative;
+    border-bottom: 0;
+    box-shadow: 0 0 5px 0 rgb(0 0 0 / 40%);
   }
   .logo__block img {
-    height: 28px;
+    height: 26px;
   }
   .logo__title {
     font-size: var(--font-size-xl);
