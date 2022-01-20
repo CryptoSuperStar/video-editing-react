@@ -1,7 +1,7 @@
 import React from 'react';
 import './DemoLayerEmpty.scss';
-import introVidBigger from "../../assets/vid/intro_1080p.mp4";
-import introVidSmaller from "../../assets/vid/intro_480p.mp4";
+import introVidDesktop from "../../assets/vid/intro_desktop.mp4";
+import introVidMobile from "../../assets/vid/intro_mobile.mp4";
 
 
 const DemoLayerEmpty = ({setShowDemo}) => {
@@ -15,7 +15,7 @@ const DemoLayerEmpty = ({setShowDemo}) => {
         <div className="introVid__container">
           <video 
               id='introVideo'
-              src={window.innerWidth <= 575 ? introVidSmaller : introVidBigger} 
+              src={window.innerWidth <= 575 ? introVidMobile : introVidDesktop} 
               autoPlay={true} 
               playsInline 
               loop 
