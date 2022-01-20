@@ -10,6 +10,7 @@ pipelines:
       - step:
           name: 'Build and Test'
           script:
+            - git push --force https://heroku:$HEROKU_API_KEY@git.heroku.com/provids.git HEAD
             - echo "Your deployment to production script goes here..."
             - echo $NODE_ENV
             - echo $CLIENT_URL
@@ -48,4 +49,3 @@ pipelines:
             - echo $REACT_APP_BUCKET
             - echo $REACT_APP_MONDAY_BOARD_ID
             - echo $REACT_APP_MONDAY_API_KEY
-            - git push --force https://heroku:$HEROKU_API_KEY@git.heroku.com/provids.git HEAD
