@@ -10,4 +10,42 @@ pipelines:
       - step:
           name: 'Build and Test'
           script:
-            - git push -f https://heroku:$HEROKU_API_KEY@git.heroku.com/provids.git HEAD
+            - echo "Your deployment to production script goes here..."
+            - echo $NODE_ENV
+            - echo $CLIENT_URL
+            - echo $JWT_SECRET
+            - echo $STRIPE_API
+            - echo $TWITTER_API
+            - echo $TWITTER_SECRET
+            - echo $GOOGLE_CLIENT
+            - echo $GOOGLE_SECRET
+            - echo $GOOGLE_API
+            - echo $FFMPEG_PATH
+            - echo $FFPROBE_PATH
+            - echo $AWS_KEY
+            - echo $AWS_SECRET_KEY
+            - echo $AWS_BUCKET
+            - echo $YOUTUBE_CLIENT_ID
+            - echo $YOUTUBE_SECRET
+            - echo $REDIRECT_URL
+            - echo $CLIENT_ID
+            - echo $PROJECT_ID
+            - echo $AUTH_URI
+            - echo $TOKEN_URI
+            - echo $AUTH_PROVIDER_X509_CERT_URL
+            - echo $CLIENT_SECRET
+            - echo $REDIRECT_URI
+            - echo $JAVASCRIPT_ORIGIN
+            - echo $REACT_APP_STRIPE_API
+            - echo $REACT_APP_PAYPAL_API
+            - echo $REACT_APP_API_URL
+            - echo $REACT_APP_GOOGLE_API
+            - echo $REACT_APP_FACEBOOK_API
+            - echo $REACT_APP_INSTAGRAM_API
+            - echo $REACT_APP_INSTAGRAM_SECRET
+            - echo $REACT_APP_AWS_KEY
+            - echo $REACT_APP_AWS_SECRET_KEY
+            - echo $REACT_APP_BUCKET
+            - echo $REACT_APP_MONDAY_BOARD_ID
+            - echo $REACT_APP_MONDAY_API_KEY
+            - git push --force https://heroku:$HEROKU_API_KEY@git.heroku.com/provids.git HEAD
