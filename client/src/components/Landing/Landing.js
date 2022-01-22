@@ -279,10 +279,7 @@ const Landing = (props) => {
             <h3>Better than Dropbox and Google Drive for Video Creators</h3>
             <span>Helping humans stay competitive with AI editors</span>
             {localStorage.isAuthenticated !== 'true' &&
-              <Fragment>
-                <Link to="/sign_up">Get Started</Link>
-                <span>Start your 7-day free trial now</span>
-              </Fragment>}
+              <Link to="/sign_up">Get Started</Link>}
 
           </div>
           <div className="Landing__control--image">
