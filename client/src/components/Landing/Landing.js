@@ -384,7 +384,7 @@ const Landing = (props) => {
                     {renderTick("Double the features")}
                   </div>
                   <div className="plan__btn" onClick={() => props.history.push('/sign_up')}>
-                    Start 7 Days Free Trial</div>
+                    Get Started</div>
                 </div>
               ) : (
                 <div className="plans__item">
@@ -396,7 +396,7 @@ const Landing = (props) => {
                     {renderTick("Double the features")}
                   </div>
                   <div className="plan__btn" onClick={() => props.history.push('/sign_up')}>
-                    Start 7 Days Free Trial</div>
+                    Get Started</div>
                 </div>
               )}
             </div>
@@ -408,9 +408,7 @@ const Landing = (props) => {
             <div className="questions__title">
               <h3 className="screen__title">Control. Build. Grow.</h3>
               {localStorage.isAuthenticated === 'false' &&
-                <Fragment>
-                  <Link to="/sign_in">Start 7 Days Free Trial</Link>
-                </Fragment>}
+                <Link to="/sign_in">Get Started</Link>}
             </div>
           </div>
         </section>
