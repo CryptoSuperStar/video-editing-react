@@ -170,12 +170,12 @@ const Accounts = (props) => {
               <div className="billing__info">
                 <div className="billing__accounts">
                   <div className="billing__plan">
-                    <div>
+                    {/* <div>
                       <span className="billing__plan--title">
                         Trial
                       </span>
                       <span className='billing__plan--exp'>Experienced on {moment(userInfo.createdAt).add(1, 'w').format('MMMM Do YYYY')}</span>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
