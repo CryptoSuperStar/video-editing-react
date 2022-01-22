@@ -288,7 +288,7 @@ const PayWallModal = (props) => {
           <Cancel fill="black" className="connectSocial__cross--cancel" />
           <ArrowLeft className="connectSocial__cross--arrowLeft" />
         </div>
-        <h3>Buy Pro</h3>
+        <h3>Go Professional</h3>
         <h5>Select your plan</h5>
         <div className="modal__plans--block">
           {plans.map((plan, i) => (

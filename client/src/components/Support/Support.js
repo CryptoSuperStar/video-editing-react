@@ -83,7 +83,7 @@ const Support = (props) => {
           <label>
             <span>Description</span>
             <textarea
-              placeholder="Lorem ipsum dolor sit amet, consectetur e suspendisse sed."
+              placeholder=""
               rows="8"
               value={request}
               onChange={(e) => setRequest(e.target.value)}
