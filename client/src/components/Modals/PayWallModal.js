@@ -289,7 +289,6 @@ const PayWallModal = (props) => {
           <ArrowLeft className="connectSocial__cross--arrowLeft" />
         </div>
         <h3>Buy Pro</h3>
-        <p>Lorem ipsum dolor sit amet</p>
         <h5>Select your plan</h5>
         <div className="modal__plans--block">
           {plans.map((plan, i) => (

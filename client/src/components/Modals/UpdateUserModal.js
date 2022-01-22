@@ -54,7 +54,6 @@ const UpdateUserModal = (props) => {
           <ArrowLeft className="connectSocial__cross--arrowLeft" />
         </div>
         <h3>Update Profile</h3>
-        <p>Lorem ipsum dolor sit amet</p>
         <form className="pay__modal--form" onSubmit={handleSubmit}>
           <div style={{ display: 'flex' }}>
             <label className="pay__form--firstName">
