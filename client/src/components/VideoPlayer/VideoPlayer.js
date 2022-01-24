@@ -148,7 +148,6 @@ const VideoPlayer = (props) => {
       onMouseLeave={() => setIsShowControl(false)}>
       <div className="upload__title--mobil">
         <h5>Edit your media</h5>
-        {/*<span>Lorem ipsum dolor sit amet</span>*/}
       </div>
       <div className="video__inner"
         style={{

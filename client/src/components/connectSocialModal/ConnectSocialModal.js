@@ -41,7 +41,6 @@ const ConnectSocialModal = (props) => {
         </div>
         <span className="steps">Step 2 of 2</span>
         <h3>Add your social networks</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
         <InstagramLogin
           clientId={REACT_APP_INSTAGRAM_API}
           onSuccess={responseInstagramSuccess}

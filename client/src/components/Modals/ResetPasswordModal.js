@@ -25,7 +25,6 @@ const ResetPasswordModal = (props) => {
           <ArrowLeft className="connectSocial__cross--arrowLeft"/>
         </div>
         <h3>Reset Password</h3>
-        <p>Lorem ipsum dolor sit amet</p>
         {props.user.registeredWith === 'SSO' ?
           <form className="pay__modal--form" onSubmit={handleSubmit}>
             <label className="pay__form--creditCard">

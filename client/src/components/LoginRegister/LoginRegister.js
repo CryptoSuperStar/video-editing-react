@@ -235,7 +235,6 @@ const LoginRegister = (props) => {
           <h3 style={{ marginTop: isLogin === 'Sign up' && '0' }}>
             {isLogin === 'Sign In' ? 'Welcome Back' : 'Sign Up for ProVid'}
           </h3>
-          <p className="web__view">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
           <p className="mobile__view">Sign into your account</p>
           {showLoginRegister
             ? loginRegisterForm
@@ -289,8 +288,6 @@ const LoginRegister = (props) => {
         </div>
         <div className="LoginRegister__image web__view">
           <img src={screen10} alt="screen10" />
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-            do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
         </div>
       </div>}
     </Fragment>
