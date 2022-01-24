@@ -22,8 +22,8 @@ const PayAccessModal = (props) => {
       <div className="pay__access--modal">
         <h3>Access All Premium Features</h3>
         <div className="access__modal--image_block">
-          <img src={accessImage} alt="access_image" />
-          <h5>Start your 7-day Free trial now!</h5>
+          {/* <img src={accessImage} alt="access_image" />
+          <h5>Start your 7-day Free trial now!</h5> */}
           <button type="button" onClick={() => {
             props.setShowPayAccess(false);
             props.setShowPayWall(true);
@@ -33,16 +33,15 @@ const PayAccessModal = (props) => {
             <ArrowRight />
           </button>
         </div>
-        {renderTick("Lorem ipsum dolor sit amet")}
-        {renderTick("Consectetur adipiscing elit")}
-        {renderTick("Sed do eiusmod tempor")}
-        {renderTick("Incididunt ut labore et dolore")}
-        {renderTick("Magna aliqua Convallis convallis")}
+        {renderTick("Fastest way to get footage and notes from clients")}
+        {renderTick("Tag edit notes to timeline in footage")}
+        {renderTick("Track revisions and easily send video to customer")}
+        {renderTick("Faster uploads than dropbox")}
         <button className="go__pro" onClick={() => {
           props.setShowPayAccess(false);
           props.setShowPayWall(true);
         }
-        }>Go Premium Now
+        }>Go Professional
         </button>
       </div>
     </div>

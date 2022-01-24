@@ -26,7 +26,6 @@ const ShareLinkModal = (props) => {
           <ArrowLeft className="connectSocial__cross--arrowLeft"/>
         </div>
         <h3>Share Link</h3>
-        <p>Lorem ipsum dolor sit amet</p>
         <form className="pay__modal--form">
           <label className="pay__form--creditCard">
             <span>Your Link</span>

@@ -152,7 +152,6 @@ const UpdateAddPayment = (props) => {
           <ArrowLeft className="connectSocial__cross--arrowLeft"/>
         </div>
         <h3>{props.type === 'update' ? "Update Payment Method" : "Add Payment"}</h3>
-        <p>Lorem ipsum dolor sit amet</p>
         <h5>Select Payment Method</h5>
         <div className="modal__payments">
           {payments.map((pay, i) => (
