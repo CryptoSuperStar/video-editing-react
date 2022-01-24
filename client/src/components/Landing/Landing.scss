@@ -25,16 +25,6 @@
     width: 65%;
     letter-spacing: -0.66px;
     line-height: 39px;
-    &:last-child {
-      margin-top: 15px;
-      color: #bcc7cd;
-      font-family: var(--primary-font);
-      font-size: var(--font-size-xxl);
-      font-style: normal;
-      font-weight: 500;
-      letter-spacing: -0.5px;
-      line-height: 16px;
-    }
   }
   a {
     display: inline-block;
