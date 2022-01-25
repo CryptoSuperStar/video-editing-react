@@ -233,7 +233,7 @@ const LoginRegister = (props) => {
         <div className="LoginRegister__text">
           {isLogin === "Sign Up" && <span className="steps mobile__view">Step 1 of 2</span>}
           <h3 style={{ marginTop: isLogin === 'Sign up' && '0' }}>
-            {isLogin === 'Sign In' ? 'Welcome Back' : 'Sign Up for ProVid'}
+            {isLogin === 'Sign In' ? 'Welcome Back' : 'Sign Up for MyVideosPro'}
           </h3>
           <p className="mobile__view">Sign into your account</p>
           {showLoginRegister
