@@ -235,7 +235,6 @@ const LoginRegister = (props) => {
           <h3 style={{ marginTop: isLogin === 'Sign up' && '0' }}>
             {isLogin === 'Sign In' ? 'Welcome Back' : 'Sign Up for MyVideosPro'}
           </h3>
-          <p className="mobile__view">Sign into your account</p>
           {showLoginRegister
             ? loginRegisterForm
             : (<div className="LoginRegister__social_login">
