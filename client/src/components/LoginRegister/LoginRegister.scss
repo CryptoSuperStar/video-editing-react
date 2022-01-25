@@ -53,15 +53,6 @@
     font-style: normal;
     font-weight: 700;
   }
-  p {
-    width: 45%;
-    text-align: center;
-    letter-spacing: 0.00px;
-    line-height: 22px;
-    color: var(--mine-shaft);
-    font-family: "Montserrat", "Helvetica Neue", sans-serif;
-    font-size: var(--font-size-m);
-  }
   & > span {
     display: inline-block;
     margin: 150px 0;
@@ -296,9 +287,6 @@
     flex-basis: 100%;
     background: linear-gradient(180deg, #ffffff 0%, #eaf0fd 49.26%, #ffffff 100%);
     padding-top: 75px;
-    p {
-      width: 60%;
-    }
   }
   .LoginRegister__image {
    display: none;
