@@ -43,7 +43,7 @@ const PayWallModal = (props) => {
     title: 'ANNUAL',
     cost: 16.99,
     active: true,
-    totalPrice: 200
+    totalPrice: 203.88
   }, {
     title: 'MONTHLY',
     cost: 20,
