@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
 const getMeta = require('../middleware/meta');
+const reformatVideo = require('../middleware/reformatVideo');
 const { updateProject,
   createTempProjectController,
   clearTempProject,
@@ -13,8 +14,8 @@ const { updateProject,
   addMediaToProject,
   updateCommentsController, deleteVideo } = require('../controllers/projects.controller');
 
-router.post('/createTempProject', auth, getMeta, createTempProjectController);
-router.put('/addMedia', auth, getMeta,  addMediaToProject);
+router.post('/createTempProject', auth, getMeta, reformatVideo, createTempProjectController);
+router.put('/addMedia', auth, getMeta, reformatVideo, addMediaToProject);
 router.put('/updateComments/:projectId', updateCommentsController);
 router.post('/takeScreenshot', auth, getMeta, takeScreenShotController);
 router.get('/clearTempProject/:projectId/:bucket', auth, clearTempProject);
