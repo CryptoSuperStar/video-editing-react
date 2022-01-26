@@ -385,7 +385,7 @@ const UploadMedia = props => {
                   <span>Revision {props.project?.projectRevision}</span>
                 </button>
                 <button
-                  style={{ backgroundColor: ((["Done", "Complete"]).includes(props.project?.projectStatus)) && "gray" }}
+                  style={{ backgroundColor: ((["Done", "Complete"]).includes(props.project?.projectStatus)) && "gray",textAlign:"center" }}
                   onClick={(e) => { (!(["Done", "Complete"]).includes(props.project?.projectStatus)) && setShowWarningModal(true) }}
                 >
                   <span>Submit</span>
