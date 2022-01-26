@@ -27,7 +27,7 @@ const EmptyProject = (props) => {
     const file = e.target.files[0]; // accessing file
     const fileSize = file.size / 1048576;
     const fileName = (file.name).split('.');
-    let supportedTypes = ["wav","mp3","aac","ogg","oga","wma","flac","png","gif","avif","apng","jpg", "jpeg","svg","webp","bmp","ico","tiff","mp4"]
+    let supportedTypes = ["wav","mp3","aac","ogg","oga","wma","flac","png","gif","avif","apng","jpg", "jpeg","svg","webp","bmp","ico","tiff","mp4","mov"]
     if (fileSize > 2048) {
       toast.error('The File size should be less than 2GB')
       target.files = null;
@@ -87,8 +87,6 @@ const EmptyProject = (props) => {
           Upload Media
         </label>
       </div>
-      <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-        incididunt ut labore et dolore magna aliqua.</span>
       {
         showModal &&
         (<div className=" modal__wrapper">
