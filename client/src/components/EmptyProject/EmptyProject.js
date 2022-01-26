@@ -13,6 +13,7 @@ const EmptyProject = (props) => {
 
   const fileInput = useRef();
   const [showDemo, setShowDemo] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     if (localStorage.showDemoLayer === 'true') {
@@ -21,12 +22,23 @@ const EmptyProject = (props) => {
   }, [])
 
   const handleChange = (e) => {
+    const { target } = e;
     props.setComments([])
     const file = e.target.files[0]; // accessing file
     const fileSize = file.size / 1048576;
+    const fileName = (file.name).split('.');
+    let supportedTypes = ["wav","mp3","aac","ogg","oga","wma","flac","png","gif","avif","apng","jpg", "jpeg","svg","webp","bmp","ico","tiff","mp4","mov"]
     if (fileSize > 2048) {
       toast.error('The File size should be less than 2GB')
-    } else {
+      target.files = null;
+      target.value = null;
+    }
+    if(supportedTypes.includes(fileName[fileName.length - 1].toLowerCase()) === false ){
+      setShowModal(true);
+      target.files = null;
+      target.value = null;
+    }
+    else {
       let newFileName = e.target.files[0].name;
       newFileName = newFileName.replace(/ /g, '_')
       newFileName = newFileName.replace(/\(|\)/g, '');
@@ -75,6 +87,19 @@ const EmptyProject = (props) => {
           Upload Media
         </label>
       </div>
+      {
+        showModal &&
+        (<div className=" modal__wrapper">
+          <div className="style__modal">
+            {/* <div className="connectSocial__cross" onClick={() => { props.setShowPayAccess(true); props.setShowPromoCodeWall(false) }}>
+                  <Cancel fill="black" className="connectSocial__cross--cancel" />
+                  <ArrowLeft className="connectSocial__cross--arrowLeft" />
+              </div> */}
+            <h3>File not supported</h3>
+              <button className="pay__modal--submit" onClick={()=>setShowModal(false)}>Ok</button>
+          </div>
+        </div>)
+      }
     </>
   );
 };
