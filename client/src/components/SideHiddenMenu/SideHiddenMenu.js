@@ -18,7 +18,7 @@ const SideHiddenMenu = (props) => {
   return (
     <div className="SideHiddenMenu mobile__view" style={{left: props.showMenu ? 0 : -window.innerWidth - 60 + "px"}}>
       <div className="SideHiddenMenu__login">
-        <span>Join the Pro leagues with ProVid</span>
+        <span>Join the Pro leagues with MyVideosPro</span>
         {(localStorage.isAuthenticated === "false" || !localStorage.token) && <div className="SideHiddenMenu__links">
           <button className="SideHiddenMenu__link--register" onClick={() => handleButton("sign_up")}>Sign Up</button>
           <button className="SideHiddenMenu__link--login" onClick={() => handleButton("sign_in")}>Sign In</button>

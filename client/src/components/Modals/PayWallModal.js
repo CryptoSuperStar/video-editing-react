@@ -41,14 +41,14 @@ const PayWallModal = (props) => {
   const [lastName, setLastName] = useState('');
   const [plans, setPlans] = useState([{
     title: 'ANNUAL',
-    cost: 49,
+    cost: 16.99,
     active: true,
-    totalPrice: 588
+    totalPrice: 203.88
   }, {
     title: 'MONTHLY',
-    cost: 75,
+    cost: 20,
     active: false,
-    totalPrice: 75
+    totalPrice: 20
   }]);
 
   const [payments, setPayments] = useState([{

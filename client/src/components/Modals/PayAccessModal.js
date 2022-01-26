@@ -1,8 +1,6 @@
 import React from 'react';
 import { ReactComponent as Cancel } from "../../assets/img/close-2.svg";
 import accessImage from "../../assets/img/base@1x.png";
-import { ReactComponent as ArrowRight } from "../../assets/img/right-arrow-svgrepo-com.svg";
-import { ReactComponent as ArrowLeft } from "../../assets/img/arrow-left.svg";
 import { ReactComponent as Tick } from "../../assets/img/accept_added_check_complite_yes_icon.svg";
 import { useHistory } from 'react-router-dom';
 
@@ -21,18 +19,18 @@ const PayAccessModal = (props) => {
     <div className="modal__wrapper">
       <div className="pay__access--modal">
         <h3>Access All Premium Features</h3>
-        <div className="access__modal--image_block">
+        {/* <div className="access__modal--image_block"> */}
           {/* <img src={accessImage} alt="access_image" />
           <h5>Start your 7-day Free trial now!</h5> */}
-          <button type="button" onClick={() => {
+          {/* <button type="button" onClick={() => {
             props.setShowPayAccess(false);
             props.setShowPayWall(true);
           }
           }>
             <span>$ 9.99 per mo.</span>
             <ArrowRight />
-          </button>
-        </div>
+          </button> */}
+        {/* </div> */}
         {renderTick("Fastest way to get footage and notes from clients")}
         {renderTick("Tag edit notes to timeline in footage")}
         {renderTick("Track revisions and easily send video to customer")}
