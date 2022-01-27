@@ -132,7 +132,7 @@ const Accounts = (props) => {
                         {pay.plan.title}
                         <img src={star} alt="star" />
                       </span>
-                      <span className='billing__plan--exp'>Experienced on {pay.plan.paidExpiresDate}</span>
+                      <span className='billing__plan--exp'>Your next billing is on {pay.plan.paidExpiresDate}</span>
                     </div>
                     <button className="cancelPlan"
                       onClick={() => cancelSubscribe(pay._id)}
