@@ -3,6 +3,10 @@ const FFmpeg = require('fluent-ffmpeg');
 module.exports = (req, res, next) => {
   FFmpeg.ffprobe(req.body.link, async (err, meta) => {
     
+    let codecType = [];
+    for(data of meta.streams){
+      codecType.push(data.codec_type);
+    }
     let supported = false;
     let isImage = false;
     let mediaType = '';
@@ -33,9 +37,14 @@ module.exports = (req, res, next) => {
       case 'theora':
       case 'vp8':
       case 'vp9':
-        // case 'video':
         supported = true;
         mediaType = "Video";
+      case 'aac':
+        if(codecType.includes("video")){
+          supported = true;
+          mediaType = "Video";
+        }
+        // case 'video':
     }
 
 
