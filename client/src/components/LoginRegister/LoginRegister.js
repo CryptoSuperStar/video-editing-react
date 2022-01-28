@@ -30,39 +30,15 @@ const LoginRegister = (props) => {
   const [email, setEmail] = useState('');
   const [confirmEmail, setConfirmEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('')
   const [showConnectSocial, setShowConnectSocial] = useState(false);
   const [showStepTwo, setShowStepTwo] = useState(false);
   const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [passwordsNotEquals, setPasswordsNotEquals] = useState(false);
   const [emailNotEquals, setEmailNotEquals] = useState(false);
   const [notValidFEmail, setNotValidEmail] = useState(false)
   const [passwordError, setPasswordError] = useState(false)
   const [notValidUserName, setNotValidUserName] = useState(false)
-  const isValidPassword = (password) => {
-    if (password.trim() === confirmPassword.trim()) {
-      // Regex to check valid password.
-      const regex = "^(?=.*[0-9])"
-        + "(?=.*[a-z])(?=.*[A-Z])"
-        + "(?=.*[!@#?$%^&+=])"
-        + "(?=\\S+$).{8,20}$";
 
-      if (password == null) {
-        toast.warning("Password required");
-        return false;
-      }
-      if (password.match(regex)) {
-        return true
-      } else {
-        setPasswordError(true);
-        return false
-      };
-    } else {
-      setPasswordsNotEquals(true)
-
-    }
-  }
 
   const isValidEmail = (email) => {
     if ((email.trim()).toLocaleLowerCase() === (confirmEmail.trim()).toLocaleLowerCase()) {
@@ -104,8 +80,7 @@ const LoginRegister = (props) => {
       setIsLogin('Sign In')
     } else setIsLogin("Sign Up")
     setEmail('');
-    setPassword('');
-    setConfirmPassword('')
+    setPassword('')
   }, [props.location.pathname])
 
 
@@ -194,19 +169,7 @@ const LoginRegister = (props) => {
       </div>
 
 
-      {
-        isLogin === 'Sign Up' && <>
-          <div className='formInputContainer'>
-            <input type={showConfirmPassword ? "text" : "password"} value={confirmPassword} required placeholder="Confirm Password"
-              onChange={e => { setPasswordError(false); setPasswordsNotEquals(false); setConfirmPassword(e.target.value) }} />
-            <div className='passwordIcon' onClick={() => { setShowConfirmPassword(!showConfirmPassword) }}>
-              {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
-            </div>
-            {passwordsNotEquals && <div className="inlineErrorMsg">Passwords did not match</div>}
-          </div>
 
-        </>
-      }
       <button type="submit">{isLogin === 'Sign In' ? "Sign In" : "Sign Up"}</button>
       {isLogin === 'Sign In' && <Link to="">Forgot password?</Link>}
     </form>
