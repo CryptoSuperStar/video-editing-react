@@ -26,9 +26,7 @@ const LoginRegister = (props) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [userName, setUserName] = useState('');
-  const [organization, setOrganization] = useState('');
   const [email, setEmail] = useState('');
-  const [confirmEmail, setConfirmEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showConnectSocial, setShowConnectSocial] = useState(false);
   const [showStepTwo, setShowStepTwo] = useState(false);
@@ -40,26 +38,7 @@ const LoginRegister = (props) => {
   const [notValidUserName, setNotValidUserName] = useState(false)
 
 
-  const isValidEmail = (email) => {
-    if ((email.trim()).toLocaleLowerCase() === (confirmEmail.trim()).toLocaleLowerCase()) {
-      // Regex to check valid email.
-      const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-      if (email == null) {
-        toast.warning("Email required");
-        return false;
-
-      }
-      if (email.match(regex)) {
-        return true
-      } else {
-        setNotValidEmail(true)
-        return false
-      };
-    } else {
-      setEmailNotEquals(true)
-    }
-  }
   const isValidUserName = (userName) => {
     const regex = /^[A-Za-z][A-Za-z0-9_]*(?:_[A-Za-z0-9]+)*$/;
 
@@ -105,7 +84,7 @@ const LoginRegister = (props) => {
     !showStepTwo && await props.dispatch(authUser());
   }
   const validation = () => {
-    if (isValidUserName(userName) && isValidEmail(email) && isValidPassword(password)) {
+    if (isValidUserName(userName)) {
       return true
     } else {
       return false
@@ -113,7 +92,7 @@ const LoginRegister = (props) => {
   }
   const signUp = async (userRole) => {
     if (showLoginRegister) {
-      const userCreated = await props.dispatch(registerUserSSO({ firstName, lastName, userName, organization, userRole: userRole, email: email.toLocaleLowerCase(), password }, setShowStepTwo));
+      const userCreated = await props.dispatch(registerUserSSO({ firstName, lastName, userName, userRole: userRole, email: email.toLocaleLowerCase(), password }, setShowStepTwo));
       const data = userCreated && await props.dispatch(authUser());
       data?.user?.userRole && props.history.push('/dashboard/projects');
     } else if (!showLoginRegister) {
@@ -147,18 +126,14 @@ const LoginRegister = (props) => {
             onChange={(e) => { setNotValidUserName(false); setUserName(e.target.value) }} />
           {notValidUserName && <div className="inlineErrorMsg">A valid username is required, spaces and special symbols are not allowed</div>}
         </div>
-        <input type="text" value={organization} placeholder="Organization (Optional)"
-          onChange={(e) => setOrganization(e.target.value)} />
+
       </>}
       <div className='formInputContainer'>
         <input type="email" value={email} required minLength="5" placeholder="Email"
           onChange={(e) => { setNotValidEmail(false); setEmailNotEquals(false); setEmail(e.target.value) }} />
         {notValidFEmail && <div className="inlineErrorMsg">A valid email address is required to complete registration</div>}
       </div>
-      {isLogin === 'Sign Up' && <div className='formInputContainer'> <input type="confirmEmail" value={confirmEmail} required minLength="5" placeholder="Confirm Email"
-        onChange={(e) => { setEmailNotEquals(false); setConfirmEmail(e.target.value) }} />
-        {emailNotEquals && <div className="inlineErrorMsg">Emails did not match</div>}
-      </div>}
+
       <div className='formInputContainer'>
         <input type={showPassword ? "text" : "password"} value={password} required placeholder="Password"
           onChange={e => { setPasswordError(false); setPasswordsNotEquals(false); setPassword(e.target.value) }} />
