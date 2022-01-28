@@ -1,10 +1,17 @@
 import React from 'react';
+import { updateUser } from "../../store/actions/auth.action";
 import './DemoLayerEmpty.scss';
 import introVidDesktop from "../../assets/vid/intro_desktop.mp4";
 import introVidMobile from "../../assets/vid/intro_mobile.mp4";
 
 
-const DemoLayerEmpty = ({setShowDemo}) => {
+const DemoLayerEmpty = ({props, user, setShowDemo}) => {
+
+  const handleSkipIntro = (newVal) => {
+    const updatedUser = { ...user };
+    updatedUser.skipIntro = newVal;
+    props.dispatch(updateUser(user._id, updatedUser, () => console.log('Updated Skip Intro')));
+  }
   
   const skipText = window.innerWidth <= 575 ? 'Skip' : 'SKIP TIPS';
   
@@ -33,6 +40,7 @@ const DemoLayerEmpty = ({setShowDemo}) => {
           </label>
         </div>
         <button className="skip__btn" onClick={() => {
+          handleSkipIntro(true);
           localStorage.showDemoLayer = false;
           setShowDemo(false);
         }}>{skipText}</button>

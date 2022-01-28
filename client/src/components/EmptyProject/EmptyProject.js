@@ -74,7 +74,7 @@ const EmptyProject = (props) => {
 
   return (
     <>
-      {showDemo && <DemoLayerEmpty setShowDemo={setShowDemo} />}
+      {showDemo && <DemoLayerEmpty props={props} user={props.user} setShowDemo={setShowDemo} />}
       <img src={uploadImage} alt="upload_image" />
       <h3>Upload videos to start!</h3>
       <p>Select media in the order you want it to be used.</p>
