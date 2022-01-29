@@ -147,11 +147,11 @@ const LoginRegister = (props) => {
       {/* {showConnectSocial && <ConnectSocialModal />} */}
       {showStepTwo ? <div className=" container">
         <div className="registerStep2">
-          // <div >CHOOSE AN OPTION :</div>
-          // <button onClick={() => signUp("editor")}>
-          //   Are you a video editor?
-          // </button>
-          // <div>OR</div>
+          <div >PLEASE CONFIRM :</div>
+        /*  <button onClick={() => signUp("editor")}>
+            Are you a video editor?
+          </button>
+          <div>OR</div>*/
           <button onClick={() => signUp('customer')}>
             I am Uploading media to be edited
           </button>
