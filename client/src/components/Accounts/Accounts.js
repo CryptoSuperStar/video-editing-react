@@ -105,9 +105,16 @@ const Accounts = (props) => {
               {userInfo.userRole === "editor"&&<>
               <h5>Promo Code</h5>
               <span>{userInfo.promocode ? userInfo.promocode : '---'}</span></>}
+
+              {userInfo.userRole === "customer"&&<>
+              <h5>Connect Code</h5>
+              <h5>Please contact xxx@rav.ai to get your Connect Code </h5>
+              </>}
+
             </div>
           </section>
 
+          {userInfo.userRole === "editor"&&<>
           <section>
             <div className="billing__header">
               <h3>Billing</h3>
@@ -181,6 +188,7 @@ const Accounts = (props) => {
               </div>
             }
           </section>
+</>}
 
           <section>
             <div className="general__header">
