@@ -23,8 +23,6 @@ const LoginRegister = (props) => {
 
   const [isLogin, setIsLogin] = useState('');
   const [showLoginRegister, setShowLoginRegister] = useState(false);
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -92,7 +90,7 @@ const LoginRegister = (props) => {
   }
   const signUp = async (userRole) => {
     if (showLoginRegister) {
-      const userCreated = await props.dispatch(registerUserSSO({ firstName, lastName, userName, userRole: userRole, email: email.toLocaleLowerCase(), password }, setShowStepTwo));
+      const userCreated = await props.dispatch(registerUserSSO({userName, userRole: userRole, email: email.toLocaleLowerCase(), password }, setShowStepTwo));
       const data = userCreated && await props.dispatch(authUser());
       data?.user?.userRole && props.history.push('/dashboard/projects');
     } else if (!showLoginRegister) {
@@ -116,12 +114,6 @@ const LoginRegister = (props) => {
     <form className="LoginRegister__form" onSubmit={handleSubmit}>
       {isLogin === 'Sign Up' && <>
         <div className='formInputContainer'>
-          <input type="text" value={firstName} required minLength="2" placeholder="First Name"
-            onChange={(e) => { setFirstName(e.target.value) }} />      </div>
-        <div className='formInputContainer'>
-          <input type="text" value={lastName} required minLength="2" placeholder="Last Name"
-            onChange={(e) => { setLastName(e.target.value) }} />      </div>
-        <div className='formInputContainer'>
           <input type="text" value={userName} required minLength="5" placeholder="Username"
             onChange={(e) => { setNotValidUserName(false); setUserName(e.target.value) }} />
           {notValidUserName && <div className="inlineErrorMsg">A valid username is required, spaces and special symbols are not allowed</div>}
@@ -129,7 +121,7 @@ const LoginRegister = (props) => {
 
       </>}
       <div className='formInputContainer'>
-        <input type="email" value={email} required minLength="5" placeholder="Email"
+        <input type="email" value={email} required minLength="4" placeholder="Email"
           onChange={(e) => { setNotValidEmail(false); setEmailNotEquals(false); setEmail(e.target.value) }} />
         {notValidFEmail && <div className="inlineErrorMsg">A valid email address is required to complete registration</div>}
       </div>
