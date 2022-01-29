@@ -159,7 +159,7 @@ const VideoPlayer = (props) => {
         {props.currentMedia.mediaType === mediaTypeAudio ? <span className="warning__message" >
           <AudioIcon />
         </span>
-          : !props.currentMedia.isImage && !props.currentMedia.isSupported ? <span className="warning__message" >You cannot View the File but you can add Edit Notes.</span> : ""}
+          : !props.currentMedia.isImage && !props.currentMedia.isSupported ? <span className="warning__message" >This file cannot be played but you can tag edit notes on the timeline</span> : ""}
         {/* {props.errorMessage && <span className="warning__message">You cannot View the File but you can add Edit Notes.</span>} */}
         {props.currentMedia.isImage &&
           <div className="image__block"><img src={props.currentMedia.mediaSrc} alt={props.currentMedia.mediaSrc} /></div>

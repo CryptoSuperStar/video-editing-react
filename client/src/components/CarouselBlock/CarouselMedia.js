@@ -46,7 +46,7 @@ const CarouselMedia = (props) => {
     const fileName = (file.name).split('.');
     let supportedTypes = ["wav","mp3","aac","ogg","oga","wma","flac","png","gif","avif","apng","jpg", "jpeg","svg","webp","bmp","ico","tiff","mp4","mov"]
     if (fileSize > 2048) {
-      toast.error('The File size should be less than 2GB')
+      toast.error('The File size cannot exceed 2GB')
       target.files = null;
       target.value = null;
     }
