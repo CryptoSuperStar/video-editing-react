@@ -147,13 +147,13 @@ const LoginRegister = (props) => {
       {/* {showConnectSocial && <ConnectSocialModal />} */}
       {showStepTwo ? <div className=" container">
         <div className="registerStep2">
-          <div >CHOOSE AN OPTION :</div>
-          <button onClick={() => signUp("editor")}>
-            Are you a video editor?
-          </button>
-          <div>OR</div>
+          // <div >CHOOSE AN OPTION :</div>
+          // <button onClick={() => signUp("editor")}>
+          //   Are you a video editor?
+          // </button>
+          // <div>OR</div>
           <button onClick={() => signUp('customer')}>
-            Are you Uploading video to your editor?
+            I am Uploading media to be edited
           </button>
         </div>
         <button className='backButton' onClick={() => setShowStepTwo(false)}>
