@@ -10,7 +10,7 @@ const DemoLayerEmpty = ({props, user, setShowDemo}) => {
   const handleSkipIntro = (newVal) => {
     const updatedUser = { ...user };
     updatedUser.skipIntro = newVal;
-    props.dispatch(updateUser(user._id, updatedUser, () => console.log('Updated Skip Intro')));
+    props.dispatch(updateUser(user._id, updatedUser, () => console.log('Updated Skip Intro'), 'skipIntro'));
   }
   
   const skipText = window.innerWidth <= 575 ? 'Skip' : 'SKIP TIPS';
