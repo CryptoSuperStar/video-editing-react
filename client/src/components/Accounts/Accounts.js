@@ -108,7 +108,7 @@ const Accounts = (props) => {
 
               {userInfo.userRole === "customer"&&<>
               <h5>Connect Code</h5>
-              <h5>Please contact xxx@rav.ai to get your Connect Code </h5>
+              <h5>Please contact support@rav.ai to get your Connect Code </h5>
               </>}
 
             </div>
