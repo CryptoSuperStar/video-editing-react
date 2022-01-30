@@ -16,9 +16,9 @@ function PromoCodeModal(props) {
                     <Cancel fill="black" className="connectSocial__cross--cancel" />
                     <ArrowLeft className="connectSocial__cross--arrowLeft" />
                 </div> */}
-                <h3>Apply Promo Code</h3>
+                <h3>Apply Connect Code</h3>
                 <form onSubmit={handleSubmit}>
-                    <input type="text" placeholder="Enter your Promo code here" value={promoCode} onChange={e => setPromoCode(e.target.value)} required />
+                    <input type="text" placeholder="Enter your Connect code here" value={promoCode} onChange={e => setPromoCode(e.target.value)} required />
                     <button className="pay__modal--submit" type="submit" >Apply</button>
                 </form>
             </div>
