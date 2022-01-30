@@ -102,12 +102,21 @@ const Accounts = (props) => {
             <div className="organisation">
               <h5>Organisation</h5>
               <span>{userInfo.organization ? userInfo.organization : '---'}</span>
+
+
               {userInfo.userRole === "editor"&&<>
-              <h5>Promo Code</h5>
+              <h5>Connect Code</h5>
               <span>{userInfo.promocode ? userInfo.promocode : '---'}</span></>}
-            </div>
+
+
+              {userInfo.userRole === "customer"&&<>
+              <h5>Connect Code</h5>
+              <span>Please contact support@rav.ai to get your Connect Code if you don't already have it</span>
+              </>}
+          </div>
           </section>
 
+          {userInfo.userRole === "editor"&&<>
           <section>
             <div className="billing__header">
               <h3>Billing</h3>
@@ -181,6 +190,7 @@ const Accounts = (props) => {
               </div>
             }
           </section>
+</>}
 
           <section>
             <div className="general__header">
