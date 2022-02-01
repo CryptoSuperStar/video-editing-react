@@ -253,7 +253,7 @@ const UploadMedia = props => {
     return (
       <div className="spinner__wrapper">
 
-        <MoonLoader className="spinner" color="#000" loading={loading} size={50} />
+        {/* <MoonLoader className="spinner" color="#000" loading={loading} size={50} /> */}
         <div style={{ padding: "20px" }}>Uploading....  Please wait </div>
 
       </div>
@@ -283,6 +283,7 @@ const UploadMedia = props => {
               <div className='massage'> You are about to submit your project. Make sure all changes are done and you have uploaded media . Are you sure?</div>
               <div className="option">
                 <button className='pay__modal--submit' onClick={() => setShowWarningModal(false)}> No</button>
+                <span style={{ marginLeft: '.5rem', marginRight: '.5rem' }}></span>
                 <button className='pay__modal--submit' onClick={() => props.dispatch(createProjectMedia(props.project, history, setShowWarningModal, props.user.userRole))}>Yes</button>
               </div>
             </div>
@@ -385,7 +386,7 @@ const UploadMedia = props => {
                   <span>Revision {props.project?.projectRevision}</span>
                 </button>
                 <button
-                  style={{ backgroundColor: ((["Done", "Complete"]).includes(props.project?.projectStatus)) && "gray",textAlign:"center" }}
+                  style={{ backgroundColor: ((["Done", "Complete"]).includes(props.project?.projectStatus)) && "gray", textAlign: "center" }}
                   onClick={(e) => { (!(["Done", "Complete"]).includes(props.project?.projectStatus)) && setShowWarningModal(true) }}
                 >
                   <span>Submit</span>
