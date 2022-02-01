@@ -45,6 +45,7 @@ export const registerUserSSO = (data, func) => async dispatch => {
 export const loginUserSSO = (data, history) => async dispatch => {
   try {
     const res = await axios.post(`${REACT_APP_API_URL}/loginSSO`, data);
+
     dispatch({
       type: 'LOGIN_USER',
       payload: res.data
