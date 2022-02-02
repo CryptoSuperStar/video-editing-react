@@ -215,10 +215,8 @@
 @media all and (max-width: 575px) {
   .Header__block {
     background-color: var(--concrete);
-    // height: 5vh;
-    height: 60px;
-    position: absolute;
-    top: -1px;
+    height: 5vh;
+    position: relative;
     border-bottom: 0;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
   }
