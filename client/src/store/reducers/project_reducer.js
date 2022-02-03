@@ -25,6 +25,7 @@ const initialState = {
     styleInspiration: {
       link: '',
       platform: '',
+      template:'',
       linkToUserPost: '',
       linkToExternalPost: '',
       author: {}
