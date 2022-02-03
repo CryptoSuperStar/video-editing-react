@@ -8,7 +8,11 @@ import { ReactComponent as TikTok } from "../../assets/img/tik-tok.svg";
 import { ReactComponent as OnlyFans } from "../../assets/img/OnlyFans_logo.svg";
 import { ReactComponent as Tick } from "../../assets/img/accept_added_check_complite_yes_icon.svg";
 import { createProjectMedia } from '../../store/actions/project.action';
-
+import PodCastfrom from  "../../assets/vid/podcast.mp4";
+import RealEstate  from "../../assets/vid/real_estate.mp4";
+import Vlog from "../../assets/vid/vlog.mp4";
+import Drone from "../../assets/vid/drone.mp4";
+import Conference from "../../assets/vid/conference.mp4";
 const StyleInspirationModal = (props) => {
   const [showStyleOption, setShowStyleOption] = useState(false)
   const history = useHistory();
@@ -30,6 +34,36 @@ const StyleInspirationModal = (props) => {
     src: <Instagram />,
     active: false
   }]);
+
+  const [videotemplates, setVideoTemplate] = useState([{
+    title: "PodCast",
+    url:  PodCastfrom,
+    active: true
+  }, {
+    title: "RealEstate",
+    url: RealEstate,
+    active: false
+  },
+  {
+    title: "RealEstate",
+    url: RealEstate,
+    active: false
+  },
+  {
+    title: "VLOG",
+    url: Vlog,
+    active: false
+  },
+  {
+    title: "Drone",
+    url: Drone,
+    active: false
+  },
+  {
+    title: "Conference",
+    url: Conference,
+    active: false
+  }]);
   const [favouriteRelevant, setFavouriteRelevant] = useState(false);
   const [suggestion, setSuggestion] = useState(false);
   const [link, setLink] = useState('')
@@ -43,6 +77,13 @@ const StyleInspirationModal = (props) => {
     newPlatforms.map(platform => platform.active = false);
     newPlatforms[i].active = true;
     setPlatforms(newPlatforms);
+  }
+
+  const changeTemplate = (i) => {
+    let newTemplate = [...videotemplates];
+    newTemplate.map(template=>template.active = false);
+    newTemplate[i].active = true;
+    setVideoTemplate(newTemplate);
   }
   const updateImageComments = (id) => {
     let newCurrentMedia = { ...props.currentMedia };
@@ -75,15 +116,15 @@ const StyleInspirationModal = (props) => {
   }
 
   const handleDone = () => {
-    if (category === null || category === '' || category === 'Other')
-    {
-      if (category === null) {
-        setErrorCategory('select');
-      } else {
-        setErrorCategory('input');
-      }
-      return;
-    }
+    // if (category === null || category === '' || category === 'Other')
+    // {
+    //   if (category === null) {
+    //     setErrorCategory('select');
+    //   } else {
+    //     setErrorCategory('input');
+    //   }
+    //   return;
+    // }
 
     let newContent
     if (!props.isImage) {
@@ -96,7 +137,7 @@ const StyleInspirationModal = (props) => {
     } else {
       newContent = updateImageComments(localStorage.currentMedia)
     }
-    const editedProjects = [...props.project.editedProjects]
+    const editedProjects = [props.project.editedProjects]
     if (props.project?.projectStatus === "Complete") {
       const revisionContent = newContent[newContent.length - 1];
       delete revisionContent._id;
@@ -109,17 +150,19 @@ const StyleInspirationModal = (props) => {
       ...props.project,
       styleInspiration: {
         link,
-        platform: platforms.filter(item => item.active)[0].title
+        platform: platforms.filter(item => item.active)[0].title,
+        template: videotemplates.filter(item => item.active)[0].title
       },
-      category: category,
+      // category: category,
       editedProjects: editedProjects
     } : {
       ...props.project,
       styleInspiration: {
         link,
-        platform: platforms.filter(item => item.active)[0].title
+        platform: platforms.filter(item => item.active)[0].title,
+        template: videotemplates.filter(item => item.active)[0].title
       },
-      category: category,
+      // category: category,
       content: newContent
     }
     props.setShowStyleModal(false);
@@ -142,6 +185,7 @@ const StyleInspirationModal = (props) => {
           <h5>Target Platform Length</h5>
           <div className="connectSocial__links">
             {platforms.map((platform, i) => (
+    
               <div className="modal__payments--item" key={i} style={{
                 border: `1px solid ${platform.active ? "#3b8590" : '#36596a55'}`,
                 backgroundColor: platform.active ? '#3b85911a' : 'white'
@@ -155,8 +199,26 @@ const StyleInspirationModal = (props) => {
               </div>
             ))}
           </div>
+          <h5>Select template if applicable</h5>
+          <div className="applicable_template">
+            {videotemplates.map((videotemplate, i) => (
+              <div className="template_modal" key={i} style={{
+                border: `1px solid ${videotemplate.active ? "#3b8590" : '#36596a55'}`,
+                backgroundColor: videotemplate.active ? '#3b85911a' : 'white'
+              }}
+                onClick={() => changeTemplate(i)}
+              >
+                <div className="modal__plans--tick" style={{ backgroundColor: videotemplate.active ? "#3b8590" : "rgba(133,134,149,0.1)" }}>
+                  {videotemplate.active && <Tick fill="white" />}
+                </div>
+                <video width="100%" height="auto" autoPlay loop>
+                 <source src={videotemplate.url} type="video/mp4"></source>
+                </video>
+              </div>
+            ))}
+          </div>
 
-          <h5>Project Category:</h5>
+          {/* <h5>Project Category:</h5>
           <div className="pick__category">
             <select name="projectCategory"
               style={{border: errorCategory === 'select' ? "1px solid red":''}}
@@ -192,7 +254,7 @@ const StyleInspirationModal = (props) => {
                   onChange={e => setCategory(e.target.value.trim())} />
               </>
             }
-          </div>
+          </div> */}
           
           {/* <h5>Any favourite relevant?</h5>
           <div className="favourite__relevant">

@@ -137,6 +137,42 @@
       font-family: "Montserrat", "Helvetica Neue", sans-serif;
     }
   }
+  .applicable_template{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-height: 100px;
+    overflow-y: auto;
+    margin: 15px,0;
+    .template_modal {
+      display: flex;
+      position: relative;
+      justify-content: center;
+      width: 15%;
+      padding: 4px;
+      border-radius: 10px;
+      margin: 0 5px;
+      cursor: pointer;
+      .modal__plans--tick {
+        box-sizing: border-box;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        border-radius: 50%;
+        padding: 3px;
+        width: 18px;
+        height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+  }
+
+  .applicable_template::-webkit-scrollbar {
+    display: none;
+  }
   .connectSocial__links {
     display: flex;
     justify-content: center;
