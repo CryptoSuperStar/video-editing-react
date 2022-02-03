@@ -151,7 +151,7 @@ const StyleInspirationModal = (props) => {
       styleInspiration: {
         link,
         platform: platforms.filter(item => item.active)[0].title,
-        template: videotemplates.filter(item => item.active)[0].title
+        category: videotemplates.filter(item => item.active)[0].title
       },
       // category: category,
       editedProjects: editedProjects
@@ -160,7 +160,7 @@ const StyleInspirationModal = (props) => {
       styleInspiration: {
         link,
         platform: platforms.filter(item => item.active)[0].title,
-        template: videotemplates.filter(item => item.active)[0].title
+        category: videotemplates.filter(item => item.active)[0].title
       },
       // category: category,
       content: newContent
