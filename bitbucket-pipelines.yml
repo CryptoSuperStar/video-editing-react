@@ -9,14 +9,15 @@ pipelines:
   branches:
     staging:
       - step:
-          name: 'Build and Test'
+          name: 'Deploy to staging'
           script:
+            - git fetch --all --unshallow
             - git push --force https://heroku:$HEROKU_API_KEY@git.heroku.com/provids-staging.git HEAD
 
 
     production:
       - step:
-          name: 'Build and Test'
+          name: 'Deploy to production'
           script:
             - git push --force https://heroku:$HEROKU_API_KEY@git.heroku.com/provids.git HEAD
 
