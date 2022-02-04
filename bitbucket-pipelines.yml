@@ -6,25 +6,8 @@ image: atlassian/default-image:2
 
 
 pipelines:
-  branches:
-    staging:
-      - step:
-          name: 'Deploy to staging'
-          script:
-             - git push --force https://heroku:$HEROKU_API_KEY@git.heroku.com/provids-staging.git master
-
-
-
-    production:
-      - step:
-          name: 'Deploy to production'
-          script:
-            - git push --force https://heroku:$HEROKU_API_KEY@git.heroku.com/provids.git HEAD
-
-
-    default:
+  default:
       - step:
           name: 'Build and Test'
           script:
-            - npm install
-            - npm run test
+            - git push -f https://heroku:$HEROKU_API_KEY@git.heroku.com/provids.git HEAD
