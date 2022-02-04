@@ -11,7 +11,7 @@ pipelines:
       - step:
           name: 'Deploy to staging'
           script:
-            - git fetch --all --unshallow
+            
 
 
     production:
