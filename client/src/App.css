@@ -85,7 +85,7 @@
 
 .private__inner {
   /*margin-top: 110px;*/
-  min-height: 95vh;
+  min-height: 100vh;
   height: 100vh;
   overflow: hidden;
 }
@@ -118,14 +118,19 @@
     overflow: auto;
   }
   .private__inner {
-    height: 95vh;
+    height: 100vh;
   }
-  .spinner__wrapper {
+  /* .spinner__wrapper {
     margin-top: 250px;
-  }
+  } */
   .spinner__wrapper--slider {
     height: 10vh;
   }
+
+  .spinner__wrapper {
+    height: 93vh;
+  }
+
   .spinner__wrapper--slider h3 {
     font-size: 16px !important;
     margin-bottom: 5px !important;
