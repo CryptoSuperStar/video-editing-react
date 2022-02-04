@@ -11,7 +11,8 @@ pipelines:
       - step:
           name: 'Deploy to staging'
           script:
-            
+             - git push --force https://heroku:$HEROKU_API_KEY@git.heroku.com/provids-staging.git master
+
 
 
     production:
