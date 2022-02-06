@@ -12,6 +12,7 @@ const { User } = require('../models/user.model.js');
 const { use } = require("express/lib/router");
 
 const nodemailer = require('nodemailer');
+const crypto = require('crypto');
 
 const sendPasswordResetEmail = async (email, token) => {
 
@@ -148,7 +149,8 @@ exports.passwordResetSSOController = async (req, res) => {
     // const isMatch = await bcrypt.compare(password, user.password);
     // if (!isMatch) return res.status(400).json({ msg: 'Invalid Credentials' });
 
-    const token = 'muhammed'
+    const token = crypto.randomBytes(50).toString('hex');
+    if (token.length < 50) { throw Error('token cannot be created')}
 
     const mailMessageId = await sendPasswordResetEmail(email, token).catch(console.error);
     if(!mailMessageId) {
