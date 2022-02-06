@@ -12,6 +12,7 @@ import ConnectSocialModal from "../connectSocialModal/ConnectSocialModal";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import {
   registerUserSSO,
+  passwordResetSSO,
   loginUserSSO,
   loginRegisterGoogle,
   loginRegisterFacebook, loginRegisterApple, authUser,
@@ -53,9 +54,17 @@ const LoginRegister = (props) => {
     };
   }
   useEffect(() => {
-    if (props.location.pathname === "/sign_in") {
+    if (props.location.pathname === "/password_reset") {
+      console.log(props.location.search.substr(1))
+      setShowLoginRegister(true)
+      setIsLogin('Password Reset')
+    } else if (props.location.pathname === "/sign_in") {
+      setShowLoginRegister(false)
       setIsLogin('Sign In')
-    } else setIsLogin("Sign Up")
+    } else {
+      setShowLoginRegister(false)
+      setIsLogin("Sign Up")
+    }
     setEmail('');
     setPassword('')
   }, [props.location.pathname])
@@ -101,6 +110,10 @@ const LoginRegister = (props) => {
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isLogin === "Password Reset") {
+      await props.dispatch(passwordResetSSO({ email: email.toLocaleLowerCase()}, props.history));
+      console.log(props.history)
+    }
     if (isLogin === "Sign In") {
       await props.dispatch(loginUserSSO({ email: email.toLocaleLowerCase(), password }, props.history));
       await props.dispatch(authUser());
@@ -126,19 +139,24 @@ const LoginRegister = (props) => {
         {notValidFEmail && <div className="inlineErrorMsg">A valid email address is required to complete registration</div>}
       </div>
 
-      <div className='formInputContainer'>
-        <input type={showPassword ? "text" : "password"} value={password} required placeholder="Password"
-          onChange={e => { setPasswordError(false); setPasswordsNotEquals(false); setPassword(e.target.value) }} />
-        <div className='passwordIcon' onClick={() => setShowPassword(!showPassword)}>
-          {showPassword ? <FaEyeSlash /> : <FaEye />}
+      {isLogin !== 'Password Reset' &&
+        <div className='formInputContainer'>
+          <input type={showPassword ? "text" : "password"} value={password} required placeholder="Password"
+            onChange={e => { setPasswordError(false); setPasswordsNotEquals(false); setPassword(e.target.value) }} />
+          <div className='passwordIcon' onClick={() => setShowPassword(!showPassword)}>
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </div>
+          {passwordError && <div className="inlineErrorMsg">Use 8 or more characters with a mix of lowercase and uppercase letters, numbers & symbols</div>}
         </div>
-        {passwordError && <div className="inlineErrorMsg">Use 8 or more characters with a mix of lowercase and uppercase letters, numbers & symbols</div>}
-      </div>
+      }
 
 
 
-      <button type="submit">{isLogin === 'Sign In' ? "Sign In" : "Sign Up"}</button>
-      {isLogin === 'Sign In' && <Link to="">Forgot password?</Link>}
+      <button type="submit">
+        {isLogin === 'Password Reset' ? 'Send Link'
+          : isLogin === 'Sign In' ? "Sign In" : "Sign Up"}
+      </button>
+      {isLogin === 'Sign In' && <Link to="/password_reset">Forgot password?</Link>}
     </form>
   )
   if (localStorage.isAuthenticated === 'true' && !showStepTwo) return <Redirect to={props.user.userRole === "editor" ? "/dashboard/projects" : "/dashboard/upload"} />
@@ -160,7 +178,8 @@ const LoginRegister = (props) => {
         <div className="LoginRegister__text">
           {isLogin === "Sign Up" && <span className="steps mobile__view">Step 1 of 2</span>}
           <h3 style={{ marginTop: isLogin === 'Sign up' && '0' }}>
-            {isLogin === 'Sign In' ? 'Welcome Back' : 'Sign Up for MyVideosPro'}
+            {isLogin === 'Password Reset' ? 'Forgot password?'
+              : isLogin === 'Sign In' ? 'Welcome Back' : 'Sign Up for MyVideosPro'}
           </h3>
           {showLoginRegister
             ? loginRegisterForm
