@@ -152,12 +152,29 @@ exports.passwordResetSSOController = async (req, res) => {
     const token = crypto.randomBytes(50).toString('hex');
     if (token.length < 50) { throw Error('token cannot be created')}
 
+    const duration = 60 * 60 * 1000; // 1 hour
+
+    User.findOneAndUpdate({ email },
+      { 
+      $addToSet: { 
+        passwordResetTokens: { token: token, expiresOn: Date.now() + duration}  
+      }
+    }, 
+    { new: true }, (err, data) => {
+      if (err) {
+        console.log(err);
+        return res.status(400).json({ success: false });
+      }
+    })
+
     const mailMessageId = await sendPasswordResetEmail(email, token).catch(console.error);
     if(!mailMessageId) {
       throw Error('Error: Email could not sent.')
     } else {
       res.json({ success: true })
     }
+
+    
 
 
     // jwt.sign(user.id, process.env.JWT_SECRET, (err, token) => {

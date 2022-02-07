@@ -23,6 +23,11 @@ const paymentSchema = new mongoose.Schema({
   }
 })
 
+const passwordResetTokensSchema = new mongoose.Schema({
+  token: String,
+  expiresOn: String
+})
+
 const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
@@ -102,6 +107,7 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  passwordResetTokens: [passwordResetTokensSchema],
 }, { timestamps: true })
 
 userSchema.set('toJSON', { getters: true, virtuals: true });
