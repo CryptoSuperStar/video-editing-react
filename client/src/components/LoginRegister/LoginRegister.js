@@ -22,6 +22,7 @@ import { toast } from "react-toastify";
 
 const LoginRegister = (props) => {
 
+  const [passwordResetToken, setPasswordResetToken] = useState(null);
   const [isLogin, setIsLogin] = useState('');
   const [showLoginRegister, setShowLoginRegister] = useState(false);
   const [userName, setUserName] = useState('');
@@ -55,15 +56,22 @@ const LoginRegister = (props) => {
   }
   useEffect(() => {
     if (props.location.pathname === "/password_reset") {
-      console.log(props.location.search.substr(1))
       setShowLoginRegister(true)
       setIsLogin('Password Reset')
+
+      const params = new URLSearchParams(window.location.search)
+
+      if (params.has('token')) {
+        setPasswordResetToken(params.get('token'));
+      }
     } else if (props.location.pathname === "/sign_in") {
       setShowLoginRegister(false)
       setIsLogin('Sign In')
+      setPasswordResetToken(null);
     } else {
       setShowLoginRegister(false)
       setIsLogin("Sign Up")
+      setPasswordResetToken(null);
     }
     setEmail('');
     setPassword('')
@@ -140,6 +148,7 @@ const LoginRegister = (props) => {
       </div>
 
       {isLogin !== 'Password Reset' &&
+        passwordResetToken === null ?
         <div className='formInputContainer'>
           <input type={showPassword ? "text" : "password"} value={password} required placeholder="Password"
             onChange={e => { setPasswordError(false); setPasswordsNotEquals(false); setPassword(e.target.value) }} />
@@ -147,6 +156,10 @@ const LoginRegister = (props) => {
             {showPassword ? <FaEyeSlash /> : <FaEye />}
           </div>
           {passwordError && <div className="inlineErrorMsg">Use 8 or more characters with a mix of lowercase and uppercase letters, numbers & symbols</div>}
+        </div>
+        :
+        <div className='formInputContainer'>
+          {passwordResetToken}
         </div>
       }
 
