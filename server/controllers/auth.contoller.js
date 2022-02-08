@@ -181,12 +181,10 @@ exports.passwordResetUpdateSSOController = async (req, res) => {
 
   try {
     let user = await User.findOne({ 
-      where: {
-        'passwordResetTokens.token': passwordResetToken,
-        'passwordResetTokens.expiresOn': {
-          $gt: Date.now()
-        }
-      }
+      'passwordResetTokens.token': passwordResetToken,
+      'passwordResetTokens.expiresOn': {
+        $gt: Date.now()
+      } 
     });
     if (!user) return res.json({ success: false });
 
