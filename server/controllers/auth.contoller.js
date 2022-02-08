@@ -142,25 +142,19 @@ exports.passwordResetSSOController = async (req, res) => {
   const email = req.body.email
 
   try {
-    // See if user does not exists
     let user = await User.findOne({ email });
     if (!user) return res.json({ success: false });
-
-    // const isMatch = await bcrypt.compare(password, user.password);
-    // if (!isMatch) return res.status(400).json({ msg: 'Invalid Credentials' });
 
     const token = crypto.randomBytes(50).toString('hex');
     if (token.length < 50) { throw Error('token cannot be created')}
 
     const duration = 60 * 60 * 1000; // 1 hour
 
-    User.findOneAndUpdate({ email },
-      { 
+    User.findOneAndUpdate({ email }, { 
       $addToSet: { 
         passwordResetTokens: { token: token, expiresOn: Date.now() + duration}  
       }
-    }, 
-    { new: true }, (err, data) => {
+    }, { new: true }, (err, data) => {
       if (err) {
         console.log(err);
         return res.status(400).json({ success: false });
@@ -173,14 +167,6 @@ exports.passwordResetSSOController = async (req, res) => {
     } else {
       res.json({ success: true })
     }
-
-    
-
-
-    // jwt.sign(user.id, process.env.JWT_SECRET, (err, token) => {
-    //   if (err) throw err;
-    //   res.json({ token })
-    // })
 
   } catch (e) {
     console.error(e.message);
