@@ -5,6 +5,7 @@ const auth = require('../middleware/auth');
 const {
   authController,
   passwordResetSSOController,
+  passwordResetUpdateSSOController,
   loginController,
   registerController,
   oAuthTwitter,
@@ -21,6 +22,7 @@ const {
 router.get('/auth', auth, authController);
 router.post('/loginSSO', loginController);
 router.post('/passwordResetSSO', passwordResetSSOController);
+router.post('/passwordResetUpdateSSO', passwordResetUpdateSSOController);
 router.post('/registerSSO', registerController);
 
 router.post('/auth/twitter',  oAuthTwitter);

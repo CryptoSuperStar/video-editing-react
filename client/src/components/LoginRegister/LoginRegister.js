@@ -13,6 +13,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import {
   registerUserSSO,
   passwordResetSSO,
+  passwordResetUpdateSSO,
   loginUserSSO,
   loginRegisterGoogle,
   loginRegisterFacebook, loginRegisterApple, authUser,
@@ -119,8 +120,12 @@ const LoginRegister = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isLogin === "Password Reset") {
-      await props.dispatch(passwordResetSSO({ email: email.toLocaleLowerCase()}, props.history));
-      console.log(props.history)
+      if (passwordResetToken) {
+        console.log(passwordResetToken, password)
+        await props.dispatch(passwordResetUpdateSSO({ token: passwordResetToken, password}, props.history));
+      } else {
+        await props.dispatch(passwordResetSSO({ email: email.toLocaleLowerCase()}, props.history));
+      }
     }
     if (isLogin === "Sign In") {
       await props.dispatch(loginUserSSO({ email: email.toLocaleLowerCase(), password }, props.history));
@@ -130,6 +135,23 @@ const LoginRegister = (props) => {
       setShowStepTwo(true)
     }
   }
+
+  const passwordResetForm = (
+    <form className="LoginRegister__form" onSubmit={handleSubmit}>
+      <div className='formInputContainer'>
+        <input type={showPassword ? "text" : "password"} value={password} required placeholder="Password"
+          onChange={e => { setPasswordError(false); setPasswordsNotEquals(false); setPassword(e.target.value) }} />
+        <div className='passwordIcon' onClick={() => setShowPassword(!showPassword)}>
+          {showPassword ? <FaEyeSlash /> : <FaEye />}
+        </div>
+        {passwordError && <div className="inlineErrorMsg">Use 8 or more characters with a mix of lowercase and uppercase letters, numbers & symbols</div>}
+      </div>
+
+      <button type="submit">
+        Submit
+      </button>
+    </form>
+  )
 
   const loginRegisterForm = (
     <form className="LoginRegister__form" onSubmit={handleSubmit}>
@@ -148,7 +170,6 @@ const LoginRegister = (props) => {
       </div>
 
       {isLogin !== 'Password Reset' &&
-        passwordResetToken === null ?
         <div className='formInputContainer'>
           <input type={showPassword ? "text" : "password"} value={password} required placeholder="Password"
             onChange={e => { setPasswordError(false); setPasswordsNotEquals(false); setPassword(e.target.value) }} />
@@ -156,12 +177,7 @@ const LoginRegister = (props) => {
             {showPassword ? <FaEyeSlash /> : <FaEye />}
           </div>
           {passwordError && <div className="inlineErrorMsg">Use 8 or more characters with a mix of lowercase and uppercase letters, numbers & symbols</div>}
-        </div>
-        :
-        <div className='formInputContainer'>
-          {passwordResetToken}
-        </div>
-      }
+        </div>}
 
 
 
@@ -191,52 +207,56 @@ const LoginRegister = (props) => {
         <div className="LoginRegister__text">
           {isLogin === "Sign Up" && <span className="steps mobile__view">Step 1 of 2</span>}
           <h3 style={{ marginTop: isLogin === 'Sign up' && '0' }}>
-            {isLogin === 'Password Reset' ? 'Forgot password?'
-              : isLogin === 'Sign In' ? 'Welcome Back' : 'Sign Up for MyVideosPro'}
+            {isLogin === 'Password Reset' ?
+              passwordResetToken ? 'Update Your Password' : 'Forgot password?'
+                : isLogin === 'Sign In' ? 'Welcome Back' : 'Sign Up for MyVideosPro'}
           </h3>
-          {showLoginRegister
-            ? loginRegisterForm
-            : (<div className="LoginRegister__social_login">
-              <FacebookLogin
-                appId={REACT_APP_FACEBOOK_API}
-                autoLoad={false}
-                callback={responseFacebook}
-                textButton={`${isLogin} with Facebook`}
-                cssClass="facebook__button"
-                icon="fa-facebook"
-                disableMobileRedirect={true}
-              />
-              <GoogleLogin
-                clientId={`${REACT_APP_GOOGLE_API}`}
-                onSuccess={responseGoogle}
-                onFailure={responseGoogle}
-                cookiePolicy={'single_host_origin'}
-                className="google__button"
-              >{`${isLogin} with Google`}
-              </GoogleLogin>
-              {/* <AppleSignin
-                authOptions={{
-                  clientId: 'com.example.web',
-                  scope: 'email name',
-                  redirectURI: 'http://localhost:3000/api/login_register_apple',
-                  state: 'state',
-                  nonce: 'nonce',
-                  usePopup: true
-                }}
-                uiType="dark"
-                className="apple-auth-btn"
-                noDefaultStyle={false}
-                buttonExtraChildren={`${isLogin} with Apple`}
-                onSuccess={responseApple}
-                onError={(error) => console.error(error)}
-                skipScript={false}
-                iconProp={{ style: { margin: '10px 0 0 15px' } }}
-              /> */}
-              <button className="email__button" onClick={() => setShowLoginRegister(true)}>
-                <img src={emailImage} alt="email_image" />
-                <span>{isLogin} with Email</span>
-              </button>
-            </div>)
+          {passwordResetToken ?
+            passwordResetForm
+            :
+            showLoginRegister
+              ? loginRegisterForm
+              : (<div className="LoginRegister__social_login">
+                <FacebookLogin
+                  appId={REACT_APP_FACEBOOK_API}
+                  autoLoad={false}
+                  callback={responseFacebook}
+                  textButton={`${isLogin} with Facebook`}
+                  cssClass="facebook__button"
+                  icon="fa-facebook"
+                  disableMobileRedirect={true}
+                />
+                <GoogleLogin
+                  clientId={`${REACT_APP_GOOGLE_API}`}
+                  onSuccess={responseGoogle}
+                  onFailure={responseGoogle}
+                  cookiePolicy={'single_host_origin'}
+                  className="google__button"
+                >{`${isLogin} with Google`}
+                </GoogleLogin>
+                {/* <AppleSignin
+                  authOptions={{
+                    clientId: 'com.example.web',
+                    scope: 'email name',
+                    redirectURI: 'http://localhost:3000/api/login_register_apple',
+                    state: 'state',
+                    nonce: 'nonce',
+                    usePopup: true
+                  }}
+                  uiType="dark"
+                  className="apple-auth-btn"
+                  noDefaultStyle={false}
+                  buttonExtraChildren={`${isLogin} with Apple`}
+                  onSuccess={responseApple}
+                  onError={(error) => console.error(error)}
+                  skipScript={false}
+                  iconProp={{ style: { margin: '10px 0 0 15px' } }}
+                /> */}
+                <button className="email__button" onClick={() => setShowLoginRegister(true)}>
+                  <img src={emailImage} alt="email_image" />
+                  <span>{isLogin} with Email</span>
+                </button>
+              </div>)
           }
 
           {isLogin === 'Sign In'

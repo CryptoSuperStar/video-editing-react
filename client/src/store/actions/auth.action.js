@@ -66,6 +66,30 @@ export const passwordResetSSO = (data, func) => async dispatch => {
   }
 }
 
+export const passwordResetUpdateSSO = (data, func) => async dispatch => {
+  const { token, password } = data
+  try {
+    const res = await axios.post(`${REACT_APP_API_URL}/passwordResetUpdateSSO`, { token, password });
+    if (res.data?.success === true) {
+      console.log('succesfully things')
+      // dispatch({
+      //   type: 'UPDATE_USER',
+      //   payload: res.data
+      // });
+      toast.success(`Your password is updated.`);
+      //func(false)
+    } else if (res.data?.success === false) {
+      toast.error(`Invalid or expired link.`);
+    }
+  } catch (e) {
+    console.log(e);
+    toast.error("Something went wrong")
+    // dispatch({
+    //   type: "UPDATE_USER_ERROR"
+    // })
+  }
+}
+
 export const loginUserSSO = (data, history) => async dispatch => {
   try {
     const res = await axios.post(`${REACT_APP_API_URL}/loginSSO`, data);

@@ -25,7 +25,7 @@ const paymentSchema = new mongoose.Schema({
 
 const passwordResetTokensSchema = new mongoose.Schema({
   token: String,
-  expiresOn: String
+  expiresOn: Number
 })
 
 const userSchema = new mongoose.Schema({

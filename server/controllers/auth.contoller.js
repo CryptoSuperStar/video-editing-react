@@ -188,6 +188,41 @@ exports.passwordResetSSOController = async (req, res) => {
   }
 }
 
+exports.passwordResetUpdateSSOController = async (req, res) => {
+
+  const passwordResetToken = req.body.token
+  const password = req.body.password
+
+  try {
+    let user = await User.findOne({ 
+      where: {
+        'passwordResetTokens.token': passwordResetToken,
+        'passwordResetTokens.expiresOn': {
+          $gt: Date.now()
+        }
+      }
+    });
+    if (!user) return res.json({ success: false });
+
+    if (user.registeredWith === 'SSO') {
+      // Encrypt password
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(password, salt);
+
+      user.passwordResetTokens = [];
+      
+      user = await user.save();
+      if (!user) return res.json({ success: false });
+      
+      res.json({ success: true })
+    }
+
+  } catch (e) {
+    console.error(e.message);
+    res.status(500).send({ msg: 'Server Error' })
+  }
+}
+
 exports.resetPassword = async (req, res) => {
   const id = req.userId;
   const { oldPass, newPass } = req.body;
