@@ -76,7 +76,8 @@ export const passwordResetUpdateSSO = (data, func) => async dispatch => {
       //   type: 'UPDATE_USER',
       //   payload: res.data
       // });
-      toast.success(`Your password is updated.`);
+      toast.success(`Your password is updated. Use your new password to sign in.`);
+      return 'OK'
       //func(false)
     } else if (res.data?.success === false) {
       toast.error(`Invalid or expired link.`);

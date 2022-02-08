@@ -121,7 +121,10 @@ const LoginRegister = (props) => {
     e.preventDefault();
     if (isLogin === "Password Reset") {
       if (passwordResetToken) {
-        await props.dispatch(passwordResetUpdateSSO({ token: passwordResetToken, password}, props.history));
+        const isPasswordUpdated = await props.dispatch(passwordResetUpdateSSO({ token: passwordResetToken, password}, props.history));
+        if (isPasswordUpdated == 'OK') {
+          props.history.push('/sign_in')
+        }
       } else {
         await props.dispatch(passwordResetSSO({ email: email.toLocaleLowerCase()}, props.history));
       }
