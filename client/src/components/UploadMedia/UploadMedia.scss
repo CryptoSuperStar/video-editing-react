@@ -148,13 +148,15 @@
       display: flex;
       position: relative;
       justify-content: center;
-      width: 15%;
+      width: 19%;
       padding: 4px;
       border-radius: 10px;
       margin: 0 5px;
+      margin-bottom: 5px;
       cursor: pointer;
-      @media (max-width: 768px) {
-        width: 30%;
+      height: 89px;
+      @media (max-width: 510px) { 
+        height: 53px;
       }
       .modal__plans--tick {
         box-sizing: border-box;
@@ -168,12 +170,12 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        @media (max-width: 768px) {
-          margin-top: 7px;
-          width: 67%;
-          height: 67%;
-          margin-right: 6px;
-        }
+        // @media (max-width: 768px) {
+        //   margin-top: 7px;
+        //   width: 67%;
+        //   height: 67%;
+        //   margin-right: 6px;
+        // }
       }
     }
 
