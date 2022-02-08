@@ -1,6 +1,6 @@
 .upload__media {
   width: 100%;
-  min-height: 100vh;
+  min-height: 95vh;
   max-height: 100vh;
   display: flex;
   justify-content: center;
@@ -669,12 +669,8 @@
 }
 
 @media all and (max-width: 575px) {
-  .upload__media .upload__media--inner {
-    margin: 0;
-  }
-
   .dashboard {
-    height: 100vh;
+    height: 95vh;
     box-sizing: border-box;
   }
   .video-controls {
@@ -859,7 +855,7 @@
     }
   }
   .modal__wrapper {
-    top: 0;
+    top: 75px;
     position: fixed;
   }
   .style__modal {
@@ -892,7 +888,7 @@
     }
   }
   .pay__modal--submit {
-    margin: 15px 7px;
+    margin: 15px 0;
   }
   .carousel-content {
     img {
