@@ -29,8 +29,8 @@ const sendPasswordResetEmail = async (email, token) => {
     from: process.env.MAIL_SENDER,
     to: email,
     subject: "Reset your password",
-    text: `Hello, \n\nPlease click here to reset your password: https://myvideospro.com/password_reset?token=${token}`,
-    html: `Hello, \n\nPlease click here to reset your password: https://myvideospro.com/password_reset?token=${token}`,
+    text: `Hello, \n\nPlease click here to reset your password:\n\n https://myvideospro.com/password_reset?token=${token}`,
+    html: `Hello, <br /><br />Please click here to reset your password:<br /><br /><a href="https://myvideospro.com/password_reset?token=${token}">https://myvideospro.com/password_reset?token=${token}</a>`,
   });
 
   return info.messageId
