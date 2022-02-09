@@ -8,11 +8,18 @@ import { ReactComponent as TikTok } from "../../assets/img/tik-tok.svg";
 import { ReactComponent as OnlyFans } from "../../assets/img/OnlyFans_logo.svg";
 import { ReactComponent as Tick } from "../../assets/img/accept_added_check_complite_yes_icon.svg";
 import { createProjectMedia } from '../../store/actions/project.action';
-import PodCastfrom from  "../../assets/vid/podcast.mp4";
-import RealEstate  from "../../assets/vid/real_estate.mp4";
-import Vlog from "../../assets/vid/vlog.mp4";
-import Drone from "../../assets/vid/drone.mp4";
-import Conference from "../../assets/vid/conference.mp4";
+import Conference  from  "../../assets/vid/Conference .mp4";
+import Drone   from "../../assets/vid/Drone .mp4";
+import Events from "../../assets/vid/Events.mp4";
+import HowTo from "../../assets/vid/HowTo.mp4";
+import PodCast1 from "../../assets/vid/PodCast1.mp4";
+import PodCast2 from "../../assets/vid/PodCast2.mp4";
+import Product from "../../assets/vid/Product.mp4";
+import RealEstate from "../../assets/vid/RealEstate.mp4";
+import VirtualMeeting from "../../assets/vid/VirtualMeeting.mp4";
+import VLOG from "../../assets/vid/VLOG.mp4";
+import Sports from "../../assets/vid/Sports.mp4";
+
 const StyleInspirationModal = (props) => {
   const [showStyleOption, setShowStyleOption] = useState(false)
   const history = useHistory();
@@ -36,34 +43,59 @@ const StyleInspirationModal = (props) => {
   }]);
 
   const [videotemplates, setVideoTemplate] = useState([{
-    title: "PodCast",
-    url:  PodCastfrom,
-    active: true
+    title: "Conference",
+    url:  Conference,
+    active: false
   }, {
-    title: "RealEstate",
-    url: RealEstate,
-    active: false
-  },
-  {
-    title: "RealEstate",
-    url: RealEstate,
-    active: false
-  },
-  {
-    title: "VLOG",
-    url: Vlog,
-    active: false
-  },
-  {
     title: "Drone",
     url: Drone,
     active: false
   },
   {
-    title: "Conference",
-    url: Conference,
+    title: "Events",
+    url: Events,
     active: false
-  }]);
+  },
+  {
+    title: "HowTo",
+    url: HowTo,
+    active: false
+  },
+  {
+    title: "PodCast1",
+    url: PodCast1,
+    active: false
+  },
+  {
+    title: "PodCast2",
+    url: PodCast2,
+    active: false
+  },
+  {
+    title: "Product",
+    url: Product,
+    active: false
+  },
+  {
+    title: "RealEstate",
+    url: RealEstate,
+    active: false
+  },
+  {
+    title: "VirtualMeeting",
+    url: VirtualMeeting,
+    active: false
+  },
+  {
+    title: "VLOG",
+    url: VLOG,
+    active: false
+  },
+  {
+    title: "Sports",
+    url: Sports,
+    active: false
+  },]);
   const [favouriteRelevant, setFavouriteRelevant] = useState(false);
   const [suggestion, setSuggestion] = useState(false);
   const [link, setLink] = useState('')
@@ -81,9 +113,16 @@ const StyleInspirationModal = (props) => {
 
   const changeTemplate = (i) => {
     let newTemplate = [...videotemplates];
-    newTemplate.map(template=>template.active = false);
-    newTemplate[i].active = true;
-    setVideoTemplate(newTemplate);
+    if(videotemplates[i].active == false)
+    {
+      newTemplate.map(template=>template.active = false);
+      newTemplate[i].active = true;
+      setVideoTemplate(newTemplate);
+    }
+    else {
+      newTemplate.map(template=>template.active = false);
+      setVideoTemplate(newTemplate);
+    }
   }
   const updateImageComments = (id) => {
     let newCurrentMedia = { ...props.currentMedia };
@@ -211,7 +250,7 @@ const StyleInspirationModal = (props) => {
                 <div className="modal__plans--tick" style={{ backgroundColor: videotemplate.active ? "#3b8590" : "rgba(133,134,149,0.1)" }}>
                   {videotemplate.active && <Tick fill="white" />}
                 </div>
-                <video width="100%" height="auto" autoPlay loop>
+                <video width="100%" height="auto" autoPlay muted playsInline loop>
                  <source src={videotemplate.url} type="video/mp4"></source>
                 </video>
               </div>
