@@ -11,6 +11,31 @@ const generateUniqueId = require('generate-unique-id');
 const { User } = require('../models/user.model.js');
 const { use } = require("express/lib/router");
 
+const nodemailer = require('nodemailer');
+const crypto = require('crypto');
+
+const sendPasswordResetEmail = async (email, token) => {
+
+  let transporter = nodemailer.createTransport({
+    host: process.env.MAIL_HOST,
+    port: process.env.MAIL_PORT,
+    auth: {
+      user: process.env.MAIL_USERNAME,
+      pass: process.env.MAIL_PASSWORD
+    }
+  });
+
+  let info = await transporter.sendMail({
+    from: process.env.MAIL_SENDER,
+    to: email,
+    subject: "Reset your password",
+    text: `Hello, \n\nPlease click here to reset your password:\n\n https://myvideospro.com/password_reset?token=${token}`,
+    html: `Hello, <br /><br />Please click here to reset your password:<br /><br /><a href="https://myvideospro.com/password_reset?token=${token}">https://myvideospro.com/password_reset?token=${token}</a>`,
+  });
+
+  return info.messageId
+}
+
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT);
 const generatePromoCode = async () => {
   const promo = generateUniqueId({
@@ -105,6 +130,76 @@ exports.loginController = async (req, res) => {
       if (err) throw err;
       res.json({ token })
     })
+
+  } catch (e) {
+    console.error(e.message);
+    res.status(500).send({ msg: 'Server Error' })
+  }
+}
+
+exports.passwordResetSSOController = async (req, res) => {
+
+  const email = req.body.email
+
+  try {
+    let user = await User.findOne({ email });
+    if (!user) return res.json({ success: false });
+
+    const token = crypto.randomBytes(50).toString('hex');
+    if (token.length < 50) { throw Error('token cannot be created')}
+
+    const duration = 60 * 60 * 1000; // 1 hour
+
+    User.findOneAndUpdate({ email }, { 
+      $addToSet: { 
+        passwordResetTokens: { token: token, expiresOn: Date.now() + duration}  
+      }
+    }, { new: true }, (err, data) => {
+      if (err) {
+        console.log(err);
+        return res.status(400).json({ success: false });
+      }
+    })
+
+    const mailMessageId = await sendPasswordResetEmail(email, token).catch(console.error);
+    if(!mailMessageId) {
+      throw Error('Error: Email could not sent.')
+    } else {
+      res.json({ success: true })
+    }
+
+  } catch (e) {
+    console.error(e.message);
+    res.status(500).send({ msg: 'Server Error' })
+  }
+}
+
+exports.passwordResetUpdateSSOController = async (req, res) => {
+
+  const passwordResetToken = req.body.token
+  const password = req.body.password
+
+  try {
+    let user = await User.findOne({ 
+      'passwordResetTokens.token': passwordResetToken,
+      'passwordResetTokens.expiresOn': {
+        $gt: Date.now()
+      } 
+    });
+    if (!user) return res.json({ success: false });
+
+    if (user.registeredWith === 'SSO') {
+      // Encrypt password
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(password, salt);
+
+      user.passwordResetTokens = [];
+      
+      user = await user.save();
+      if (!user) return res.json({ success: false });
+      
+      res.json({ success: true })
+    }
 
   } catch (e) {
     console.error(e.message);

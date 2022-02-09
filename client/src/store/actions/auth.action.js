@@ -42,6 +42,55 @@ export const registerUserSSO = (data, func) => async dispatch => {
   }
 }
 
+export const passwordResetSSO = (data, func) => async dispatch => {
+  const email = data.email
+  try {
+    const res = await axios.post(`${REACT_APP_API_URL}/passwordResetSSO`, { email });
+    if (res.data?.success === true) {
+      console.log('succesfully things')
+      // dispatch({
+      //   type: 'UPDATE_USER',
+      //   payload: res.data
+      // });
+      toast.success(`Email sent. Please check your inbox.`);
+      //func(false)
+    } else if (res.data?.success === false) {
+      toast.error(`There is no such user with that email.`);
+    }
+  } catch (e) {
+    console.log(e);
+    toast.error("Something went wrong")
+    // dispatch({
+    //   type: "UPDATE_USER_ERROR"
+    // })
+  }
+}
+
+export const passwordResetUpdateSSO = (data, func) => async dispatch => {
+  const { token, password } = data
+  try {
+    const res = await axios.post(`${REACT_APP_API_URL}/passwordResetUpdateSSO`, { token, password });
+    if (res.data?.success === true) {
+      console.log('succesfully things')
+      // dispatch({
+      //   type: 'UPDATE_USER',
+      //   payload: res.data
+      // });
+      toast.success(`Your password is updated. Use your new password to sign in.`);
+      return 'OK'
+      //func(false)
+    } else if (res.data?.success === false) {
+      toast.error(`Invalid or expired link.`);
+    }
+  } catch (e) {
+    console.log(e);
+    toast.error("Something went wrong")
+    // dispatch({
+    //   type: "UPDATE_USER_ERROR"
+    // })
+  }
+}
+
 export const loginUserSSO = (data, history) => async dispatch => {
   try {
     const res = await axios.post(`${REACT_APP_API_URL}/loginSSO`, data);
