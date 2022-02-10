@@ -4,12 +4,13 @@ import {connect} from "react-redux";
 import DashboardSideNav from "../components/DashboardSideNav/DashboardSideNav";
 import supportMockPage from "../../src/assets/img/support-mock.png";
 import accountMockPage from "../../src/assets/img/accounts-mock.png";
-import crypto from "crypto";
+import projectMockPage from "../../src/assets/img/projects-mock.png";
 
 const PrivateRoute = ({ component: Component, dispatch, user, location, ...rest }) => {
   const modalBlockedRoutes = {
     support: supportMockPage,
     account: accountMockPage,
+    projects: projectMockPage
   }
   
   let content = useRef(null);
