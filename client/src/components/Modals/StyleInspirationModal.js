@@ -232,7 +232,7 @@ const StyleInspirationModal = (props) => {
                 onClick={() => changePlatform(i)}
               >
                 <div className="modal__plans--tick" style={{ backgroundColor: platform.active ? "#3b8590" : "rgba(133,134,149,0.1)" }}>
-                  {platform.active && <img src={Tick} style={{marginTop : 0}}/>}
+                  {platform.active && <img src={Tick} style={{marginTop : 0, width : 12, height :12}}/>}
                 </div>
                 {platform.src}
               </div>
@@ -248,7 +248,7 @@ const StyleInspirationModal = (props) => {
                 onClick={() => changeTemplate(i)}
               >
                 <div className="modal__plans--tick" style={{ backgroundColor: videotemplate.active ? "#3b8590" : "rgba(133,134,149,0.1)" }}>
-                  {videotemplate.active && <img src={Tick} style={{marginTop : 0}}/>}
+                  {videotemplate.active && <img src={Tick} style={{marginTop : 0, width : 12, height :12}}/>}
                 </div>
                 <video width="100%" height="auto" autoPlay muted playsInline loop>
                  <source src={videotemplate.url} type="video/mp4"></source>
