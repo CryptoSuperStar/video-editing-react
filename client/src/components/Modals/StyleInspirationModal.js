@@ -17,7 +17,7 @@ import PodCast2 from "../../assets/vid/PodCast2.mp4";
 import Product from "../../assets/vid/Product.mp4";
 import RealEstate from "../../assets/vid/RealEstate.mp4";
 import VirtualMeeting from "../../assets/vid/VirtualMeeting.mp4";
-import VLOG from "../../assets/vid/VLOG.mp4";
+import VLOG from "../../assets/vid/vlog.mp4";
 import Sports from "../../assets/vid/Sports.mp4";
 
 const StyleInspirationModal = (props) => {
