@@ -44,6 +44,7 @@ function App(props) {
         <Route exact path="/" component={Landing}/>
         <Route exact path="/sign_in" component={LoginRegister}/>
         <Route exact path="/sign_up" component={LoginRegister}/>
+        <Route exact path="/password_reset" component={LoginRegister}/>
         <PrivateRoute exact path="/term_conds_policy" component={Policy}/>
         <PrivateRoute exact path="/dashboard/upload" component={UploadMedia}/>
         <PrivateRoute exact path="/dashboard/account" component={Accounts}/>
