@@ -141,23 +141,22 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    max-height: 100px;
-    overflow-y: auto;
+    max-height: 135px;
+    overflow-y: scroll;
     margin: 15px,0;
     .template_modal {
       display: flex;
       position: relative;
       justify-content: center;
-      width: 19%;
+      width: 24%;
       padding: 4px;
       border-radius: 10px;
       margin: 0 5px;
       margin-bottom: 5px;
-      cursor: pointer;
-      height: 89px;
-      @media (max-width: 510px) { 
-        height: 53px;
+      @media (max-width: 768px) {
+        width: 31%;
       }
+      cursor: pointer;
       .modal__plans--tick {
         box-sizing: border-box;
         position: absolute;
@@ -182,7 +181,8 @@
   }
 
   .applicable_template::-webkit-scrollbar {
-    display: none;
+    display:show;
+    scrollbar-width: 5px;
   }
   .connectSocial__links {
     display: flex;
