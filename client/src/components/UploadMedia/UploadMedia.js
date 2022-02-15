@@ -52,6 +52,8 @@ const UploadMedia = props => {
   const [loadingSlider, setLoadingSlider] = useState(false);
   const [moveTo, setMoveTo] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [disableButton,setDisableButton] = useState(false);
+  const [moonLoading,setMoonLoading] = useState(false);
   const editableStatus = ["Draft", "Complete"]
   const editedProject = props.project?.editedProjects?.length > 0 ? props.project?.editedProjects.find(item => item.revision === props.project.projectRevision) : false
   let commentFinal = [];
@@ -411,6 +413,7 @@ const UploadMedia = props => {
                   <span>Trim</span>
                 </button>
                 <button className="generate-video"
+                disabled = { disableButton ? true : false}
                   onClick={() => { (editableStatus.includes(props.project?.projectStatus) && (editedProject ? editedProject._id === currentMedia._id : true)) && setShowStyleModal(true) }}
                   style={{ backgroundColor: (!(editableStatus.includes(props.project?.projectStatus)) || (editedProject ? editedProject._id !== currentMedia._id : false)) && "gray" }}>
                   <img src={cam} alt="cam" />
@@ -446,12 +449,14 @@ const UploadMedia = props => {
                   setCurrentTime={setCurrentTime}
                   setErrorMessage={setErrorMessage}
                   projectName={props.project.projectName}
+                  disableButton = {disableButton}
+                  moonLoading = {moonLoading}
                 />
               )
             }
           </div >
         ) : (
-          <EmptyProject setComments={setComments} setLoadingVideo={setLoading} setLoadingSlider={setLoadingSlider} />
+          <EmptyProject setComments={setComments} setLoadingVideo={setLoading} setLoadingSlider={setLoadingSlider} setDisableButton = {setDisableButton} moonLoading = {moonLoading} setMoonLoading = {setMoonLoading} />
         )}
       </div >
       {showCommentBlock && <CommentBlock arrComments={comments} />}

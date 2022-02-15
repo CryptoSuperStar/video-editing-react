@@ -50,7 +50,7 @@ const CarouselMedia = (props) => {
       _loadingDivsHtml.push(
         <div key={i} className="mediaFiles__slider--inner" style={{ backgroundColor: 'black' }}>
           <div style={{ display: 'flex', justifyContent: 'center', width: '100vw' }}>
-            <MoonLoader className="spinner" color=" #ffffff" loading={props.loadingVideo} size={50} />
+            <MoonLoader className="spinner" color=" #ffffff" loading={props.moonLoading} size={50} />
           </div>
         </div>
       )
@@ -236,13 +236,13 @@ const CarouselMedia = (props) => {
         ))}
         {loadingStatus && loadingStatus?.length > 0 && loadingStatus?.map((e) => (<div className="mediaFiles__slider--inner" style={{ backgroundColor: 'black' }}>
           <div style={{ display: 'flex', justifyContent: 'center', width: '100vw' }}>
-            <MoonLoader className="spinner" color=" #ffffff" loading={props.loadingVideo} size={50} />
+            <MoonLoader className="spinner" color=" #ffffff" loading={props.moonLoading} size={50} />
           </div>
         </div>))}
         {loadingDivsHtml}
         {(props.project.projectStatus === "Draft" || (props.isEditor && props.project.projectStatus !== "Done")) &&
           <div className="mediaFiles__slider--inner" ref={sliderItemWidth}
-            style={disableButtons && { pointerEvents: 'none' }}
+            style={disableButtons ? { pointerEvents: 'none' }:''}
             onClick={() => {
               if ((localStorage.updateComment && localStorage.updateComment === 'true')
                 || (localStorage.editedVideoTime && localStorage.editedVideoTime === 'true')) {

@@ -40,6 +40,7 @@ const EmptyProject = (props) => {
       }
     }
     for (let e in files) {
+      localStorage.setItem("TotalFiles", 0);
       let file = files[e];
       const fileSize = file.size / 1048576;
       const fileName = (file.name).split('.');
@@ -66,10 +67,10 @@ const EmptyProject = (props) => {
         }
         const ReactS3Client = new S3(config);
         setLoading(true);
-        props.setLoadingVideo(true);
         ReactS3Client.uploadFile(file, newFileName).then(data => {
           if (data.status === 204) {
             if (files[e] == files[0]) {
+              console.log("files recieved in if:",files);
               props.dispatch(createTempProject(data.location, bucket, props.setLoadingVideo)).then((res) => {
                 localStorage.setItem("currentProjectId", res.project._id);
                 let format = ['mp4', 'mov'];
@@ -89,9 +90,12 @@ const EmptyProject = (props) => {
               })
             }
             else if (e > 0) {
+              console.log("files recieved in else:",files);
+              props.setDisableButton(true);
               localStorage.setItem("TotalFiles", supportedFiles.length - 1)
               localStorage.setItem("disableButtons", true)
-              props.setLoadingVideo(true);
+              // props.setLoadingVideo(true);
+              props.setMoonLoading(true);
             }
           }
           else {

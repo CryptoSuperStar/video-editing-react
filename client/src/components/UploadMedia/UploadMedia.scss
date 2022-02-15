@@ -64,11 +64,13 @@
     line-height: 40px;
     color: var(--black);
     font-family: "Montserrat", "Helvetica Neue", sans-serif;
-    font-size: xx-large;
+    font-size: 2.5vw;
+    margin-bottom: 40px;
     font-weight: 700;
   }
   .dropzone_paragraph{
-    font-size: large;
+    font-family: "Montserrat", "Helvetica Neue", sans-serif;
+    font-size: larger;
     margin-top: 15px;
     letter-spacing: 2px;
   }
@@ -657,6 +659,9 @@
   .comment {
     overflow-x: hidden;
   }
+  .dropzone_header{
+    margin-bottom: 22px !important;
+  }
 }
 
 @media all and (max-width: 1280px) {
@@ -896,7 +901,6 @@
     }
   }
   .modal__wrapper {
-    top: 75px;
     position: fixed;
   }
   .style__modal {
