@@ -1,7 +1,7 @@
 const fs = require('fs');
 const {google} = require('googleapis');
 const categoryIds = 22;
-
+const AWS = require('aws-sdk');
 const SCOPES = "https://www.googleapis.com/auth/youtube.upload";
 const oAuth2Client = new google.auth.OAuth2(
   process.env.YOUTUBE_CLIENT_ID,
@@ -81,3 +81,23 @@ exports.uploadYouTube = (req, res) => {
     }
   
 }
+
+exports.downloadFile = (req, res) => { 
+  const { project_id, bucket, mediaName } = req.params;
+  const key = `${project_id}/${bucket}/${mediaName}`
+  AWS.config.update(
+    {
+      accessKeyId: process.env.AWS_KEY,
+      secretAccessKey: process.env.AWS_SECRET_KEY,
+      region: 'us-east-2'
+
+    }
+  );
+  var s3 = new AWS.S3();
+  const params = {Bucket:'provid', Key:key}
+  res.attachment(key);
+  var fileStream = s3.getObject(params).createReadStream();
+  fileStream.pipe(res);
+}
+
+
