@@ -14,18 +14,21 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    text-align: left;
     video {
       width: 100%;
+      height: auto;
     }
     label {
       font-size: small;
       color: #eee;
       margin-left: 5px;
+      display: block;
     }
     input {
       margin-left: 10px;
-      margin-top: 5px;
-      position: absolute;
+      top: 6px;
+      position: relative;
     }
   }
   .skip__btn {
@@ -75,7 +78,7 @@
   .DemoLayer {
     .skip__btn {
       bottom: auto;
-      top: 6vh;
+      top: 3vh;
       width: 110px;
       height: 45px;
       border-radius: 25px;
