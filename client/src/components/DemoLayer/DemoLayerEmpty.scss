@@ -23,11 +23,12 @@
       font-size: small;
       color: #eee;
       margin-left: 5px;
+      display: block;
     }
     input {
       margin-left: 10px;
-      margin-top: 5px;
-      position: absolute;
+      top: 6px;
+      position: relative;
     }
   }
   .skip__btn {
