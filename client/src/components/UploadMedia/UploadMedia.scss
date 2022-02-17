@@ -752,6 +752,13 @@
 }
 
 @media all and (max-width: 575px) {
+  .dropzone_header{
+    font-size: 34px !important;
+  }
+  .dropzone_paragraph{
+    font-size: 16px !important;
+    line-height: 20px !important;
+  }
   .corousel_img{
     width: 20vw !important;
   }
