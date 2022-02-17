@@ -50,7 +50,7 @@
     margin-top: 150px;
   }
   h3 {
-    margin-top: 30px;
+    margin-top: 18px;
     letter-spacing: 0px;
     line-height: 40px;
     color: var(--black);
@@ -141,30 +141,83 @@
     line-height: 40px;
     color: rgba(0, 0, 0, 0.5);
     font-family: "Montserrat", "Helvetica Neue", sans-serif;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 500;
-    margin-top: 8px;
   }
   input {
     width: 70%;
-    margin-top: 15px;
     border-radius: 22px;
-    padding: 15px 25px;
+    padding: 10px 25px;
     border: 1px solid var(--dove-gray);
     outline: none;
     letter-spacing: 0px;
     line-height: 22px;
     color: black;
     font-size: 15px;
+    @media (max-width: 768px) {
+      margin-top: 5px;
+    }
     &::placeholder {
       color: var(--star-dust-2);
       font-family: "Montserrat", "Helvetica Neue", sans-serif;
     }
   }
+  .applicable_template{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-height: 250px;
+    overflow-y: scroll;
+    @media (max-width: 768px) {
+      margin-top: 5px;
+      max-height: 140px;
+    }
+    .template_modal {
+      display: flex;
+      position: relative;
+      justify-content: center;
+      width: 20%;
+      padding: 4px;
+      border-radius: 10px;
+      margin: 0 5px;
+      margin-bottom: 5px;
+      @media (max-width: 768px) {
+        width: 31%;
+      }
+      cursor: pointer;
+      .modal__plans--tick {
+        box-sizing: border-box;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        border-radius: 50%;
+        padding: 3px;
+        width: 18px;
+        height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        // @media (max-width: 768px) {
+        //   margin-top: 7px;
+        //   width: 67%;
+        //   height: 67%;
+        //   margin-right: 6px;
+        // }
+      }
+    }
+
+  }
+
+  .applicable_template::-webkit-scrollbar {
+    display:show;
+    scrollbar-width: 5px;
+  }
   .connectSocial__links {
     display: flex;
     justify-content: center;
-    margin: 15px 0;
+    @media (max-width: 768px) {
+      margin-top: 5px;
+    }
     .modal__payments--item {
       display: flex;
       position: relative;
