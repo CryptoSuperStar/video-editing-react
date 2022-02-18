@@ -16,7 +16,7 @@ const EmptyProject = (props) => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    if (!props.user.skipIntro && localStorage.showDemoLayer === 'true') {
+    if (!props.user.skipIntro) {
       setShowDemo(true)
     }
   }, [])

@@ -274,7 +274,7 @@ const UploadMedia = props => {
         />
       )}
       {showWarningModal &&
-        <div className="modal__wrapper" style={{ zIndex: localStorage.showDemoLayer === 'true' && '130' }}>
+        <div className="modal__wrapper">
           <div className="style__modal">
             <div className="connectSocial__cross" onClick={() => setShowWarningModal(false)}>
               <Cancel fill="black" />
