@@ -41,7 +41,6 @@ const DemoLayerEmpty = ({props, user, setShowDemo}) => {
         </div>
         <button className="skip__btn" onClick={() => {
           handleSkipIntro(true);
-          localStorage.showDemoLayer = false;
           setShowDemo(false);
         }}>{skipText}</button>
       </div>
