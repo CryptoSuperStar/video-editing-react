@@ -34,7 +34,7 @@ export const takeScreenshots = (id, bucket, link, name, setLoadingSlider) => asy
         type: 'TAKE_SCREENSHOTS',
         payload: res.data
       })
-      setLoadingSlider(false)
+      setLoadingSlider(false);
       toast.success('Images were generated.')
     } catch (e) {
       dispatch({

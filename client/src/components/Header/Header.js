@@ -68,9 +68,9 @@ const Header = (props) => {
               }
 
             }}
-            
+
             className="menu__upload--button">
-            
+
             <Plus />
             <span>Create New Project</span>
           </Link>

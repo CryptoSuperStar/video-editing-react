@@ -52,12 +52,15 @@ const UploadMedia = props => {
   const [loadingSlider, setLoadingSlider] = useState(false);
   const [moveTo, setMoveTo] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [disableButton,setDisableButton] = useState(false);
-  const [moonLoading,setMoonLoading] = useState(false);
+  const [videoPlayerLoader, setVideoPlayerLoader] = useState(false);
+  const [disableButtons, setDisableButtons] = useState(false);
+  const [carouselLoader, setCarouselLoader] = useState(false);
   const editableStatus = ["Draft", "Complete"]
+  const [loadingStatus, setLoadingStatus] = useState([]);
   const editedProject = props.project?.editedProjects?.length > 0 ? props.project?.editedProjects.find(item => item.revision === props.project.projectRevision) : false
   let commentFinal = [];
   const [isEditor, setIsEditor] = useState(false)
+
   useEffect(() => {
     if (props.user.userRole === "editor") {
       setIsEditor(true)
@@ -251,15 +254,7 @@ const UploadMedia = props => {
   //   commentFinal.push({ createdAt: imageCommentDate || new Date(), text: activeComment, time: "" });
   // }
 
-  if (loading)
-    return (
-      <div className="spinner__wrapper">
 
-        <MoonLoader className="spinner" color="#000" loading={loading} size={50} />
-        <div style={{ padding: "20px" }}>Uploading....  Please wait </div>
-
-      </div>
-    );
   return (
     <div className="upload__media">
       {showStyleModal && (
@@ -294,7 +289,7 @@ const UploadMedia = props => {
       <div className="upload__media--inner">
         {currentMedia.mediaName && props.project.projectName ? (
           <div className="video__block" style={{ marginTop: window.innerWidth <= 575 && showCommentBlock && "0" }}>
-            <div className="video__indicators">
+            {!videoPlayerLoader && <div className="video__indicators">
               <div className="comments_indicator" onClick={toggleCommentBlock}>
                 <Chat />
                 <span className="comments__total">
@@ -306,18 +301,26 @@ const UploadMedia = props => {
               }}>
                 <Share />
               </div>
-            </div>
-            <VideoPlayer
-              currentMedia={currentMedia}
-              setCurrentMedia={setCurrentMedia}
-              moveTo={moveTo}
-              setMedia={setMedia}
-              content={projectContent}
-              setCurrentTime={setCurrentTime}
-              errorMessage={errorMessage}
-              setErrorMessage={setErrorMessage}
-              setComments={setComments}
-            />
+            </div>}
+            {videoPlayerLoader ? <div className="spinner__wrapper">
+
+              <MoonLoader className="spinner" color="#000" loading={loading} size={50} />
+              <div style={{ padding: "20px" }}>Uploading....  Please wait </div>
+
+            </div> :
+              <VideoPlayer
+                currentMedia={currentMedia}
+                setCurrentMedia={setCurrentMedia}
+                moveTo={moveTo}
+                setMedia={setMedia}
+                content={projectContent}
+                setCurrentTime={setCurrentTime}
+                errorMessage={errorMessage}
+                setErrorMessage={setErrorMessage}
+                setComments={setComments}
+                loadingVideo={loading}
+              />
+            }
             {
               showShareModal && currentMedia.screens.length > 0 && (
                 <ShareModal
@@ -337,7 +340,7 @@ const UploadMedia = props => {
             }
             {/* {currentMedia.isImage && <div className="TimeLine" />} */}
             {
-              !loadingSlider && !currentMedia.isImage && (
+              !loadingSlider && !currentMedia.isImage && !videoPlayerLoader && (
                 <TimeLine
                   isEditor={isEditor}
                   user={props.user}
@@ -383,17 +386,20 @@ const UploadMedia = props => {
               {isEditor ? <>
                 <button
                   style={{ backgroundColor: "hsl(229deg 82% 11%)" }}
+                  disabled={loading ? true : false}
                 >
                   <span>Revision {props.project?.projectRevision}</span>
                 </button>
                 <button
-                  style={{ backgroundColor: ((["Done", "Complete"]).includes(props.project?.projectStatus)) && "gray",textAlign:"center" }}
+                  disabled={loading ? true : false}
+                  style={{ backgroundColor: ((["Done", "Complete"]).includes(props.project?.projectStatus)) && "gray", textAlign: "center" }}
                   onClick={(e) => { (!(["Done", "Complete"]).includes(props.project?.projectStatus)) && setShowWarningModal(true) }}
                 >
                   <span>Submit</span>
                 </button>
               </> : <>
                 <button
+                  disabled={loading ? true : false}
                   onClick={(e) => { (editableStatus.includes(props.project?.projectStatus) && (editedProject ? editedProject._id === currentMedia._id : true)) && handleActiveScreenshot(e) }}
                   style={{ backgroundColor: (isShowComment || !(editableStatus.includes(props.project?.projectStatus)) || (editedProject ? editedProject._id !== currentMedia._id : false)) && "gray" }}>
                   <Chat />
@@ -407,13 +413,14 @@ const UploadMedia = props => {
                   </span>
                 </button>
                 <button
+                  disabled={loading ? true : false}
                   onClick={(e) => { (props.project?.projectStatus === "Draft") && handleTrimVideo(e) }}
                   style={{ backgroundColor: (showTrimBox || !(props.project?.projectStatus === "Draft")) && "gray" }}>
                   <Trim />
                   <span>Trim</span>
                 </button>
                 <button className="generate-video"
-                disabled = { disableButton ? true : false}
+                  disabled={disableButtons ? true : false}
                   onClick={() => { (editableStatus.includes(props.project?.projectStatus) && (editedProject ? editedProject._id === currentMedia._id : true)) && setShowStyleModal(true) }}
                   style={{ backgroundColor: (!(editableStatus.includes(props.project?.projectStatus)) || (editedProject ? editedProject._id !== currentMedia._id : false)) && "gray" }}>
                   <img src={cam} alt="cam" />
@@ -440,6 +447,7 @@ const UploadMedia = props => {
                   projectStatus={props.project?.projectStatus}
                   setComments={setComments}
                   setLoadingVideo={setLoading}
+                  loadingVideo={loading}
                   setLoadingSlider={setLoadingSlider}
                   user={props.user}
                   setMedia={setMedia}
@@ -449,14 +457,18 @@ const UploadMedia = props => {
                   setCurrentTime={setCurrentTime}
                   setErrorMessage={setErrorMessage}
                   projectName={props.project.projectName}
-                  disableButton = {disableButton}
-                  moonLoading = {moonLoading}
+                  disableButtons={disableButtons}
+                  loadingStatus={loadingStatus}
+                  setLoadingStatus={setLoadingStatus}
+                  setCarouselLoader={setCarouselLoader}
+                  carouselLoader={carouselLoader}
+                  setDisableButtons={setDisableButtons}
                 />
               )
             }
           </div >
         ) : (
-          <EmptyProject setComments={setComments} setLoadingVideo={setLoading} setLoadingSlider={setLoadingSlider} setDisableButton = {setDisableButton} moonLoading = {moonLoading} setMoonLoading = {setMoonLoading} />
+          <EmptyProject setDisableButtons={setDisableButtons} setVideoPlayerLoader={setVideoPlayerLoader} setComments={setComments} setLoadingVideo={setLoading} setLoadingSlider={setLoadingSlider} loadingStatus={loadingStatus} setLoadingStatus={setLoadingStatus} setCarouselLoader={setCarouselLoader} carouselLoader={carouselLoader} />
         )}
       </div >
       {showCommentBlock && <CommentBlock arrComments={comments} />}
