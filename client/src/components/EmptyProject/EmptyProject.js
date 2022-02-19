@@ -16,10 +16,10 @@ const EmptyProject = (props) => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    if (!props.user.skipIntro) {
+    if (props.user.skipIntro === false) {
       setShowDemo(true)
     }
-  }, [])
+  }, [props.user.skipIntro])
 
   const handleChange = (e) => {
     const { target } = e;
