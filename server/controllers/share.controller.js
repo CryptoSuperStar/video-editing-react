@@ -1,4 +1,5 @@
 const fs = require('fs');
+const { Project } = require('../models/project.model');
 const {google} = require('googleapis');
 const categoryIds = 22;
 const AWS = require('aws-sdk');
@@ -98,6 +99,12 @@ exports.downloadFile = (req, res) => {
   res.attachment(key);
   var fileStream = s3.getObject(params).createReadStream();
   fileStream.pipe(res);
+
+  Project.findByIdAndUpdate({ _id: project_id }, { $set: { projectStatus: "Done" } },
+    (err, data) => {
+      if (err)
+        return res.status(400).send({ msg: `Database Error ${err}` });
+    })
 }
 
 

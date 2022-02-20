@@ -32,6 +32,7 @@ const ShareModal = (props) => {
     link.href=`${REACT_APP_API_URL}/downloadFile/${project_id}/${bucket}/${mediaName}`
     link.download=mediaName;
     link.click()
+    props.shareModal();
   }
   
   const Tempalert = () =>{
