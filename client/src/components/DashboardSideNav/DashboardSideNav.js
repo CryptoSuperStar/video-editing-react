@@ -32,7 +32,7 @@ const DashboardSideNav = () => {
         <Plus />
         <span>Upload</span>
       </NavLink>
-      <NavLink to="/dashboard/projects" >
+      <NavLink to="/dashboard/projects" onClick={()=>{localStorage.setItem("disableButtons",false)}}>
         <ProjectsIcon />
         <span>Projects</span>
       </NavLink>
