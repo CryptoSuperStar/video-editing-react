@@ -209,7 +209,7 @@ const EmptyProject = (props) => {
 
   return (
     <>
-      {showDemo && <DemoLayerEmpty setShowDemo={setShowDemo} />}
+      {showDemo && <DemoLayerEmpty props={props} user={props.user} setShowDemo={setShowDemo} />}
       {loading ? <div className="spinner__wrapper" style={{ height: '100vh' }}>
 
         <MoonLoader className="spinner" color="#000" loading={loading} size={50} />
