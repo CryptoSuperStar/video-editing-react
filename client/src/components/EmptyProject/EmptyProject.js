@@ -24,10 +24,10 @@ const EmptyProject = (props) => {
 
 
   useEffect(() => {
-    if (localStorage.showDemoLayer === 'true') {
+    if (props.user.skipIntro === false) {
       setShowDemo(true)
     }
-  }, [])
+  }, [props.user.skipIntro])
 
   let LoadingStatus = [];
 
