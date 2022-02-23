@@ -243,6 +243,9 @@ const UploadMedia = props => {
     props.dispatch(updateContent(newContent));
     return newContent;
   }
+  const shareModal = () =>  {
+    setShowShareModal(false);
+  }
   const toggleCommentBlock = () => setShowCommentBlock(!showCommentBlock);
   const toggleShareBlock = () => setShowShareModal(!showShareModal);
   // if (!currentMedia.isImage) {
@@ -326,6 +329,7 @@ const UploadMedia = props => {
                 <ShareModal
                   path={currentMedia.mediaSrc}
                   name={currentMedia.mediaName}
+                  shareModal ={shareModal()}
                   thumbnail={currentMedia.screens[0].screenSrc}
                 />
               )
