@@ -154,7 +154,7 @@ export const getProjects = (setLoading) => async dispatch => {
         payload: res.data
       })
       setLoading(false);
-    } catch (e) {
+     } catch (e) {
       dispatch({
         type: 'GET_PROJECTS_ERROR'
       })
@@ -166,6 +166,8 @@ export const getProjects = (setLoading) => async dispatch => {
 export const getProject = (id, setLoading) => async dispatch => {
   try {
     const res = await axios.get(`${REACT_APP_API_URL}/getProject/${id}`);
+    localStorage.userID = res?.data?.project?.author;
+    localStorage.bucket = res?.data?.project?.bucket;
     dispatch({
       type: 'GET_PROJECT',
       payload: res.data
