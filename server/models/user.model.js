@@ -107,10 +107,6 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  skipIntro: {
-    type: Boolean,
-    default: false
-  },
   passwordResetTokens: [passwordResetTokensSchema],
 }, { timestamps: true })
 
