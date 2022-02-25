@@ -1,13 +1,7 @@
 const fs = require('fs');
 const {google} = require('googleapis');
 const categoryIds = 22;
-const AWS = require('aws-sdk');
 
-AWS.config.update({region: 'eu-west-1', apiVersion: '2006-03-01', 
-accessKeyId: "AKIAV4ALG4MNK2CQFK6Q",     
-secretAccessKey: "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",  
-});
-const s3 = new AWS.S3();
 const SCOPES = "https://www.googleapis.com/auth/youtube.upload";
 const oAuth2Client = new google.auth.OAuth2(
   process.env.YOUTUBE_CLIENT_ID,
@@ -43,7 +37,7 @@ exports.authYouTube = async (req, res) => {
 }
 
 exports.uploadYouTube = (req, res) => {
-  const {path, name, thumbnail, code , userId , bucket} = req.body;
+  const {path, name, thumbnail, code} = req.body;
   
   if (code) {
     // Get an access token based on our OAuth code
@@ -57,41 +51,32 @@ exports.uploadYouTube = (req, res) => {
         oAuth2Client.setCredentials(tokens);
         authed = true;
         const youtube = google.youtube({ version: "v3", auth: oAuth2Client });
-       var s3data = {
-          Bucket:`${process.env.AWS_BUCKET}/${userId}/${bucket}` , 
-          Key: name
-      };
-      let fileStream = s3.getObject(s3data).createReadStream();
-      const params = {
-          auth: oAuth2Client, // create this using 'google-auth-library'
-          part: 'snippet,status',
-          resource: {
+        youtube.videos.insert({
+            part: 'snippet,status',
+            requestBody: {
               snippet: {
-                  title: name,
-                  description: 'description'
+                title: name,
+                
+                categoryId: categoryIds,
+                defaultLanguage: 'en',
+                defaultAudioLanguage: 'en'
               },
               status: {
-                  privacyStatus: 'public'
-              }
+                privacyStatus: "public"
+              },
+            },
+            media: {
+              body: fs.createReadStream(path),
+            },
           },
-          media: {
-              mimeType: 'video/mp4',
-              body: fileStream // stream to stream copy
+          (err, data) => {
+            if(err) throw err
+            console.log(data)
+            console.log("Done.");
+            res.status(200).json({data})
           }
-      };
-      youtube.videos.insert(params, function (err, result) {
-          if (err) {
-              console.error('error');
-              console.error(err);
-              res.status(400).json({err})
-              
-          }
-          else {
-              console.log('success');
-              res.status(200).json({result})
-          }
-      });
-         }
+        );
+      }
       })
     }
   
