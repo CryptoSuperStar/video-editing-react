@@ -174,9 +174,7 @@ export const updateUser = (id, data, func, action) => async dispatch => {
       payload: res.data
     });
     if (action !== "Sign Up") {
-      if (action !== "skipIntro") {
-        toast.success(`Your profile details have been updated`);
-      }
+      toast.success(`Your profile details have been updated`);
       func(false)
     }
   } catch (e) {

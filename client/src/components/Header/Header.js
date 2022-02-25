@@ -92,7 +92,7 @@ const Header = (props) => {
   )
 
   return (
-    <div className="Header__block container">
+    <div className="Header__block container" style={{ zIndex: localStorage.showDemoLayer === 'true' && '100' }}>
       {isDashboard && <>
         {showPayAccess && <PayAccessModal setShowPayAccess={setShowPayAccess} setShowPayWall={setShowPayWall} setShowPromoCodeWall={setShowPromoCodeWall} />}
         {showPayWall &&
