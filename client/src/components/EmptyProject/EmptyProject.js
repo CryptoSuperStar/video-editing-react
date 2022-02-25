@@ -24,10 +24,10 @@ const EmptyProject = (props) => {
 
 
   useEffect(() => {
-    if (props.user.skipIntro === false) {
+    if (localStorage.showDemoLayer === 'true') {
       setShowDemo(true)
     }
-  }, [props.user.skipIntro])
+  }, [])
 
   let LoadingStatus = [];
 
@@ -209,7 +209,7 @@ const EmptyProject = (props) => {
 
   return (
     <>
-      {showDemo && <DemoLayerEmpty props={props} user={props.user} setShowDemo={setShowDemo} />}
+      {showDemo && <DemoLayerEmpty setShowDemo={setShowDemo} />}
       {loading ? <div className="spinner__wrapper" style={{ height: '100vh' }}>
 
         <MoonLoader className="spinner" color="#000" loading={loading} size={50} />
