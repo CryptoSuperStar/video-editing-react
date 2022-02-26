@@ -23,6 +23,7 @@ const authReducer = (state = initialState, {type, payload}) => {
     case 'LOGIN_USER':
     case 'LOGIN_REGISTER_GOOGLE':
     case 'LOGIN_REGISTER_FACEBOOK': {
+      if (payload.registering === true) localStorage.showDemoLayer = true;
       localStorage.token = payload.token;
       return {
         ...state,
@@ -30,6 +31,7 @@ const authReducer = (state = initialState, {type, payload}) => {
       }
     }
     case 'REGISTER_USER':
+      localStorage.showDemoLayer = true;
       localStorage.token = payload.token;
       return {
         ...state,
@@ -71,8 +73,6 @@ const authReducer = (state = initialState, {type, payload}) => {
       localStorage.removeItem('currentProjectId');
       localStorage.removeItem('currentMedia');
       localStorage.removeItem('currentPublishedMedia');
-      localStorage.removeItem('bucket');
-       localStorage.removeItem('userId');
       localStorage.isAuthenticated = false;
       return {
         user: {
