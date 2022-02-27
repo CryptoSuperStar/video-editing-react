@@ -112,4 +112,9 @@ exports.downloadFile = (req, res) => {
   res.attachment(key);
   var fileStream = s3.getObject(params).createReadStream();
   fileStream.pipe(res);
+  Project.findByIdAndUpdate({ _id: project_id }, { $set: { projectStatus: 'Done' } },
+    (err, data) => {
+      if (err) return res.status(400).send({ msg: `Database Error ${err}` });
+    })
+
 }
