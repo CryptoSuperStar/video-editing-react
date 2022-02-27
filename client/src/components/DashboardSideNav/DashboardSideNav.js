@@ -28,9 +28,18 @@ const DashboardSideNav = () => {
         <AccountIcon />
         <span>Account</span>
       </NavLink>
-      <NavLink to="/dashboard/upload" className="menu__upload--button">
+      <NavLink to="/dashboard/upload" className="menu__upload--button" 
+        onClick={() => {
+          if (window.location.pathname === "/dashboard/upload") {
+            localStorage.removeItem('duration');
+            localStorage.removeItem('currentProjectId');
+            localStorage.removeItem('currentMedia');
+            localStorage.removeItem('comments');
+            window.location.reload()
+          }
+        }}>
         <Plus />
-        <span>Upload</span>
+        <span>Create</span>
       </NavLink>
       <NavLink to="/dashboard/projects" onClick={()=>{localStorage.setItem("disableButtons",false)}}>
         <ProjectsIcon />
