@@ -253,8 +253,6 @@ const UploadMedia = props => {
   // } else {
   //   commentFinal.push({ createdAt: imageCommentDate || new Date(), text: activeComment, time: "" });
   // }
-
-
   return (
     <div className="upload__media">
       {showStyleModal && (
@@ -327,6 +325,7 @@ const UploadMedia = props => {
                   path={currentMedia.mediaSrc}
                   name={currentMedia.mediaName}
                   thumbnail={currentMedia.screens[0].screenSrc}
+                  shareBlock = {toggleShareBlock}
                 />
               )
             }
