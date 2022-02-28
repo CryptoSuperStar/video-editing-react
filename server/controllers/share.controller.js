@@ -2,6 +2,7 @@ const fs = require('fs');
 const {google} = require('googleapis');
 const categoryIds = 22;
 const AWS = require('aws-sdk');
+const { Project } = require('../models/project.model');
 
 AWS.config.update({region: 'eu-west-1', apiVersion: '2006-03-01', 
 accessKeyId: "AKIAV4ALG4MNK2CQFK6Q",     
@@ -99,14 +100,7 @@ exports.uploadYouTube = (req, res) => {
 exports.downloadFile = (req, res) => { 
   const { project_id, bucket, mediaName } = req.params;
   const key = `${project_id}/${bucket}/${mediaName}`
-  AWS.config.update(
-    {
-      accessKeyId: process.env.AWS_KEY,
-      secretAccessKey: process.env.AWS_SECRET_KEY,
-      region: 'us-east-2'
 
-    }
-  );
   var s3 = new AWS.S3();
   const params = {Bucket:'provid', Key:key}
   res.attachment(key);
